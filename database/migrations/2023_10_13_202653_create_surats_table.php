@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('surat_keterangan', function (Blueprint $table) {
             $table->integer('id_presensi');
+            $table->text('surat_keterangan');
 
             // Foreign Key
 

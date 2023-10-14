@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Akun extends Model
 {
     use HasFactory;
+    protected $table = 'akun';
+    protected $fillable = ['id_level', 'username', 'password'];
+    protected $primaryKey = 'id_akun';
+    public $timestamps = false;
 }

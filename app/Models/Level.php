@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Level extends Model
 {
     use HasFactory;
+    protected $table = 'level_akun';
+    protected $fillable = ['nama_level'];
+    protected $primaryKey = 'id_level';
+    public $timestamps = false;
 }
