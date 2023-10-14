@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Level>
  */
-class LevelFactory extends Factory
+class RoleFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class LevelFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama_role' => $this->faker->randomElement(['Siswa', 'Wali Kelas', 'Pengurus Kelas', 'Guru Piket', 'Guru BK', 'Tata Usaha Kesiswaan']),
         ];
     }
 }

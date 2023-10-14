@@ -9,7 +9,7 @@ class Akun extends Model
 {
     use HasFactory;
     protected $table = 'akun';
-    protected $fillable = ['id_level', 'username', 'password'];
+    protected $fillable = ['id_role', 'username', 'password'];
     protected $primaryKey = 'id_akun';
     public $timestamps = false;
 }

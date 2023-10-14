@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Level extends Model
+class Role extends Model
 {
     use HasFactory;
-    protected $table = 'level_akun';
-    protected $fillable = ['nama_level'];
-    protected $primaryKey = 'id_level';
+    protected $table = 'role_akun';
+    protected $fillable = ['nama_role'];
+    protected $primaryKey = 'id_role';
     public $timestamps = false;
 }

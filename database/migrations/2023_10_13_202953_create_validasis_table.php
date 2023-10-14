@@ -16,8 +16,7 @@ return new class extends Migration
             $table->integer('id_pengurus');
             $table->integer('id_presensi');
             $table->text('keterangan');
-            $table->time('waktu_pelajaran');
-            $table->enum('waktu_pelajaran', ['Istirahat pertama', 'Istirahat kedua', 'Istirahat kedua'])->nullable()->default(['foo', 'bar']);
+            $table->enum('waktu_pelajaran', ['Istirahat pertama', 'Istirahat kedua', 'Istirahat ketiga']);
 
             // Foreign Key
 

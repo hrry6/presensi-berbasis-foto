@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Level;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class LevelController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class LevelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Level $level)
+    public function show(Role $role)
     {
         //
     }
@@ -42,7 +42,7 @@ class LevelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Level $level)
+    public function edit(Role $role)
     {
         //
     }
@@ -50,7 +50,7 @@ class LevelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Level $level)
+    public function update(Request $request, Role $role)
     {
         //
     }
@@ -58,7 +58,7 @@ class LevelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Level $level)
+    public function destroy(Role $role)
     {
         //
     }

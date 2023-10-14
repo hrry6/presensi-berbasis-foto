@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('akun', function (Blueprint $table) {
             $table->integer('id_akun', true);
-            $table->integer('id_level');
+            $table->integer('id_role');
             $table->string('username', 60);
             $table->string('password', 225);
             
             // Foreign Key
 
-            $table->foreign('id_level')->on('level_akun')
-                ->references('id_level')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_role')->on('role_akun')
+                ->references('id_role')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
