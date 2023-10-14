@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengurus_kelas', function (Blueprint $table) {
             $table->integer('id_pengurus', true);
             $table->integer('id_siswa');
-            $table->string('jabatan', 100);
+            $table->string('jabatan', 20);
 
             // Foreign Key
 
