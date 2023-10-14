@@ -17,7 +17,7 @@ class AkunFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            
         ];
     }
 }
