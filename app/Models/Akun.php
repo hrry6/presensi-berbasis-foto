@@ -11,5 +11,6 @@ class Akun extends Model
     protected $table = 'akun';
     protected $fillable = ['id_role', 'username', 'password'];
     protected $primaryKey = 'id_akun';
+    protected $casts = ['password' => 'hashed' ];
     public $timestamps = false;
 }

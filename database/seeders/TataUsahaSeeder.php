@@ -2,29 +2,28 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\Hash;
-use Faker\Factory as Faker;
 
-class AkunSeeder extends Seeder
+class TataUsahaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
         $faker = Faker::create();
-    
-        $datas = [1, 2, 3, 4, 5, 6];
-    
+
+        $datas = [6];
+
         foreach ($datas as $data) {
             for ($i = 1; $i <= 5; $i++) {
-                DB::table('akun')->insert([
-                    'id_role' => $data,
-                    'username' => $faker->randomNumber(6, true),
-                    'password' => Hash::make('testing')
+                DB::table('tata_usaha_kesiswaan')->insert([
+                    'id_akun' => $data,
+                    'nama_kesiswaan' => $faker->userName(),
+                    'foto_kesiswaan' => $faker->image(),
                 ]);
             }
         }

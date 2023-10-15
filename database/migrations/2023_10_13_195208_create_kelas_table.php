@@ -15,8 +15,8 @@ return new class extends Migration
             $table->integer('id_kelas', true);
             $table->integer('id_wali_kelas');
             $table->integer('id_jurusan');
-            $table->char('nama_kelas', 1);
-            $table->char('tingkatan', 2);
+            $table->string('nama_kelas', 60);
+            $table->char('tingkatan', 3);
             $table->enum('status_kelas', ['aktif', 'tidak aktif']);
 
             // Foreign Key

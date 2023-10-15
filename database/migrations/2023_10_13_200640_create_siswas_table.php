@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('id_kelas');
             $table->integer('nis');
             $table->string('nama_siswa', 60);
-            $table->integer('nomer_hp');
+            $table->string('nomer_hp', 20);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->text('foto_siswa');
 
