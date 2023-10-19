@@ -52,10 +52,12 @@ Route::middleware(['auth'])->group(function () {
     // WALI KELAS
     Route::prefix('wali-kelas')->middleware('akses:2')->group(function () {
         Route::get('dashboard', [WaliKelasController::class, 'index']);
+        Route::get('akun-siswa', [WaliKelasController::class, 'showSiswa']);
         Route::get('tambah-siswa', [WaliKelasController::class, 'create']);
         Route::post('tambah-simpan', [WaliKelasController::class, 'store']);
-        Route::get('/siswa/edit/{id}', [JenisSuratController::class, 'edit']);
-        Route::post('/surat/edit/simpan', [JenisSuratController::class, 'update']);
+        Route::get('/siswa/edit/{id}', [WaliKelasController::class, 'edit']);
+        Route::post('/surat/edit/simpan', [WaliKelasController::class, 'update']);
+        Route::delete('hapus-siswa', [WaliKelasController::class, 'destroySiswa']);
     });
 
     // SISWA

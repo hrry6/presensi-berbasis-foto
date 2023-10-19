@@ -19,6 +19,21 @@ class WaliKelasController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+
+    public function showSiswa(Siswa $siswa)
+    {
+        $data = [
+            'siswa' => $siswa
+                    ->join('kelas','siswa.id_kelas','=','kelas.id_kelas')
+                    ->join('jurusan','kelas.id_jurusan','=','jurusan.id_jurusan')->get()
+        ];
+        // dd($data);
+        return view('wali-kelas.siswa', $data);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create(Kelas $kelas)
@@ -91,5 +106,28 @@ class WaliKelasController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroySiswa(Request $request)
+    {
+        $id_siswa = $request->input('id_siswa');
+        $aksi = Siswa::where('id_siswa', $id_siswa)->delete();
+        if($aksi)
+        {
+            $pesan = [
+                'success' => true,
+                'pesan' => 'Data berhasil di hapus'
+            ];
+        }else
+        {
+            $pesan = [
+                'success' => false,
+                'pesan' => 'Data gagal di hapus'
+            ];
+        }
+        return response()->json($pesan);
     }
 }
