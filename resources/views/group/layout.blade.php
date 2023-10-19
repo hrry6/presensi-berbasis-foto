@@ -91,11 +91,9 @@
     <!--Main Navigation-->
 
     <!--Main layout-->
-    <main style="margin-top: 58px">
-        <div class="container p-5">
-            @yield('isi')
-        </div>
-    </main>
+    <div style="margin-top: 90px ">
+        @yield('isi')
+    </div>
 
     <!--Main layout-->
 </body>
