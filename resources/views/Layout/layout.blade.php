@@ -5,7 +5,7 @@
     <title>@yield('judul')</title>
     <style>
       body {
-  background-color: #fbfbfb;
+  background-color: #ece9e9;
 }
 @media (min-width: 991.98px) {
   main {
@@ -107,7 +107,7 @@
       
       <!--Main layout-->
       <main style="margin-top: 58px">
-        <div class="container pt-4">
+        <div class="container p-5">
           @yield('isi')
         </div>
       </main>
