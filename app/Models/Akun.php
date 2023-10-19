@@ -22,7 +22,7 @@ class Akun extends Model
     }
 
     // One to One
-    public function tataUsahaKesiswaan(): HasOne
+    public function TataUsaha(): HasOne
     {
         return $this->hasOne(User::class, 'id_akun');
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OtentikasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [OtentikasiController::class, 'index'])->name('login');
+
+// Route::group(function () {
+//     Route::get('/', [AuthController::class, 'index'])->name('login');
+//     Route::post('/', [AuthController::class, 'login']);
+// });
