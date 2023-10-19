@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\guru_piket;
+use App\Models\GuruPiket;
 use Illuminate\Http\Request;
 
 class GuruPiketController extends Controller
@@ -12,7 +12,7 @@ class GuruPiketController extends Controller
      */
     public function index()
     {
-        //
+        return view('guru-piket.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class GuruPiketController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(guru_piket $guru_piket)
+    public function show(GuruPiket $GuruPiket)
     {
         //
     }
@@ -42,7 +42,7 @@ class GuruPiketController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(guru_piket $guru_piket)
+    public function edit(GuruPiket $GuruPiket)
     {
         //
     }
@@ -50,7 +50,7 @@ class GuruPiketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, guru_piket $guru_piket)
+    public function update(Request $request, GuruPiket $GuruPiket)
     {
         //
     }
@@ -58,7 +58,7 @@ class GuruPiketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(guru_piket $guru_piket)
+    public function destroy(GuruPiket $GuruPiket)
     {
         //
     }

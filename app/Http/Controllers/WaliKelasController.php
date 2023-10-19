@@ -11,7 +11,7 @@ class WaliKelasController extends Controller
      */
     public function index()
     {
-        //
+        return view('wali-kelas.index');
     }
 
     /**

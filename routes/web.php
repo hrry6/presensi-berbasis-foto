@@ -21,21 +21,37 @@ use App\Http\Controllers\PengurusKelasController;
 
 Route::get('/', [OtentikasiController::class, 'index'])->name('login');
 Route::post('/', [OtentikasiController::class, 'authenticated']);
-Route::prefix('tata-usaha')->group(function () {
-    Route::get('dashboard', [TataUsahaController::class, 'index']);
-});
-Route::prefix('guru-bk')->group(function () {
-    Route::get('dashboard', [WaliKelasController::class, 'index']);
-});
-Route::prefix('guru-piket')->group(function () {
-    Route::get('dashboard', [GuruPiketController::class, 'index']);
-});
-Route::prefix('wali-kelas')->group(function () {
-    Route::get('dashboard', [WaliKelasController::class, 'index']);
-});
-Route::prefix('siswa')->group(function () {
-    Route::get('dashboard', [SiswaController::class, 'index']);
-});
-Route::prefix('pengurus-kelas')->group(function () {
-    Route::get('dashboard', [PengurusKelasController::class, 'index']);
+
+
+Route::middleware(['auth'])->group(function () {
+
+    // TATA USAHA
+    Route::prefix('tata-usaha')->middleware('akses:tata-usaha')->group(function () {
+        Route::get('dashboard', [TataUsahaController::class, 'index']);
+    });
+
+    // GURU BK
+    Route::prefix('guru-bk')->middleware('akses:guru-bk')->group(function () {
+        Route::get('dashboard', [WaliKelasController::class, 'index']);
+    });
+
+    // GURU PIKET
+    Route::prefix('guru-piket')->middleware('akses')->group(function () {
+        Route::get('dashboard', [GuruPiketController::class, 'index']);
+    });
+
+    // WALI KELAS
+    Route::prefix('wali-kelas')->middleware('akses:wali-kelas')->group(function () {
+        Route::get('dashboard', [WaliKelasController::class, 'index']);
+    });
+
+    // SISWA
+    Route::prefix('siswa')->middleware('akses:siswa')->group(function () {
+        Route::get('dashboard', [SiswaController::class, 'index']);
+    });
+
+    // PENGURUS KELAS
+    Route::prefix('pengurus-kelas')->middleware('akses:pengurus-kelas')->group(function () {
+        Route::get('dashboard', [PengurusKelasController::class, 'index']);
+    });
 });

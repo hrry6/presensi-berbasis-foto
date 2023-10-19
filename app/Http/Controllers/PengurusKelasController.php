@@ -12,7 +12,7 @@ class PengurusKelasController extends Controller
      */
     public function index()
     {
-        //
+        return view('pengurus-kelas.index');
     }
 
     /**

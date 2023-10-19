@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\guru_bk;
+use App\Models\GuruBk;
 use Illuminate\Http\Request;
 
 class GuruBkController extends Controller
@@ -12,7 +12,7 @@ class GuruBkController extends Controller
      */
     public function index()
     {
-        //
+        return view('guru-bk.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class GuruBkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(guru_bk $guru_bk)
+    public function show(GuruBk $GuruBk)
     {
         //
     }
@@ -42,7 +42,7 @@ class GuruBkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(guru_bk $guru_bk)
+    public function edit(GuruBk $GuruBk)
     {
         //
     }
@@ -50,7 +50,7 @@ class GuruBkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, guru_bk $guru_bk)
+    public function update(Request $request, GuruBk $GuruBk)
     {
         //
     }
@@ -58,7 +58,7 @@ class GuruBkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(guru_bk $guru_bk)
+    public function destroy(GuruBk $GuruBk)
     {
         //
     }
