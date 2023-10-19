@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('jam');
             $table->string('aksi', 60);
             $table->string('record', 225);
+            
         });
     }
 

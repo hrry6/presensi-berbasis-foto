@@ -25,7 +25,7 @@ class GuruSeeder extends Seeder
             for ($i = 1; $i <= 5; $i++) {
                 DB::table('guru')->insert([
                     'id_akun' => $data,
-                    'nama_guru' => $faker->name(). Arr::random(['SP', 'SPd', 'S.Kom']),
+                    'nama_guru' => $faker->name(). Arr::random(['S.Pd', 'S.Kom']),
                     'foto_guru' => $faker->image(),
                 ]);
             }
