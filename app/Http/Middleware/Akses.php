@@ -14,14 +14,14 @@ class Akses
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $allowedRole): Response
     {
-        $allowedRoles = [1, 2, 3, 4, 5, 6];
+        $user = Auth::user();
 
-        if (Auth::user() && in_array(Auth::user()->id_role, $allowedRoles)) {
+        if ($user && $user->id_role == $allowedRole) {
             return $next($request);
         }
 
-        return redirect()->route('auth.login');
+        return redirect()->route('/');
     }
 }

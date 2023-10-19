@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuruBkController;
 use App\Http\Controllers\GuruPiketController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
@@ -26,32 +27,33 @@ Route::post('/', [OtentikasiController::class, 'authenticated']);
 Route::middleware(['auth'])->group(function () {
 
     // TATA USAHA
-    Route::prefix('tata-usaha')->middleware('akses:guru-bk')->group(function () {
+    Route::prefix('tata-usaha')->middleware('akses:6')->group(function () {
         Route::get('dashboard', [TataUsahaController::class, 'index']);
     });
 
     // GURU BK
-    Route::prefix('guru-bk')->middleware('akses:guru-bk')->group(function () {
-        Route::get('dashboard', [WaliKelasController::class, 'index']);
+    Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
+        Route::get('dashboard', [GuruBkController::class, 'index']);
     });
 
     // GURU PIKET
-    Route::prefix('guru-piket')->middleware('akses:guru-piket')->group(function () {
+    Route::prefix('guru-piket')->middleware('akses:4')->group(function () {
         Route::get('dashboard', [GuruPiketController::class, 'index']);
     });
 
+    // PENGURUS KELAS
+    Route::prefix('pengurus-kelas')->middleware('akses:3')->group(function () {
+        Route::get('dashboard', [PengurusKelasController::class, 'index']);
+    });
+
     // WALI KELAS
-    Route::prefix('wali-kelas')->middleware('akses:wali-kelas')->group(function () {
+    Route::prefix('wali-kelas')->middleware('akses:2')->group(function () {
         Route::get('dashboard', [WaliKelasController::class, 'index']);
     });
 
     // SISWA
-    Route::prefix('siswa')->middleware('akses:siswa')->group(function () {
+    Route::prefix('siswa')->middleware('akses:1')->group(function () {
         Route::get('dashboard', [SiswaController::class, 'index']);
     });
 
-    // PENGURUS KELAS
-    Route::prefix('pengurus-kelas')->middleware('akses:pengurus-kelas')->group(function () {
-        Route::get('dashboard', [PengurusKelasController::class, 'index']);
-    });
 });
