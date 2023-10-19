@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Siswa;
 use App\Models\TataUsahaKesiswaaan;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,17 @@ class TataUsahaController extends Controller
     public function index()
     {
         return view('tata-usaha.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function showSiswa()
+    {
+        $data = [
+            'siswa' => Siswa::all()
+        ];
+        return view('tata-usaha.siswa', $data);
     }
 
     /**

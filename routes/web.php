@@ -27,9 +27,10 @@ Route::get('/logout', [OtentikasiController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
 
-    // TATA USAHA
     Route::prefix('tata-usaha')->middleware('akses:6')->group(function () {
         Route::get('dashboard', [TataUsahaController::class, 'index']);
+        Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
+
     });
 
     // GURU BK
