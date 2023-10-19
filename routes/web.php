@@ -22,6 +22,7 @@ use App\Http\Controllers\PengurusKelasController;
 
 Route::get('/', [OtentikasiController::class, 'index'])->name('login');
 Route::post('/', [OtentikasiController::class, 'authenticated']);
+Route::get('/logout', [OtentikasiController::class, 'logout']);
 
 
 Route::middleware(['auth'])->group(function () {
