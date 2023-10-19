@@ -85,7 +85,9 @@
       
             <!-- Right links -->
             <ul class="navbar-nav ms-auto d-flex flex-row">
-              
+              <a href="/logout" class="btn btn-danger">
+                Logout
+              </a>
               <li class="nav-item dropdown">
                   <img
                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
