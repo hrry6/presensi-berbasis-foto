@@ -26,7 +26,7 @@ Route::post('/', [OtentikasiController::class, 'authenticated']);
 Route::middleware(['auth'])->group(function () {
 
     // TATA USAHA
-    Route::prefix('tata-usaha')->middleware('akses:tata-usaha')->group(function () {
+    Route::prefix('tata-usaha')->middleware('akses:guru-bk')->group(function () {
         Route::get('dashboard', [TataUsahaController::class, 'index']);
     });
 
