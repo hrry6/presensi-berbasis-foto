@@ -19,7 +19,7 @@ class WaliKelasController extends Controller
      */
     public function create()
     {
-        //
+        return view('wali-kelas.tambah-siswa');
     }
 
     /**
