@@ -15,6 +15,14 @@
                             <input type="text" class="form-control" name="nama_siswa">
                         </div>
                         <div class="form-group">
+                            <label for="nama_siswa">Password</label>
+                            <input type="text" class="form-control" name="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_siswa">Kelas</label>
+                            <input type="text" class="form-control" name="password">
+                        </div>
+                        <div class="form-group">
                             <label for="nis">Nis</label>
                             <input type="text" class="form-control" name="nis">
                         </div>
@@ -24,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
-                            <input type="text" class="form-control" name="jenis_kelamin">
+                            <input type="text" class="form-control" name="nomer_hp">
                         </div>
                         <div class="form-group">
                             <label for="foto_siswa">Foto Siswa</label>
