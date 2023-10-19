@@ -56,7 +56,7 @@
         <!-- Navbar -->
         <nav
              id="main-navbar"
-             class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
+             class="navbar navbar-expand-lg navbar-light bg-white fixed-top border border-dark-subtle"
              >
           <!-- Container wrapper -->
           <div class="container-fluid">

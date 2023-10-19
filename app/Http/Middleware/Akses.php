@@ -22,6 +22,6 @@ class Akses
             return $next($request);
         }
 
-        return redirect()->route('/');
+        return redirect()->to('/');
     }
 }
