@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akun;
+use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\TataUsahaKesiswaaan;
 use Illuminate\Http\Request;
@@ -19,20 +21,25 @@ class TataUsahaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function showSiswa()
+    public function showSiswa(Siswa $siswa)
     {
         $data = [
-            'siswa' => Siswa::all()
+            'siswa' => $siswa->join('kelas','siswa.id_kelas','=','kelas.id_kelas')->get()
         ];
+        // dd($data);
         return view('tata-usaha.siswa', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createSiswa()
     {
-        //
+        $data = [
+            'akun' => Akun::all(),
+            'kelas' => Kelas::all()
+        ];
+        return view('tata-usaha.tambah-siswa', $data);
     }
 
     /**

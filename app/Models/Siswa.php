@@ -25,4 +25,9 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kelas::class, 'id_kelas');
     }
+
+    public function getNamaKelasAttribute()
+    {
+        return Kelas::find($this->attributes['id_kelas'])->kelas;
+    }
 }

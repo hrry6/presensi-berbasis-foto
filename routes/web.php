@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('tata-usaha')->middleware('akses:6')->group(function () {
         Route::get('dashboard', [TataUsahaController::class, 'index']);
         Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
-
+        Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
     });
 
     // GURU BK

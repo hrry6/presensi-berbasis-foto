@@ -56,10 +56,13 @@ class="collapse d-lg-block sidebar collapse bg-white"
 @endsection
 @section('isi')
 <div class="mt-4 ml-4 pt-3 container-md bg-white">
-    <form action="">
-        <input type="text" placeholder="Search Siswa">
-        <button class="position-relative">Search</button>
-    </form>
+    <div class="d-flex width-full justify-content-between mb-3">
+      <form action="">
+          <input type="text" placeholder="Search Siswa">
+          <button class="position-relative">Search</button>
+      </form>
+      <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
+    </div>
     <table class="table table-bordered">
         <thead class="thead table-dark">
           <tr class="">
@@ -80,7 +83,7 @@ class="collapse d-lg-block sidebar collapse bg-white"
               <td>{{ $i->nis}}</td>
               <td>{{ $i->nama_siswa}}</td>
               <td>{{ $i->jenis_kelamin}}</td>
-              <th>{{ $i->id_kelas}}</th>
+              <th>{{ $i->kelas->nama_kelas}}</th>
               <td>AKSI</td>
             </tr>
             @endforeach

@@ -58,5 +58,7 @@
         <img src="{{ asset('img/wave.svg') }}" style="width: 100%;">
     </div>
 </body>
+<script>
 
+</script>
 </html>

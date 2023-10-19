@@ -31,3 +31,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
+
+import DataTable from 'datatables.net-bs5';
+window.DataTable = DataTable
+
+//import SweetAlert from 'sweetalert2';
+import Swal from 'sweetalert2';
+window.swal = Swal
