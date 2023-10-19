@@ -20,7 +20,7 @@ class KelasSeeder extends Seeder
         $datas = [1, 2, 3, 4, 5];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 1; $i++) {
                 DB::table('kelas')->insert([
                     'id_wali_kelas' => $data,
                     'id_jurusan' => $i,

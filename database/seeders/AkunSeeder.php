@@ -24,7 +24,7 @@ class AkunSeeder extends Seeder
                 DB::table('akun')->insert([
                     'id_role' => $data,
                     'username' => $faker->randomNumber(6, true),
-                    'password' => Hash::make('testing')
+                    'password' => Hash::make('123')
                 ]);
             }
         }

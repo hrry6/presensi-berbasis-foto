@@ -32,4 +32,10 @@ class Guru extends Model
     {
         return $this->hasOne(GuruBk::class, 'id_guru');
     }
+
+    // Get Attribute column
+    public function getJenisSuratAttribute()
+    {
+        return Kelas::find($this->attributes['id_wali_kelas'])->wali_kelas;
+    }
 }

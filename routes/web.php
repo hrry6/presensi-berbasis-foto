@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', [TataUsahaController::class, 'index']);
         Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
         Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
+        Route::delete('hapus-siswa', [TataUsahaController::class, 'destroySiswa']);
     });
 
     // GURU BK
@@ -52,7 +53,6 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('wali-kelas')->middleware('akses:2')->group(function () {
         Route::get('dashboard', [WaliKelasController::class, 'index']);
         Route::get('tambah-siswa', [WaliKelasController::class, 'create']);
-        Route::get('tambah-simpan', [WaliKelasController::class, 'store']);
     });
 
     // SISWA
