@@ -7,11 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <title>Login</title>
-    <style>
-        * {
-            border-radius: 0 !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -26,19 +21,22 @@
 
                                     <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-50">
 
-                                    <form>
+                                    <form action="" method="POST">
+                                        @csrf
                                         <p class="mb-3 fw-bold fs-3">Log In</p>
 
                                         <div class="form-outline mb-4">
-                                            <input type="text" class="form-control" placeholder="Username" />
+                                            <input type="text" class="form-control" placeholder="Username"
+                                                name="username" />
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input type="password" class="form-control" placeholder="Password" />
+                                            <input type="password" class="form-control" placeholder="Password"
+                                                name="password" />
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <button type="button"
+                                            <button type="submit"
                                                 class="btn bg-primary w-100 text-white p-2 fw-bold fs-5 rounded-2">LOGIN</button>
                                         </div>
 
@@ -46,10 +44,9 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-6 d-flex align-items-center gradient-custom-2" style="text-color: black">
-                                <div class="text-white px-3 py-5 p-md-5 mx-md-4">
-                                    <img src="{{ asset('img/backtoschool.png') }}" style="width: 450px;" alt="logo">
-                                </div>
+                            <div
+                                class="col-lg-5 d-flex align-items-center text-center"class="text-white px-3 py-5 p-md-5 mx-md-4">
+                                <img src="{{ asset('img/backtoschool.png') }}" style="width: 100%;" alt="logo">
                             </div>
                         </div>
                     </div>
@@ -58,7 +55,7 @@
         </div>
     </section>
     <div class="fixed-bottom">
-        <img src="{{ asset('img/wave.svg') }}">
+        <img src="{{ asset('img/wave.svg') }}" style="width: 100%;">
     </div>
 </body>
 
