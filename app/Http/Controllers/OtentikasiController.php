@@ -31,9 +31,19 @@ class OtentikasiController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if ($user->role == 'admin' || $user->role == 'operator') {
-                return redirect('dashboard/surat')->with('_token', Session::token());
-            } 
+            if ($user->id_role == 6) {
+                return redirect('tata-usaha')->with('_token', Session::token());
+            } elseif ($user->id_role == 5) {
+                return redirect('guru-bk')->with('_token', Session::token());
+            } elseif ($user->id_role == 4) {
+                return redirect('guru-piket')->with('_token', Session::token());
+            } elseif ($user->id_role == 3) {
+                return redirect('pengurus-kelas')->with('_token', Session::token());
+            } elseif ($user->id_role == 2) {
+                return redirect('wali-kelas')->with('_token', Session::token());
+            } elseif ($user->id_role == 1) {
+                return redirect('siswa')->with('_token', Session::token());
+            }
         }
 
         return redirect()->back()->withErrors('Terdapat kesalahan Username atau Password')->withInput()->with('_token', Session::token());
