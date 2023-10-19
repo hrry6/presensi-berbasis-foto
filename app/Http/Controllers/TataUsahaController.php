@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akun;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\TataUsahaKesiswaaan;
@@ -24,7 +25,9 @@ class TataUsahaController extends Controller
     public function showSiswa(Siswa $siswa)
     {
         $data = [
-            'siswa' => $siswa->join('kelas','siswa.id_kelas','=','kelas.id_kelas')->get()
+            'siswa' => $siswa
+                    ->join('kelas','siswa.id_kelas','=','kelas.id_kelas')
+                    ->join('jurusan','kelas.id_jurusan','=','jurusan.id_jurusan')->get()
         ];
         // dd($data);
         return view('tata-usaha.siswa', $data);
@@ -37,7 +40,8 @@ class TataUsahaController extends Controller
     {
         $data = [
             'akun' => Akun::all(),
-            'kelas' => Kelas::all()
+            'kelas' => Kelas::all(),
+            'jurusan' => Jurusan::all()
         ];
         return view('tata-usaha.tambah-siswa', $data);
     }
@@ -77,8 +81,23 @@ class TataUsahaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TataUsahaKesiswaaan $tataUsahaKesiswaaan)
+    public function destroySiswa(Request $request)
     {
-        //
+        $id_siswa = $request->input('id_siswa');
+        $aksi = Siswa::where('id_siswa', $id_siswa)->delete();
+        if($aksi)
+        {
+            $pesan = [
+                'success' => true,
+                'pesan' => 'Data berhasil di hapus'
+            ];
+        }else
+        {
+            $pesan = [
+                'success' => false,
+                'pesan' => 'Data gagal di hapus'
+            ];
+        }
+        return response()->json($pesan);
     }
 }

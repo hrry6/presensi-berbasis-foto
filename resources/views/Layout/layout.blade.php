@@ -97,6 +97,7 @@
         </div>
     </main>
 
+    @yield('footer')
     <!--Main layout-->
 </body>
 

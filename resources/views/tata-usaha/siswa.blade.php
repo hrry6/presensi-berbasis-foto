@@ -63,7 +63,7 @@ class="collapse d-lg-block sidebar collapse bg-white"
       </form>
       <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered DataTable">
         <thead class="thead table-dark">
           <tr class="">
             <th scope="col">No</th>
@@ -84,7 +84,10 @@ class="collapse d-lg-block sidebar collapse bg-white"
               <td>{{ $i->nama_siswa}}</td>
               <td>{{ $i->jenis_kelamin}}</td>
               <th>{{ $i->kelas->nama_kelas}}</th>
-              <td>AKSI</td>
+              <td>
+                <a href="" class="btn btn-success">EDIT</a>
+                <btn class="btn btn-danger btnHapus" idHapus="{{$i->id_siswa}}">HAPUS</btn>
+              </td>
             </tr>
             @endforeach
         </tbody>
@@ -92,4 +95,40 @@ class="collapse d-lg-block sidebar collapse bg-white"
       
 </div>
   
+@endsection
+
+@section('footer')
+<script type="module">
+    $('.DataTable tbody').on('click','.btnHapus',function(a){
+        a.preventDefault();
+        let idHapus = $(this).closest('.btnHapus').attr('idHapus');
+        swal.fire({
+            title : "Apakah anda ingin menghapus data ini?",
+            showCancelButton: true,
+            confirmButtonText: 'Setuju',
+            cancelButtonText: `Batal`,
+            confirmButtonColor: 'red'
+
+        }).then((result)=>{
+            if(result.isConfirmed){
+                $.ajax({
+                    type: 'DELETE',
+                    url: 'hapus-siswa',
+                    data: {
+                        id_siswa : idHapus,
+                        _token : "{{csrf_token()}}"
+                    },
+                    success : function(data){
+                        if(data.success){
+                            swal.fire('Berhasil di hapus!', '', 'success').then(function(){
+                                //Refresh Halaman
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
 @endsection
