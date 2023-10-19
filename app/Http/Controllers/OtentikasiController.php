@@ -32,17 +32,17 @@ class OtentikasiController extends Controller
             $user = Auth::user();
 
             if ($user->id_role == 6) {
-                return redirect('tata-usaha')->with('_token', Session::token());
+                return redirect('tata-usaha/dashboard')->with('_token', Session::token());
             } elseif ($user->id_role == 5) {
-                return redirect('guru-bk')->with('_token', Session::token());
+                return redirect('guru-bk/dashboard')->with('_token', Session::token());
             } elseif ($user->id_role == 4) {
-                return redirect('guru-piket')->with('_token', Session::token());
+                return redirect('guru-piket/dashboard')->with('_token', Session::token());
             } elseif ($user->id_role == 3) {
-                return redirect('pengurus-kelas')->with('_token', Session::token());
+                return redirect('pengurus-kelas/dashboard')->with('_token', Session::token());
             } elseif ($user->id_role == 2) {
-                return redirect('wali-kelas')->with('_token', Session::token());
+                return redirect('wali-kelas/dashboard')->with('_token', Session::token());
             } elseif ($user->id_role == 1) {
-                return redirect('siswa')->with('_token', Session::token());
+                return redirect('siswa/dashboard')->with('_token', Session::token());
             }
         }
 

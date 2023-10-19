@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // GURU PIKET
-    Route::prefix('guru-piket')->middleware('akses')->group(function () {
+    Route::prefix('guru-piket')->middleware('akses:guru-piket')->group(function () {
         Route::get('dashboard', [GuruPiketController::class, 'index']);
     });
 
