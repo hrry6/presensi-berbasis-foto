@@ -55,7 +55,7 @@ class WaliKelasController extends Controller
         }
 
         if ($siswa->create($data)) {
-            return redirect('/dashboard')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('wali-kelas/dashboard')->with('success', 'Data surat baru berhasil ditambah');
         }
 
         return back()->with('error', 'Data surat gagal ditambahkan');
