@@ -37,7 +37,7 @@
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
                 <tr class="">
-                    {{-- <th scope="col">No</th> --}}
+                    <th scope="col">No</th>
                     <th scope="col">Tabel</th>
                     <th scope="col">Aktor</th>
                     <th scope="col">Tanggal </th>
@@ -49,7 +49,7 @@
             <tbody>
                 @foreach ($logs as $i)
                     <tr>
-                        {{-- <td>{{ $i->id_siswa }}</td> --}}
+                        <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $i->tabel }}</td>
                         <td>{{ $i->aktor }}</td>
                         <td>{{ $i->tanggal }}</td>

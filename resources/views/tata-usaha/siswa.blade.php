@@ -50,7 +50,7 @@
             <tbody>
                 @foreach ($siswa as $i)
                     <tr>
-                        <th>{{ $i->id_siswa }}</th>
+                        <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $i->foto_siswa }}</td>
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>

@@ -60,7 +60,9 @@ class TataUsahaController extends Controller
 
         $user = Auth::user();
         Auth::user();
+        $data['pembuat'] = $user->id_role;
         $data['id_akun'] = $user->id_akun;
+
 
         if ($request->hasFile('file')) {
             $foto_file = $request->file('foto_siswa');

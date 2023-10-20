@@ -20,7 +20,7 @@ class AkunSeeder extends Seeder
         $datas = [1, 2, 3, 4, 5, 6];
     
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 6; $i++) {
                 DB::table('akun')->insert([
                     'id_role' => $data,
                     'username' => $faker->randomNumber(6, true),
