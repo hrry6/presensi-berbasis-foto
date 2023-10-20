@@ -56,8 +56,6 @@ class WaliKelasController extends Controller
             'nomer_hp' => 'required',
             'foto_siswa' => 'required'
         ]);
-
-        // dd($data);
         $user = Auth::user();
         Auth::user();
         $data['id_akun'] = $user->id_akun;

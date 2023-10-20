@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\TataUsahaKesiswaaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TataUsahaController extends Controller
 {
@@ -36,22 +37,55 @@ class TataUsahaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function createSiswa()
+    public function createSiswa(Kelas $kelas)
     {
-        $data = [
-            'akun' => Akun::all(),
-            'kelas' => Kelas::all(),
-            'jurusan' => Jurusan::all()
-        ];
-        return view('tata-usaha.tambah-siswa', $data);
+        $waliKelas = $kelas->all();
+        return view('tata-usaha.tambah-siswa', ["waliKelas" => $waliKelas]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function storeSiswa(Request $request, Siswa $siswa)
     {
-        //
+        $data = $request->validate([
+            'nis' => 'required',
+            'nama_siswa' => 'required',
+            'id_kelas' => 'required',
+            'jenis_kelamin' => 'required',
+            'nomer_hp' => 'required',
+            'foto_siswa' => 'required'
+        ]);
+
+        $user = Auth::user();
+        Auth::user();
+        $data['id_akun'] = $user->id_akun;
+
+        if ($request->hasFile('file')) {
+            $foto_file = $request->file('foto_siswa');
+            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+            $foto_file->move(public_path('foto'), $foto_nama);
+            $data['foto_siswa'] = $foto_nama;
+        }
+
+        if ($siswa->create($data)) {
+            return redirect('tata-usaha/akun-siswa')->with('success', 'Data surat baru berhasil ditambah');
+        }
+
+        return back()->with('error', 'Data surat gagal ditambahkan');
+    }
+
+        /**
+     * Store a newly created resource in storage.
+     */
+    public function editSiswa(Request $request, Kelas $kelas ,Siswa $siswa)
+    {
+        $waliKelas = [
+            "siswa" => $siswa
+                            ->kelas()
+                            ->akun(),
+        ];
+        return view('tata-usaha.tambah-siswa',  $waliKelas);
     }
 
     /**

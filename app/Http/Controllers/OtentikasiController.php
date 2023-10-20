@@ -32,7 +32,7 @@ class OtentikasiController extends Controller
             $user = Auth::user();
 
             if ($user->id_role == 6) {
-                return redirect('tata-usaha/dashboard')->with('_token', Session::token());
+                return redirect('tata-usaha/akun-siswa')->with('_token', Session::token());
             } elseif ($user->id_role == 5) {
                 return redirect('guru-bk/dashboard')->with('_token', Session::token());
             } elseif ($user->id_role == 4) {

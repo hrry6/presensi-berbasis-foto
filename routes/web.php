@@ -31,7 +31,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard', [TataUsahaController::class, 'index']);
         Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
         Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
+        Route::post('simpan-siswa', [TataUsahaController::class, 'storeSiswa']);
+        Route::get('edit-siswa/{id}', [TataUsahaController::class, 'editSiswa']);
         Route::delete('hapus-siswa', [TataUsahaController::class, 'destroySiswa']);
+        Route::get('logs', [TataUsahaController::class, 'logs']);
     });
 
     // GURU BK
