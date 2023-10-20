@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Akun;
 use App\Models\Jurusan;
 use App\Models\Kelas;
+use App\Models\Logs;
 use App\Models\Siswa;
 use App\Models\TataUsahaKesiswaaan;
 use Illuminate\Http\Request;
@@ -133,5 +134,16 @@ class TataUsahaController extends Controller
             ];
         }
         return response()->json($pesan);
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     */
+    public function logs(Logs $logs)
+    {
+        $data = [
+            'logs' => $logs->all()
+        ];
+        return view('tata-usaha.logs', $data);
     }
 }
