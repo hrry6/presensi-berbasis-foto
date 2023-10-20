@@ -262,7 +262,8 @@ class TataUsahaController extends Controller
     public function logs(Logs $logs)
     {
         $data = [
-            'logs' => $logs->all()
+            'logs' => $logs->all(),
+            
         ];
         return view('tata-usaha.logs', $data);
     }
