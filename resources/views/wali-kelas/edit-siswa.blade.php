@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="edit-simpan/edit" method="POST">
+                    <form action="{{ url('wali-kelas/edit-siswa/simpan') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>
@@ -31,7 +31,10 @@
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="form-control">
-                                <option value="{{ $siswa->id_siswa }}">{{ $siswa->jenis_kelamin }}</option>
+                                <option value="Laki-Laki" {{ $siswa->jenis_kelamin === 'Laki-Laki' ? 'selected' : '' }}>
+                                    Laki-Laki</option>
+                                <option value="Perempuan" {{ $siswa->jenis_kelamin === 'Perempuan' ? 'selected' : '' }}>
+                                    Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -40,7 +43,10 @@
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Siswa</label>
-                            <input type="file" class="form-control" name="foto_siswa" />
+                            <input type="file" class="form-control" name="foto_siswa" value="{{ $siswa->foto_siswa }}" />
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}" />
                         </div>
                         <div class="mt-3">
                             {{-- <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a> --}}
