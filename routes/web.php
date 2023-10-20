@@ -28,12 +28,25 @@ Route::get('/logout', [OtentikasiController::class, 'logout']);
 Route::middleware(['auth'])->group(function () {
 
     Route::prefix('tata-usaha')->middleware('akses:6')->group(function () {
+        // DASHBOARD
         Route::get('dashboard', [TataUsahaController::class, 'index']);
+
+        // AKUN SISWA
         Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
         Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
         Route::post('simpan-siswa', [TataUsahaController::class, 'storeSiswa']);
         Route::get('edit-siswa/{id}', [TataUsahaController::class, 'editSiswa']);
+        Route::post('edit-siswa/update', [TataUsahaController::class, 'updateSiswa']);
         Route::delete('hapus-siswa', [TataUsahaController::class, 'destroySiswa']);
+
+        // PENGURUS KELAS
+        Route::get('akun-pengurus-kelas', [TataUsahaController::class, 'showPengurus']);
+        Route::get('tambah-pengurus-kelas', [TataUsahaController::class, 'createPengurus']);
+        Route::post('simpan-pengurus-kelas', [TataUsahaController::class, 'storePengurus']);
+        Route::get('edit-pengurus-kelas/{id}', [TataUsahaController::class, 'editPengurus']);
+        Route::post('edit-pengurus-kelas/update', [TataUsahaController::class, 'updatePengurus']);
+        Route::delete('hapus-pengurus-kelas', [TataUsahaController::class, 'destroyPengurus']);
+        // LOGS
         Route::get('logs', [TataUsahaController::class, 'logs']);
     });
 
@@ -54,14 +67,15 @@ Route::middleware(['auth'])->group(function () {
 
     // WALI KELAS
     Route::prefix('wali-kelas')->middleware('akses:2')->group(function () {
+        // DASHBOARD
         Route::get('dashboard', [WaliKelasController::class, 'index']);
+
+        // AKUN SISWA
         Route::get('akun-siswa', [WaliKelasController::class, 'showSiswa']);
         Route::get('tambah-siswa', [WaliKelasController::class, 'create']);
         Route::post('tambah-simpan', [WaliKelasController::class, 'store']);
-
         Route::get('edit-siswa/{id}', [WaliKelasController::class, 'edit']);
         Route::post('edit-siswa/simpan', [WaliKelasController::class, 'update']);
-
         Route::delete('hapus-siswa', [WaliKelasController::class, 'destroySiswa']);
     });
 

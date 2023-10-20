@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="{{ url('wali-kelas/edit-siswa/simpan') }}" method="POST" enctype="multipart/form-data">
+                    <form action="/tata-usaha/edit-siswa/update" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>
@@ -49,7 +49,7 @@
                             <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}" />
                         </div>
                         <div class="mt-3">
-                            {{-- <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a> --}}
+                            <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a>
                             <button type="submit" class="btn btn-primary">SUBMIT</button>
                         </div>
                     </form>
