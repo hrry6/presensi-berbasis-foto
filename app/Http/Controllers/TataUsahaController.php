@@ -6,8 +6,9 @@ use App\Models\Akun;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
+use App\Models\PengurusKelas;
 use App\Models\Siswa;
-use App\Models\TataUsahaKesiswaaan;
+use App\Models\TataUsaha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,11 +29,21 @@ class TataUsahaController extends Controller
     {
         $data = [
             'siswa' => $siswa
-                    ->join('kelas','siswa.id_kelas','=','kelas.id_kelas')
-                    ->join('jurusan','kelas.id_jurusan','=','jurusan.id_jurusan')->get()
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
         ];
         // dd($data);
         return view('tata-usaha.siswa', $data);
+    }
+
+    public function showPengurus(PengurusKelas $pengurus)
+    {
+        $data = [
+            'pengurus' => $pengurus
+                ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')->get()
+        ];
+
+        return view('tata-usaha.pengurus-kelas', $data);
     }
 
     /**
@@ -76,15 +87,15 @@ class TataUsahaController extends Controller
         return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
-        /**
+    /**
      * Store a newly created resource in storage.
      */
-    public function editSiswa(Request $request, Kelas $kelas ,Siswa $siswa)
+    public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
     {
         $waliKelas = [
             "siswa" => $siswa
-                            ->kelas()
-                            ->akun(),
+                ->kelas()
+                ->akun(),
         ];
         return view('tata-usaha.tambah-siswa',  $waliKelas);
     }
@@ -92,7 +103,7 @@ class TataUsahaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TataUsahaKesiswaaan $tataUsahaKesiswaaan)
+    public function show(TataUsaha $TataUsaha)
     {
         //
     }
@@ -100,7 +111,7 @@ class TataUsahaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TataUsahaKesiswaaan $tataUsahaKesiswaaan)
+    public function edit(TataUsaha $TataUsaha)
     {
         //
     }
@@ -108,7 +119,7 @@ class TataUsahaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TataUsahaKesiswaaan $tataUsahaKesiswaaan)
+    public function update(Request $request, TataUsaha $TataUsaha)
     {
         //
     }
@@ -120,14 +131,12 @@ class TataUsahaController extends Controller
     {
         $id_siswa = $request->input('id_siswa');
         $aksi = Siswa::where('id_siswa', $id_siswa)->delete();
-        if($aksi)
-        {
+        if ($aksi) {
             $pesan = [
                 'success' => true,
                 'pesan' => 'Data berhasil di hapus'
             ];
-        }else
-        {
+        } else {
             $pesan = [
                 'success' => false,
                 'pesan' => 'Data gagal di hapus'
@@ -136,7 +145,7 @@ class TataUsahaController extends Controller
         return response()->json($pesan);
     }
 
-        /**
+    /**
      * Remove the specified resource from storage.
      */
     public function logs(Logs $logs)

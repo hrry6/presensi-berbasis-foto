@@ -55,11 +55,13 @@ class WaliKelasController extends Controller
             'id_kelas' => 'required',
             'jenis_kelamin' => 'required',
             'nomer_hp' => 'required',
-            'foto_siswa' => 'required'
+            'foto_siswa' => 'required',
         ]);
+
         $user = Auth::user();
-        Auth::user();
+
         $data['id_akun'] = $user->id_akun;
+        $data['pembuat'] = $user->id_role;
 
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');

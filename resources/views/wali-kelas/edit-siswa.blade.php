@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="{{ url('wali-kelas/edit-siswa/simpan') }}" method="POST">
+                    <form action="{{ url('wali-kelas/edit-siswa/simpan') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Siswa</label>
-                            <input type="file" class="form-control" name="foto_siswa" value="{{ $siswa->foto_siswa }}" />
+                            <input type="file" class="form-control" name="foto_siswa" />
                         </div>
                         <div class="form-group">
                             <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}" />
