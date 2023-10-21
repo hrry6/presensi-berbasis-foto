@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akun;
+use App\Models\Guru;
+use App\Models\GuruBk;
+use App\Models\GuruPiket;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
@@ -47,6 +50,20 @@ class TataUsahaController extends Controller
         ];
         // dd($data);
         return view('tata-usaha.pengurus-kelas', $data);
+    }
+
+    public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket,Kelas $kelas)
+    {
+        $data = [
+            'guruBK' => $guru_bk
+                ->join('guru', 'guru_bk.id_guru', '=', 'guru.id_guru')->get(),
+            'guruPiket' => $guru_piket
+                ->join('guru', 'guru_piket.id_guru', '=', 'guru.id_guru')->get(),
+            'kelas' => $kelas
+                ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')->get(),
+        ];
+        // dd($data);
+        return view('tata-usaha.guru', $data);
     }
 
     /**
@@ -97,6 +114,7 @@ class TataUsahaController extends Controller
         }        
 
         if ($siswa->create($data)) {
+
             return redirect('wali-kelas/akun-siswa')->with('success', 'Data surat baru berhasil ditambah');
         }
 

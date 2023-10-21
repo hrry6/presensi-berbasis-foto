@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('id_akun');
             $table->string('nama_guru', 60);
             $table->text('foto_guru');
+            $table->string('pembuat', 60);
 
             // Foreign Key
 

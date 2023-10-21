@@ -11,7 +11,7 @@ class Guru extends Model
 {
     use HasFactory;
     protected $table = 'guru';
-    protected $fillable = ['id_akun', 'nama_guru', 'foto_guru'];
+    protected $fillable = ['id_akun', 'nama_guru', 'foto_guru', 'pembuat'];
     protected $primaryKey = 'id_guru';
     public $timestamps = false;
 
