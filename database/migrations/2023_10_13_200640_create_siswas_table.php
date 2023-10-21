@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('nomer_hp', 20);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->text('foto_siswa')->nullable(true);
-            $table->integer('pembuat')->default('6');
+            $table->string('pembuat', 60);
 
             // Foreign Key
             $table->foreign('id_akun')->on('akun')

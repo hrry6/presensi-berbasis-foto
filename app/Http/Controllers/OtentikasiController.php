@@ -10,7 +10,25 @@ class OtentikasiController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        if(!Auth::user())
+        {
+            return view('auth.login');
+        }else{
+            $user = Auth::user();
+            if ($user->id_role == 6) {
+                return redirect('tata-usaha/akun-siswa')->with('_token', Session::token());
+            } elseif ($user->id_role == 5) {
+                return redirect('guru-bk/dashboard')->with('_token', Session::token());
+            } elseif ($user->id_role == 4) {
+                return redirect('guru-piket/dashboard')->with('_token', Session::token());
+            } elseif ($user->id_role == 3) {
+                return redirect('pengurus-kelas/dashboard')->with('_token', Session::token());
+            } elseif ($user->id_role == 2) {
+                return redirect('wali-kelas/dashboard')->with('_token', Session::token());
+            } elseif ($user->id_role == 1) {
+                return redirect('siswa/dashboard')->with('_token', Session::token());
+            }
+        }
     }
 
     function authenticated(Request $request)

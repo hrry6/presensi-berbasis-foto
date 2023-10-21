@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Dashboard Tata Usaha')
+@section('judul', 'Akun Pengurus Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -51,7 +51,12 @@
                 @foreach ($pengurus as $i)
                     <tr>
                         <th>{{ $loop->iteration }}</th>
-                        <td>{{ $i->foto_siswa }}</td>
+                        <td>
+                            @if ($i->foto_siswa)
+                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
+                                    style="max-width: 100px; height: auto;" />
+                            @endif
+                        </td>
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <th>{{ $i->jabatan }}</th>

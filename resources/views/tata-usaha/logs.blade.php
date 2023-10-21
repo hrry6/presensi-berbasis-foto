@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Logs Tata Usaha')
+@section('judul', 'Logs')
 @section('sidenav')
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">

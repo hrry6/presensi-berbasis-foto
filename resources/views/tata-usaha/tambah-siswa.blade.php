@@ -1,5 +1,5 @@
 @extends('group.layout')
-@section('judul', 'Dashboard Wali Kelas')
+@section('judul', 'Tambah Akun Siswa')
 @section('isi')
     <div class="pt-2">
         <h1 class="fw-bold mt-3 text-center">Tambah Akun Siswa</h1>
@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="simpan-siswa" method="POST">
+                    <form action="simpan-siswa" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>
@@ -22,8 +22,8 @@
                         <div class="form-group">
                             <label>Kelas</label>
                             <select name="id_kelas" class="form-control">
-                                @foreach ($waliKelas as $jenis)
-                                    <option value="{{ $jenis->id_kelas }}">{{ $jenis->nama_kelas }}
+                                @foreach ($kelas as $i)
+                                    <option value="{{ $i->id_kelas }}">{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}
                                     </option>
                                 @endforeach
                             </select>
@@ -32,8 +32,8 @@
                             <label>Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="form-control">
                                 <option disabled selected>Jenis Kelamin</option>
-                                <option name="Laki-Laki">Laki-Laki</option>
-                                <option name="Perempuan">Perempuan</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">

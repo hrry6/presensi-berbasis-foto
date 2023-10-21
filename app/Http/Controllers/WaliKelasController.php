@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guru;
 use App\Models\Kelas;
+use App\Models\Role;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
@@ -68,7 +69,7 @@ class WaliKelasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Siswa $siswa)
+    public function store(Request $request, Siswa $siswa, Role $role)
     {
         $data = $request->validate([
             'nis' => 'required',
@@ -80,10 +81,10 @@ class WaliKelasController extends Controller
         ]);
 
         $user = Auth::user();
-
+        $role = $role->where('id_role',$user->id_role)->first('nama_role');
         $data['id_akun'] = $user->id_akun;
-        $data['pembuat'] = $user->id_role;
-
+        $data['pembuat'] = $role->nama_role;
+        // dd($data);
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();

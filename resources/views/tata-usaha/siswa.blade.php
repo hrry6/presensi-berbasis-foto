@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Dashboard Tata Usaha')
+@section('judul', 'Akun Siswa')
 @section('sidenav')
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -44,6 +44,7 @@
                     <th scope="col">Nama Lengkap</th>
                     <th scope="col">Jenkel</th>
                     <th scope="col">Kelas</th>
+                    <th scope="col">Pembuat</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -51,11 +52,17 @@
                 @foreach ($siswa as $i)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $i->foto_siswa }}</td>
+                        <td>
+                            @if ($i->foto_siswa)
+                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
+                                    style="max-width: 100px; height: auto;" />
+                            @endif
+                        </td>
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
-                        <th>{{ $i->kelas->nama_kelas }}</th>
+                        <th>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->kelas->nama_kelas}}</th>
+                        <th>{{ $i->pembuat }}</th>
                         <td>
                             <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">HAPUS</btn>
