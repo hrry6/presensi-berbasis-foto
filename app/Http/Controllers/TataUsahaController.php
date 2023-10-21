@@ -81,7 +81,7 @@ class TataUsahaController extends Controller
         ]);
 
         $user = Auth::user();
-        Auth::user();
+
         $data['pembuat'] = $user->id_role;
         $data['id_akun'] = $user->id_akun;
 
@@ -111,12 +111,6 @@ class TataUsahaController extends Controller
             'id_pengurus' => 'required',
             'jabatan' => 'required',
         ]);
-        
-        // $data['id_pengurus'] = $request->input('id_pengurus');
-
-        // $user = Auth::user();
-        // Auth::user();
-        // dd($data);
 
         if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
             return redirect('/tata-usaha/akun-pengurus-kelas')->with('success', 'Data pengurus baru berhasil ditambah');
