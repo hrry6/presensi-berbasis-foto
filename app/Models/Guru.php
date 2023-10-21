@@ -15,24 +15,6 @@ class Guru extends Model
     protected $primaryKey = 'id_guru';
     public $timestamps = false;
 
-    // One to One
-    public function akun(): BelongsTo
-    {
-        return $this->belongsTo(Akun::class, 'id_akun');
-    }
-
-    // One to One
-    public function guruPiket(): HasOne
-    {
-        return $this->hasOne(GuruPiket::class, 'id_guru');
-    }
-
-    // One to One
-    public function guruBk(): HasOne
-    {
-        return $this->hasOne(GuruBk::class, 'id_guru');
-    }
-
     // Get Attribute column
     public function getJenisSuratAttribute()
     {

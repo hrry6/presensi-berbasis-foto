@@ -13,21 +13,4 @@ class Siswa extends Model
     protected $fillable = ['id_akun', 'id_kelas', 'nis', 'nama_siswa', 'nomer_hp', 'jenis_kelamin', 'foto_siswa', 'pembuat'];
     protected $primaryKey = 'id_siswa';
     public $timestamps = false;
-
-    // One to One
-    public function akun(): BelongsTo
-    {
-        return $this->belongsTo(Akun::class, 'id_akun');
-    }
-
-    // One to One
-    public function kelas(): BelongsTo
-    {
-        return $this->belongsTo(Kelas::class, 'id_kelas');
-    }
-
-    public function getNamaKelasAttribute()
-    {
-        return Kelas::find($this->attributes['id_kelas'])->kelas;
-    }
 }

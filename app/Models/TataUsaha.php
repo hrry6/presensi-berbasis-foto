@@ -13,10 +13,4 @@ class TataUsaha extends Model
     protected $fillable = ['id_akun', 'nama_kesiswaan', 'foto_kesiswaan'];
     protected $primaryKey = 'id_kesiswaan';
     public $timestamps = false;
-
-    // One to One
-    public function akun(): BelongsTo
-    {
-        return $this->belongsTo(Akun::class, 'id_akun');
-    }
 }

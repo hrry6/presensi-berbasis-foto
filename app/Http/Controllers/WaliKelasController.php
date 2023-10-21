@@ -84,7 +84,7 @@ class WaliKelasController extends Controller
         $role = $role->where('id_role',$user->id_role)->first('nama_role');
         $data['id_akun'] = $user->id_akun;
         $data['pembuat'] = $role->nama_role;
-        // dd($data);
+
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
@@ -100,6 +100,27 @@ class WaliKelasController extends Controller
         }
 
         return back()->with('error', 'Data surat gagal ditambahkan');
+    }
+
+    public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
+    {
+        $data = $request->validate([
+            'id_siswa' => 'required',
+            'jabatan' => 'required'
+        ]);
+
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+
+
+        if ($pengurus->create($data)) {
+            notify()->success('Data pengurus kelas telah ditambah', 'Success');
+            return redirect('wali-kelas/akun-pengurus-kelas')->with('success', 'Data pengurus kelas berhasil ditambah');
+        }
+
+        return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
     }
 
     /**

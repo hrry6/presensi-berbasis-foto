@@ -14,28 +14,4 @@ class Akun extends Authenticatable
     protected $fillable = ['id_role', 'username', 'password'];
     protected $primaryKey = 'id_akun';
     public $timestamps = false;
-
-    // One to One
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'id_role');
-    }
-
-    // One to One
-    public function TataUsaha(): HasOne
-    {
-        return $this->hasOne(User::class, 'id_akun');
-    }
-
-    // One to One
-    public function guru(): HasOne
-    {
-        return $this->hasOne(User::class, 'id_akun');
-    }
-
-    // One to One
-    public function siswa(): HasOne
-    {
-        return $this->hasOne(User::class, 'id_akun');
-    }
 }

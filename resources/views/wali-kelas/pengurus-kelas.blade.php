@@ -54,7 +54,7 @@
                         <th>{{ $i->jabatan }}</th>
                         <td>{{ $i->nama_kelas }}</td>
                         <td>
-                            <a href="/tata-usaha/edit-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-success">EDIT</a>
+                            <a href="/wali-kelas/edit-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_pengurus }}">HAPUS</btn>
                         </td>
                     </tr>
@@ -83,7 +83,7 @@
                     console.log(idHapus)
                     $.ajax({
                         type: 'DELETE',
-                        url: '/tata-usaha/hapus-pengurus-kelas',
+                        url: '/wali-kelas/hapus-pengurus-kelas',
                         data: {
                             id_pengurus: idHapus,
                             _token: "{{ csrf_token() }}"
