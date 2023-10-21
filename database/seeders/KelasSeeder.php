@@ -22,7 +22,6 @@ class KelasSeeder extends Seeder
         foreach ($datas as $data) {
             for ($i = 1; $i <= 1; $i++) {
                 DB::table('kelas')->insert([
-                    'id_wali_kelas' => $data,
                     'id_jurusan' => $i,
                     'nama_kelas' => 'Kelas '. Arr::random(['A', 'B', 'C']),
                     'tingkatan' => Arr::random(['X', 'XI', 'XII']),
