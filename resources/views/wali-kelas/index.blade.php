@@ -18,6 +18,9 @@
                 <a href="{{ url('wali-kelas/presensi-siswa') }}" class="list-group-item list-group-item-action py-2 ripple">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
                 </a>
+                <a href="{{ url('wali-kelas/logs') }}" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Logs</span>
+                </a>
             </div>
         </div>
     </nav>

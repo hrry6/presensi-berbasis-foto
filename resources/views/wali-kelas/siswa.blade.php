@@ -17,6 +17,9 @@
                 <a href="#" class="list-group-item list-group-item-action py-2 ripple">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
                 </a>
+                <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Logs</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -48,14 +51,14 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             @if ($i->foto_siswa)
-                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
-                                    style="max-width: 100px; height: auto;" />
+                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} " style="max-width: 100px; height: auto;"
+                                    alt="Profile" />
                             @endif
                         </td>
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
-                        <td>{{ $i->nama_kelas }}</td>
+                        <th>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</th>
                         <td>
                             <a href="edit-siswa/{{ $i->id_siswa }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">HAPUS</btn>

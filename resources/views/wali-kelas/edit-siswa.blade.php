@@ -22,8 +22,10 @@
                         <div class="form-group">
                             <label>Kelas</label>
                             <select name="id_kelas" class="form-control">
-                                @foreach ($kelas as $data)
-                                    <option value="{{ $data->id_kelas }}">{{ $data->nama_kelas }}
+                                @foreach ($kelas as $i)
+                                    <option value="{{ $i->id_kelas }}"
+                                        {{ $siswa->id_kelas === $i->id_kelas ? 'selected' : '' }}>
+                                        {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
                                     </option>
                                 @endforeach
                             </select>

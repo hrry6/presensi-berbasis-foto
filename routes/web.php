@@ -102,6 +102,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-presensi-siswa/{id}', [WaliKelasController::class, 'editPresensi']);
         Route::post('edit-presensi-siswa/update', [WaliKelasController::class, 'updatePresensi']);
         Route::delete('hapus-presensi-siswa', [WaliKelasController::class, 'destroyPresensi']);
+
+        // LOGS
+        Route::get('logs', [WaliKelasController::class, 'logs']);
     });
 
     // SISWA

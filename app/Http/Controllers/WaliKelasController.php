@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
+use App\Models\Logs;
 use App\Models\Role;
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
@@ -51,9 +52,10 @@ class WaliKelasController extends Controller
      */
     public function createSiswa(Kelas $kelas)
     {
-        $waliKelas = $kelas->all();
-
-        return view('wali-kelas.tambah-siswa', ["waliKelas" => $waliKelas]);
+        $kelas = $kelas
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->get();
+        return view('tata-usaha.tambah-siswa', ["kelas" => $kelas]);
     }
 
     /**
@@ -80,10 +82,9 @@ class WaliKelasController extends Controller
         ]);
 
         $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
         $data['id_akun'] = $user->id_akun;
-        $role_akun = $role->where('id_role',$user->id_role);
-        $data['pembuat'] = $role_akun->id_role;
-
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
@@ -91,7 +92,7 @@ class WaliKelasController extends Controller
             $data['foto_siswa'] = $foto_nama;
         } else {
             return back()->with('error', 'File upload failed. Please select a valid file.');
-        }        
+        }
 
         if ($siswa->create($data)) {
             notify()->success('Data siswa telah ditambah', 'Success');
@@ -125,33 +126,37 @@ class WaliKelasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function editSiswa(string $id, Siswa $siswa, Kelas $kelas)
+    public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
     {
-        $siswaData = Siswa::where('id_siswa', $id)->first();
-        $kelasData = $kelas->all();
-
-        return view('wali-kelas.edit-siswa', [
-            'siswa' => $siswaData,
-            'kelas' => $kelasData,
-        ]);
+        $data = [
+            "siswa" => $siswa->where('id_siswa', $request->id)
+                ->join("kelas", "siswa.id_kelas", "=", "kelas.id_kelas")
+                ->join("akun", "siswa.id_akun", "=", "akun.id_akun")
+                ->first(),
+            "kelas" => $kelas
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->get()
+        ];
+        return view('wali-kelas.edit-siswa',  $data);
     }
+
 
     public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
     {
         $pengurus = [
             "pengurus" => $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
-                        ->where('id_pengurus','=', $request->id)
-                        ->first()
+                ->where('id_pengurus', '=', $request->id)
+                ->first()
         ];
         // dd($pengurus);
-        return view('wali-kelas.edit-pengurus',  $pengurus);
+        return view('tata-usaha.edit-pengurus',  $pengurus);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function updateSiswa(Request $request, Siswa $siswa)
-    { 
+    public function updateSiswa(Request $request, Siswa $siswa, Role $role)
+    {
 
         $id_siswa = $request->input('id_siswa');
 
@@ -164,9 +169,12 @@ class WaliKelasController extends Controller
             'foto_siswa' => 'sometimes'
         ]);
 
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
         if ($id_siswa !== null) {
-            if ($request->hasFile('file')) {
-                $foto_file = $request->file('file');
+            if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
+                $foto_file = $request->file('foto_siswa');
                 $foto_extension = $foto_file->getClientOriginalExtension();
                 $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
                 $foto_file->move(public_path('foto'), $foto_nama);
@@ -174,23 +182,22 @@ class WaliKelasController extends Controller
                 $update_data = $siswa->where('id_siswa', $id_siswa)->first();
                 File::delete(public_path('foto') . '/' . $update_data->file);
 
-                $data['file'] = $foto_nama;
+                $data['foto_siswa'] = $foto_nama;
             }
 
             $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
 
             if ($dataUpdate) {
-                notify()->success('Data siswa telah diedit', 'Success');
-                return redirect('wali-kelas/akun-siswa')->with('success', 'Data berhasil diupdate');
+                return redirect('tata-usaha/akun-siswa')->with('success', 'Data berhasil diupdate');
             }
-
         }
 
         return back()->with('error', 'Data gagal diupdate');
     }
 
-    public function updatePengurus(Request $request, PengurusKelas $pengurus)
-    {   
+
+    public function updatePengurus(Request $request, PengurusKelas $pengurus, Role $role)
+    {
         // dd($request);
         $id_pengurus = $request->input('id_pengurus');
         $data = $request->validate([
@@ -198,8 +205,12 @@ class WaliKelasController extends Controller
             'jabatan' => 'required',
         ]);
 
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+
         if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
-            return redirect('/wali-kelas/akun-pengurus-kelas')->with('success', 'Data pengurus baru berhasil ditambah');
+            return redirect('/tata-usaha/akun-pengurus-kelas')->with('success', 'Data pengurus baru berhasil ditambah');
         }
 
         return back()->with('error', 'Data pengurus gagal ditambahkan');
@@ -208,18 +219,20 @@ class WaliKelasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroySiswa(Request $request)
+    public function destroySiswa(Request $request, Role $role)
     {
         $id_siswa = $request->input('id_siswa');
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+        $aksi = Siswa::where('id_siswa', $id_siswa)->update($data);
         $aksi = Siswa::where('id_siswa', $id_siswa)->delete();
-        if($aksi)
-        {
+        if ($aksi) {
             $pesan = [
                 'success' => true,
                 'pesan' => 'Data berhasil di hapus'
             ];
-        }else
-        {
+        } else {
             $pesan = [
                 'success' => false,
                 'pesan' => 'Data gagal di hapus'
@@ -244,6 +257,15 @@ class WaliKelasController extends Controller
             ];
         }
         return response()->json($pesan);
+    }
+
+    public function logs(Logs $logs)
+    {
+        $data = [
+            'logs' => $logs->all(),
+
+        ];
+        return view('wali-kelas.logs', $data);
     }
 
 }

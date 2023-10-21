@@ -16,7 +16,7 @@ class JurusanSeeder extends Seeder
     {        
 
         $datas = [
-            'Rekaya Perangkat Lunak', 'Teknik Komputer dan Jaringan',
+            'Rekayasa Perangkat Lunak', 'Teknik Komputer dan Jaringan',
             'Teknik Pengelasan', 'Teknik Permesinan', 'Teknik Kendaraan Ringan dan Otomotif',
             'Multimedia', 'Akutanasi', 'Tata Busana'
         ];

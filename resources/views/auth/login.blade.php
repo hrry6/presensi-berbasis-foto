@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Laravel Notify -->
+    @notifyCss
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <title>Login</title>
 </head>
@@ -18,6 +20,11 @@
                         <div class="row g-0">
                             <div class="col-lg-6">
                                 <div class="card-body p-md-5 mx-md-4">
+                                    <!-- Laravel Notify -->
+                                    <div class="notify" style="z-index: 999; position: absolute; display: block">
+                                        @include('notify::components.notify')
+                                        @notifyJs
+                                    </div>
 
                                     <img src="{{ asset('img/logo.png') }}" alt="logo" class="w-50">
 
@@ -27,12 +34,12 @@
 
                                         <div class="form-outline mb-4">
                                             <input type="text" class="form-control" placeholder="Username"
-                                                name="username" />
+                                                name="username" required />
                                         </div>
 
                                         <div class="form-outline mb-4">
                                             <input type="password" class="form-control" placeholder="Password"
-                                                name="password" />
+                                                name="password" required />
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
@@ -58,7 +65,5 @@
         <img src="{{ asset('img/wave.svg') }}" style="width: 100%;">
     </div>
 </body>
-<script>
 
-</script>
 </html>

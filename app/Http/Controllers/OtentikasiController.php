@@ -10,24 +10,22 @@ class OtentikasiController extends Controller
 {
     public function index()
     {
-        if(!Auth::user())
-        {
+        if (!Auth::check()) {
             return view('auth.login');
-        }else{
-            $user = Auth::user();
-            if ($user->id_role == 6) {
-                return redirect('tata-usaha/akun-siswa')->with('_token', Session::token());
-            } elseif ($user->id_role == 5) {
-                return redirect('guru-bk/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 4) {
-                return redirect('guru-piket/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 3) {
-                return redirect('pengurus-kelas/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 2) {
-                return redirect('wali-kelas/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 1) {
-                return redirect('siswa/dashboard')->with('_token', Session::token());
-            }
+        }
+
+        $user = Auth::user();
+        $redirectMap = [
+            6 => 'tata-usaha/akun-siswa',
+            5 => 'guru-bk/dashboard',
+            4 => 'guru-piket/dashboard',
+            3 => 'pengurus-kelas/dashboard',
+            2 => 'wali-kelas/dashboard',
+            1 => 'siswa/dashboard',
+        ];
+
+        if (isset($redirectMap[$user->id_role])) {
+            return redirect($redirectMap[$user->id_role]);
         }
     }
 
@@ -48,24 +46,27 @@ class OtentikasiController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            Session::regenerateToken();
+            $redirectMap = [
+                6 => 'tata-usaha/akun-siswa',
+                5 => 'guru-bk/dashboard',
+                4 => 'guru-piket/dashboard',
+                3 => 'pengurus-kelas/dashboard',
+                2 => 'wali-kelas/dashboard',
+                1 => 'siswa/dashboard',
+            ];
 
-            if ($user->id_role == 6) {
-                return redirect('tata-usaha/akun-siswa')->with('_token', Session::token());
-            } elseif ($user->id_role == 5) {
-                return redirect('guru-bk/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 4) {
-                return redirect('guru-piket/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 3) {
-                return redirect('pengurus-kelas/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 2) {
-                return redirect('wali-kelas/dashboard')->with('_token', Session::token());
-            } elseif ($user->id_role == 1) {
-                return redirect('siswa/dashboard')->with('_token', Session::token());
+            if (isset($redirectMap[$user->id_role])) {
+                smilify('success', 'Berhasil Login');
+                return redirect($redirectMap[$user->id_role]);
             }
         }
 
-        return redirect()->back()->withErrors('Terdapat kesalahan Username atau Password')->withInput()->with('_token', Session::token());
+        Session::regenerateToken();
+        smilify('error', 'Gagal Login');
+        return redirect()->back()->withInput();
     }
+
 
     public function logout()
     {
