@@ -11,6 +11,7 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\SiswaSeeder;
 use Database\Seeders\GuruBkSeeder;
 use Database\Seeders\JurusanSeeder;
+use Database\Seeders\PresensiSeeder;
 use Database\Seeders\GuruPiketSeeder;
 use Database\Seeders\PengurusKelasSeeder;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             JurusanSeeder::class,
             KelasSeeder::class,
             SiswaSeeder::class,
+            PresensiSeeder::class,
             PengurusKelasSeeder::class
         ];
     

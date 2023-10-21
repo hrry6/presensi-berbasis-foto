@@ -55,7 +55,7 @@
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
-                        <td>{{ $i->kelas->nama_kelas }}</td>
+                        <td>{{ $i->nama_kelas }}</td>
                         <td>
                             <a href="edit-siswa/{{ $i->id_siswa }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">HAPUS</btn>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Role;
 use App\Models\Siswa;
@@ -50,7 +49,7 @@ class WaliKelasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Kelas $kelas)
+    public function createSiswa(Kelas $kelas)
     {
         $waliKelas = $kelas->all();
 
@@ -69,7 +68,7 @@ class WaliKelasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Siswa $siswa, Role $role)
+    public function storeSiswa(Request $request, Siswa $siswa, Role $role)
     {
         $data = $request->validate([
             'nis' => 'required',
@@ -81,9 +80,9 @@ class WaliKelasController extends Controller
         ]);
 
         $user = Auth::user();
-        $role = $role->where('id_role',$user->id_role)->first('nama_role');
         $data['id_akun'] = $user->id_akun;
-        $data['pembuat'] = $role->nama_role;
+        $role_akun = $role->where('id_role',$user->id_role);
+        $data['pembuat'] = $role_akun->id_role;
 
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
@@ -124,17 +123,9 @@ class WaliKelasController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, Siswa $siswa, Kelas $kelas)
+    public function editSiswa(string $id, Siswa $siswa, Kelas $kelas)
     {
         $siswaData = Siswa::where('id_siswa', $id)->first();
         $kelasData = $kelas->all();
@@ -159,7 +150,7 @@ class WaliKelasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Siswa $siswa)
+    public function updateSiswa(Request $request, Siswa $siswa)
     { 
 
         $id_siswa = $request->input('id_siswa');
