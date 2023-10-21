@@ -60,7 +60,7 @@
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <th>{{ $i->jabatan }}</th>
-                        <td>{{ $i->nama_kelas }}</td>
+                        <td>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</td>
                         <td>
                             <a href="/tata-usaha/edit-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_pengurus }}">HAPUS</btn>

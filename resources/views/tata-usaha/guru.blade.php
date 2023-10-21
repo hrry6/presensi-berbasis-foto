@@ -7,7 +7,7 @@
                 <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                     <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                 </a>
-                <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple guru">
+                <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple active">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Akun Guru</span>
                 </a>
                 <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple">
@@ -123,9 +123,9 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'DELETE',
-                        url: 'hapus-siswa',
+                        url: 'hapus-guru',
                         data: {
-                            id_siswa: idHapus,
+                            id_guru: idHapus,
                             _token: "{{ csrf_token() }}"
                         },
                         success: function(data) {

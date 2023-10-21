@@ -24,8 +24,10 @@
                             <select name="status" class="form-control">
                                     <option value="Guru BK">Guru BK</option>
                                     <option value="Guru Piket">Guru Piket</option>
-                                    @foreach ($kelas as $i) 
-                                        <option value="{{ $i->id_kelas }}">Wali Kelas {{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</option>
+                                    @foreach ($kelas as $i)     
+                                        @if ($i->id_wali_kelas == null)
+                                            <option value="{{ $i->id_kelas }}">Wali Kelas {{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</option>
+                                        @endif
                                     @endforeach
                             </select>
                         </div>
