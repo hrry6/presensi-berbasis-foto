@@ -1,5 +1,5 @@
 @extends('group.layout')
-@section('judul', 'Dashboard Wali Kelas')
+@section('judul', 'Tambah Akun Pengurus Kelas')
 @section('isi')
     <div class="pt-2">
         <h1 class="fw-bold mt-3 text-center">Tambah Akun Pengurus Kelas</h1>

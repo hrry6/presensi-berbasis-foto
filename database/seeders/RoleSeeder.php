@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
             'Pengurus Kelas',
             'Guru Piket',
             'Guru BK',
-            'Tata Usaha Kesiswaan',
+            'Tata Usaha',
         ];
         
         foreach ($roles as $role) {
