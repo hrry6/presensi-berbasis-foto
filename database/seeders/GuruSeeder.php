@@ -27,6 +27,7 @@ class GuruSeeder extends Seeder
                     'id_akun' => $data,
                     'nama_guru' => $faker->name(). Arr::random(['S.Pd', 'S.Kom']),
                     'foto_guru' => $faker->image(),
+                    'pembuat' => 'Tata Usaha'
                 ]);
             }
         }

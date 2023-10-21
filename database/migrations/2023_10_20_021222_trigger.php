@@ -47,7 +47,7 @@ return new class extends Migration
         FOR EACH ROW
         BEGIN
             INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
-            VALUES ("pengurus", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
+            VALUES ("pengurus_kelas", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
         END
         ');
     
@@ -57,7 +57,7 @@ return new class extends Migration
         FOR EACH ROW
         BEGIN
             INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
-            VALUES ("pengurus", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
+            VALUES ("pengurus_kelas", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
         END
         ');
     
@@ -67,7 +67,37 @@ return new class extends Migration
         FOR EACH ROW
         BEGIN
             INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
-            VALUES ("pengurus", OLD.pembuat, CURDATE(), CURTIME(), "Hapus", "Sukses");
+            VALUES ("pengurus_kelas", OLD.pembuat, CURDATE(), CURTIME(), "Hapus", "Sukses");
+        END
+        ');
+
+        DB::unprepared('
+        CREATE TRIGGER add_guru
+        BEFORE INSERT ON guru
+        FOR EACH ROW
+        BEGIN
+            INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
+            VALUES ("guru", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
+        END
+        ');
+    
+        DB::unprepared('
+        CREATE TRIGGER update_guru
+        AFTER UPDATE ON guru
+        FOR EACH ROW
+        BEGIN
+            INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
+            VALUES ("pengurus", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
+        END
+        ');
+    
+        DB::unprepared('
+        CREATE TRIGGER delete_guru
+        AFTER DELETE ON guru
+        FOR EACH ROW
+        BEGIN
+            INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
+            VALUES ("guru", OLD.pembuat, CURDATE(), CURTIME(), "Hapus", "Sukses");
         END
         ');
     }
@@ -87,5 +117,8 @@ return new class extends Migration
         DB::unprepared('DROP TRIGGER add_pengurus');
         DB::unprepared('DROP TRIGGER update_pengurus');
         DB::unprepared('DROP TRIGGER delete_pengurus');
+        DB::unprepared('DROP TRIGGER add_guru');
+        DB::unprepared('DROP TRIGGER update_guru');
+        DB::unprepared('DROP TRIGGER delete_guru');
     }
 };

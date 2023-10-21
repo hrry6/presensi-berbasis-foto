@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akun;
+use App\Models\Guru;
+use App\Models\GuruBk;
+use App\Models\GuruPiket;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
@@ -12,6 +15,7 @@ use App\Models\Siswa;
 use App\Models\TataUsaha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class TataUsahaController extends Controller
@@ -49,6 +53,21 @@ class TataUsahaController extends Controller
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
+    public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket,Kelas $kelas)
+    {
+        $data = [
+            'guruBK' => $guru_bk
+                ->join('guru', 'guru_bk.id_guru', '=', 'guru.id_guru')->get(),
+            'guruPiket' => $guru_piket
+                ->join('guru', 'guru_piket.id_guru', '=', 'guru.id_guru')->get(),
+            'kelas' => $kelas
+                ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
+        ];
+        // dd($data);
+        return view('tata-usaha.guru', $data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -67,6 +86,16 @@ class TataUsahaController extends Controller
     {
         $siswa = $siswa->all();
         return view('tata-usaha.tambah-pengurus', ["siswa" => $siswa]);
+    }
+
+    public function createGuru(GuruBk $guru_bk, GuruPiket $guru_piket,Kelas $kelas)
+    {   
+        $data = [
+            'kelas' => $kelas->where('id_wali_kelas', null)
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
+        ];
+        // dd($data);
+        return view('tata-usaha.tambah-guru', $data);
     }
 
     /**
@@ -97,13 +126,60 @@ class TataUsahaController extends Controller
         }        
 
         if ($siswa->create($data)) {
-            return redirect('wali-kelas/akun-siswa')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('tata-usaha/akun-siswa');
         }
 
         return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
+    public function storeGuru(Request $request, Role $role, Guru $guru, GuruPiket $guruPiket, GuruBk $guruBk, Kelas $kelas)
+    {
+        $data = $request->validate([
+            'nama_guru' => 'required',
+            'foto_guru' => 'required'
+         ]);
 
+        $user = Auth::user();
+        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+        $data['id_akun'] = $user->id_akun;
+
+        if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
+            $foto_file = $request->file('foto_siswa');
+            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+            $foto_file->move(public_path('foto'), $foto_nama);
+            $data['foto_siswa'] = $foto_nama;
+        } else {
+            return back()->with('error', 'File upload failed. Please select a valid file.');
+        }        
+
+        if ($data) {
+            $status = $request->input('status');
+            if($status == 'Guru BK')
+            {
+                $guru->create($data);
+                $last_bk = DB::select('SELECT MAX(id_guru) FROM guru_piket');
+                $guruBk->create(['id_guru' => $last_bk+1]);
+                return redirect('tata-usaha/akun-guru');
+            }
+            if($status == 'Guru Piket')
+            {
+                $guru->create($data);
+                $last_piket = DB::select('SELECT MAX(id_guru) FROM guru_bk');
+                $guruPiket->create(['id_guru' => $last_piket+1]);
+                return redirect('tata-usaha/akun-guru');
+            }
+            else{
+                $guru->create($data);
+                $id_kelas = $request->input('status');
+                $last_guru = DB::select('SELECT MAX(id_guru) FROM guru');
+                $kelas->where('id_kelas', $id_kelas)->update(['id_wali_kelas'=> $last_guru]);
+                return redirect('tata-usaha/akun-guru');
+            }
+        }
+
+        return back()->with('error', 'Data surat gagal ditambahkan');
+    }
 
     public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
     {

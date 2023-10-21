@@ -46,6 +46,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-pengurus-kelas/{id}', [TataUsahaController::class, 'editPengurus']);
         Route::post('edit-pengurus-kelas/update', [TataUsahaController::class, 'updatePengurus']);
         Route::delete('hapus-pengurus-kelas', [TataUsahaController::class, 'destroyPengurus']);
+
+        // Akun Guru
+        Route::get('akun-guru', [TataUsahaController::class, 'showGuru']);
+        Route::get('tambah-guru', [TataUsahaController::class, 'createGuru']);
+        Route::post('simpan-guru', [TataUsahaController::class, 'storeGuru']);
+        Route::get('edit-guru/{id}', [TataUsahaController::class, 'editGuru']);
+        Route::post('edit-guru/update', [TataUsahaController::class, 'updateGuru']);
+        Route::delete('hapus-guru', [TataUsahaController::class, 'destroyGuru']);
+
         // LOGS
         Route::get('logs', [TataUsahaController::class, 'logs']);
     });
