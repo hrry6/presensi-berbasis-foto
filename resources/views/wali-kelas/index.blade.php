@@ -8,7 +8,8 @@
                     aria-current="true">
                     <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
                 </a>
-                <a href="{{ url('pengurus-kelas/dashboard') }}" class="list-group-item list-group-item-action py-2 ripple">
+                <a href="{{ url('wali-kelas/akun-pengurus-kelas') }}"
+                    class="list-group-item list-group-item-action py-2 ripple">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Akun Pengurus Kelas</span>
                 </a>
                 <a href="{{ url('wali-kelas/akun-siswa') }}"class="list-group-item list-group-item-action py-2 ripple">

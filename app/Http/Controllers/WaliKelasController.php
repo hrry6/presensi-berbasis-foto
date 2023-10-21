@@ -6,6 +6,7 @@ use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use App\Models\PengurusKelas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -34,6 +35,17 @@ class WaliKelasController extends Controller
         return view('wali-kelas.siswa', $data);
     }
 
+    public function showPengurus(PengurusKelas $pengurus)
+    {
+        $data = [
+            'pengurus' => $pengurus
+                ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get()
+        ];
+        // dd($data);
+        return view('wali-kelas.pengurus-kelas', $data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -42,6 +54,15 @@ class WaliKelasController extends Controller
         $waliKelas = $kelas->all();
 
         return view('wali-kelas.tambah-siswa', ["waliKelas" => $waliKelas]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function createPengurus(Siswa $siswa)
+    {
+        $siswa = $siswa->all();
+        return view('wali-kelas.tambah-pengurus', ["siswa" => $siswa]);
     }
 
     /**
@@ -73,7 +94,8 @@ class WaliKelasController extends Controller
         }        
 
         if ($siswa->create($data)) {
-            return redirect('wali-kelas/akun-siswa')->with('success', 'Data surat baru berhasil ditambah');
+            notify()->success('Data siswa telah ditambah', 'Success');
+            return redirect('wali-kelas/akun-siswa');
         }
 
         return back()->with('error', 'Data surat gagal ditambahkan');
@@ -99,6 +121,17 @@ class WaliKelasController extends Controller
             'siswa' => $siswaData,
             'kelas' => $kelasData,
         ]);
+    }
+
+    public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
+    {
+        $pengurus = [
+            "pengurus" => $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
+                        ->where('id_pengurus','=', $request->id)
+                        ->first()
+        ];
+        // dd($pengurus);
+        return view('wali-kelas.edit-pengurus',  $pengurus);
     }
 
     /**
@@ -134,6 +167,7 @@ class WaliKelasController extends Controller
             $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
 
             if ($dataUpdate) {
+                notify()->success('Data siswa telah diedit', 'Success');
                 return redirect('wali-kelas/akun-siswa')->with('success', 'Data berhasil diupdate');
             }
 
@@ -142,12 +176,20 @@ class WaliKelasController extends Controller
         return back()->with('error', 'Data gagal diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function updatePengurus(Request $request, PengurusKelas $pengurus)
+    {   
+        // dd($request);
+        $id_pengurus = $request->input('id_pengurus');
+        $data = $request->validate([
+            'id_pengurus' => 'required',
+            'jabatan' => 'required',
+        ]);
+
+        if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
+            return redirect('/wali-kelas/akun-pengurus-kelas')->with('success', 'Data pengurus baru berhasil ditambah');
+        }
+
+        return back()->with('error', 'Data pengurus gagal ditambahkan');
     }
 
     /**
@@ -172,4 +214,23 @@ class WaliKelasController extends Controller
         }
         return response()->json($pesan);
     }
+
+    public function destroyPengurus(Request $request)
+    {
+        $id_pengurus = $request->input('id_pengurus');
+        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->delete();
+        if ($aksi) {
+            $pesan = [
+                'success' => true,
+                'pesan' => 'Data berhasil di hapus'
+            ];
+        } else {
+            $pesan = [
+                'success' => false,
+                'pesan' => 'Data gagal di hapus'
+            ];
+        }
+        return response()->json($pesan);
+    }
+
 }

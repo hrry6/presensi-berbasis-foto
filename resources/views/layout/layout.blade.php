@@ -1,8 +1,11 @@
+<!DOCTYPE html>
 <html>
 
 <head>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <title>@yield('judul')</title>
+    <!-- Laravel Notify -->
+    @notifyCss
     <style>
         body {
             background-color: '#F8F8F8';
@@ -24,7 +27,6 @@
             /* Height of navbar */
             box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
             width: 240px;
-            z-index: 600;
         }
 
         @media (max-width: 991.98px) {
@@ -63,6 +65,11 @@
 </head>
 
 <body>
+    <!-- Laravel Notify -->
+    <div class="notify" style="z-index: 999; position: absolute; display: block">
+        @include('notify::components.notify')
+        @notifyJs
+    </div>
 
     <!--Main Navigation-->
     <header>
@@ -71,7 +78,8 @@
         <!-- Sidebar -->
 
         <!-- Navbar -->
-        <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top border border-dark-subtle">
+        <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top border border-dark-subtle"
+            style="z-index: 0;">
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Toggle button -->
@@ -79,12 +87,12 @@
                     aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
+                <!-- Your navbar content -->
 
                 <!-- Brand -->
                 <a class="navbar-brand" href="#">
                     <img src="/img/logo.png" width="150" alt="" loading="lazy" />
                 </a>
-
                 <!-- Right links -->
                 <ul class="navbar-nav ms-auto d-flex flex-row">
                     <a href="/logout" class="btn btn-danger">
@@ -92,7 +100,7 @@
                     </a>
                     <li class="nav-item dropdown">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle"
-                            height="22" alt="" loading="lazy" />
+                            height="22" alt="" width="22" loading="lazy" />
                     </li>
                 </ul>
             </div>

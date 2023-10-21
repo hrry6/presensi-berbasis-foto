@@ -77,6 +77,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-siswa/{id}', [WaliKelasController::class, 'edit']);
         Route::post('edit-siswa/simpan', [WaliKelasController::class, 'update']);
         Route::delete('hapus-siswa', [WaliKelasController::class, 'destroySiswa']);
+
+        // PENGURUS KELAS
+        Route::get('akun-pengurus-kelas', [WaliKelasController::class, 'showPengurus']);
+        Route::get('tambah-pengurus-kelas', [WaliKelasController::class, 'createPengurus']);
+        Route::post('simpan-pengurus-kelas', [WaliKelasController::class, 'storePengurus']);
+        Route::get('edit-pengurus-kelas/{id}', [WaliKelasController::class, 'editPengurus']);
+        Route::post('edit-pengurus-kelas/update', [WaliKelasController::class, 'updatePengurus']);
+        Route::delete('hapus-pengurus-kelas', [WaliKelasController::class, 'destroyPengurus']);
     });
 
     // SISWA

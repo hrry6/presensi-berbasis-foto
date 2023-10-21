@@ -45,8 +45,11 @@
                             <input type="file" class="form-control" name="foto_siswa" />
                         </div>
                         <div class="mt-3">
-                            {{-- <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a> --}}
-                            <button type="submit" class="btn btn-primary">SUBMIT</button>
+                            <a href="{{ url('wali-kelas/akun-siswa') }}"
+                                class="btn text-decoration-underline text-light fw-bold rounded-3"
+                                style="background-color: #14C345">KEMBALI</a>
+                            <button type="submit" class="btn text-decoration-underline text-light fw-bold"
+                                style="background-color: #F9812A ">SUBMIT</button>
                         </div>
                     </form>
                 </div>
