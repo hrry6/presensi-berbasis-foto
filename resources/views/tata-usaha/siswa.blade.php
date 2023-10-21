@@ -44,7 +44,6 @@
                     <th scope="col">Nama Lengkap</th>
                     <th scope="col">Jenkel</th>
                     <th scope="col">Kelas</th>
-                    <th scope="col">Pembuat</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -61,8 +60,7 @@
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
-                        <th>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->kelas->nama_kelas}}</th>
-                        <th>{{ $i->pembuat }}</th>
+                        <th>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</th>
                         <td>
                             <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">HAPUS</btn>

@@ -30,45 +30,76 @@
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
-                <input type="text" placeholder="Search Siswa">
+                <input type="text" placeholder="Search Guru">
                 <button class="position-relative">Search</button>
             </form>
-            <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
+            <a href="tambah-guru" class="btn btn-warning text-dark">Tambah Akun Guru</a>
         </div>
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
                     <th scope="col">Foto</th>
-                    <th scope="col">NIS</th>
-                    <th scope="col">Nama Lengkap</th>
-                    <th scope="col">Jenkel</th>
-                    <th scope="col">Kelas</th>
-                    <th scope="col">Pembuat</th>
+                    <th scope="col">Nama Guru</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($siswa as $i)
+                @php
+                    $index = 1;
+                @endphp
+                @foreach ($guruBK as $i)
                     <tr>
-                        <td>{{ $loop->index + 1 }}</td>
+                        <td>{{ $index++ }}</td>
                         <td>
-                            @if ($i->foto_siswa)
-                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
+                            @if ($i->foto_guru)
+                                <img src="{{ url('foto') . '/' . $i->foto_guru }} "
                                     style="max-width: 100px; height: auto;" />
                             @endif
                         </td>
-                        <td>{{ $i->nis }}</td>
-                        <td>{{ $i->nama_siswa }}</td>
-                        <td>{{ $i->jenis_kelamin }}</td>
-                        <th>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->kelas->nama_kelas}}</th>
-                        <th>{{ $i->pembuat }}</th>
+                        <th>{{ $i->nama_guru }}</th>
+                        <th>Guru BK</th>
                         <td>
-                            <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}" class="btn btn-success">EDIT</a>
-                            <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">HAPUS</btn>
+                            <a href="/tata-usaha/edit-guru/{{ $i->id_guru }}" class="btn btn-success">EDIT</a>
+                            <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_guru }}">HAPUS</btn>
                         </td>
                     </tr>
                 @endforeach
+                @foreach ($guruPiket as $p)
+                <tr>
+                    <td>{{ $index++ }}</td>
+                    <td>
+                        @if ($p->foto_guru)
+                            <img src="{{ url('foto') . '/' . $p->foto_guru }} "
+                                style="max-width: 100px; height: auto;" />
+                        @endif
+                    </td>
+                    <th>{{ $p->nama_guru }}</th>
+                    <th>Guru Piket</th>
+                    <td>
+                        <a href="/tata-usaha/edit-guru/{{ $p->id_guru }}" class="btn btn-success">EDIT</a>
+                        <btn class="btn btn-danger btnHapus" idHapus="{{ $p->id_guru }}">HAPUS</btn>
+                    </td>
+                </tr>
+            @endforeach
+            @foreach ($kelas as $k)
+            <tr>
+                <td>{{ $index++ }}</td>
+                <td>
+                    @if ($k->foto_guru)
+                        <img src="{{ url('foto') . '/' . $k->foto_guru }} "
+                            style="max-width: 100px; height: auto;" />
+                    @endif
+                </td>
+                <th>{{ $k->nama_guru }}</th>
+                <th>Wali Kelas {{ $k->tingkatan." ".$k->nama_jurusan." ".$k->nama_kelas}}</th>
+                <td>
+                    <a href="/tata-usaha/edit-guru/{{ $k->id_guru }}" class="btn btn-success">EDIT</a>
+                    <btn class="btn btn-danger btnHapus" idHapus="{{ $k->id_guru }}">HAPUS</btn>
+                </td>
+            </tr>
+        @endforeach
             </tbody>
         </table>
 

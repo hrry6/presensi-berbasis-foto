@@ -60,7 +60,8 @@ class TataUsahaController extends Controller
             'guruPiket' => $guru_piket
                 ->join('guru', 'guru_piket.id_guru', '=', 'guru.id_guru')->get(),
             'kelas' => $kelas
-                ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')->get(),
+                ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
         ];
         // dd($data);
         return view('tata-usaha.guru', $data);
@@ -114,8 +115,7 @@ class TataUsahaController extends Controller
         }        
 
         if ($siswa->create($data)) {
-
-            return redirect('wali-kelas/akun-siswa')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('wali-kelas/akun-siswa');
         }
 
         return back()->with('error', 'Data surat gagal ditambahkan');
