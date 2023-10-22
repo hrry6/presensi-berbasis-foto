@@ -126,6 +126,7 @@ return new class extends Migration
         DB::unprepared('DROP TRIGGER update_siswa');
         DB::unprepared('DROP TRIGGER delete_siswa');
         DB::unprepared('DROP TRIGGER add_pengurus');
+        DB::unprepared('DROP TRIGGER update_presensi_siswa');
         DB::unprepared('DROP TRIGGER update_pengurus');
         DB::unprepared('DROP TRIGGER delete_pengurus');
         DB::unprepared('DROP TRIGGER add_guru');
