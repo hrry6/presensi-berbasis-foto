@@ -4,6 +4,11 @@
     .block {
         padding: 100px;
         text-align: center;
+        border-radius: 20px
+    }
+
+    .color-text {
+        color: #F9812A;
     }
 </style>
 @section('sidenav')
@@ -32,19 +37,17 @@
     </nav>
 @endsection
 @section('isi')
-    <div class="container mt-5 mx-5">
+    <div class="container mt-1 mx-5">
         <div class="row">
             <div class="col-sm-4 mb-5 mx-5">
                 <div class="block bg-white">
-                    <span class="">100</span>
+                    <div class="fs-1 color-text fw-bold">{{ $totalStudents }}</div>
                     <span class="fs-3 text-nowrap">Jumlah Siswa</span>
                 </div>
             </div>
             <div class="col-sm-4 mb-5 mx-5">
                 <div class="block bg-white">
-                    <div>
-                        100
-                    </div>
+                    <div class="fs-1 color-text fw-bold">{{ $totalHadir }}</div>
                     <span class="fs-3 text-nowrap">Jumlah Hadir</span>
                 </div>
             </div>
@@ -53,17 +56,13 @@
         <div class="row">
             <div class="col-sm-4 mb-5 mx-5">
                 <div class="block bg-white">
-                    <div>
-                        100
-                    </div>
+                    <span class="fs-1 color-text fw-bold">{{ $totalIzin }}</span>
                     <span class="fs-3 text-nowrap">Jumlah Sakit/Izin</span>
                 </div>
             </div>
             <div class="col-sm-4 mb-5 mx-5">
                 <div class="block bg-white">
-                    <div>
-                        100
-                    </div>
+                    <span class="fs-1 color-text fw-bold">{{ $totalAlpha }}</span>
                     <span class="fs-3 text-nowrap">Jumlah Tidak Hadir</span>
                 </div>
             </div>

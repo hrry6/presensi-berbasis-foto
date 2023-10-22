@@ -24,7 +24,13 @@ class WaliKelasController extends Controller
      */
     public function index()
     {
-        return view('wali-kelas.index');
+        $totalStudents = DB::select("SELECT CountTotalStudents() as total")[0]->total;
+
+        $totalHadir = DB::select("SELECT CountStatus('Hadir') as total")[0]->total;
+        $totalIzin = DB::select("SELECT CountStatus('Izin') as total")[0]->total;
+        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as total")[0]->total;
+
+        return view('wali-kelas.index', compact('totalStudents', 'totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
     /**
@@ -34,7 +40,7 @@ class WaliKelasController extends Controller
     {
         $data = DB::table('view_siswa')->get();
         return view('wali-kelas.siswa', ['siswa' => $data]);
-    }    
+    }
 
     public function showPengurus(PengurusKelas $pengurus)
     {
@@ -103,7 +109,7 @@ class WaliKelasController extends Controller
 
         $data['password'] = Hash::make(random_int(1000, 9999));
 
-        
+
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
