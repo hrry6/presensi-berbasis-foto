@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
+use App\Models\PresensiSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -45,6 +46,19 @@ class WaliKelasController extends Controller
         ];
         // dd($data);
         return view('wali-kelas.pengurus-kelas', $data);
+    }
+
+    public function showPresensi(PresensiSiswa $presensi)
+    {
+        $data = [
+            'presensi' => $presensi
+                ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
+        ];
+
+        // dd($data);
+        return view('wali-kelas.presensi', $data);
     }
 
     /**
