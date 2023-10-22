@@ -6,15 +6,11 @@
         <div class="container mt-3">
             <div class="row">
                 <div class="col-lg-4 bg-white mb-3 mx-5" style="border-radius: 10%">
-                    <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
+                    <img src="{{ asset('img/guru-form.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
                     <form action="simpan-guru" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <label for="nis">NIS</label>
-                            <input type="number" class="form-control" name="nis">
-                        </div>
                         <div class="form-group">
                             <label for="nama_guru">Nama Guru</label>
                             <input type="text" class="form-control" name="nama_guru">
