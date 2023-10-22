@@ -55,6 +55,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('edit-guru/update', [TataUsahaController::class, 'updateGuru']);
         Route::delete('hapus-guru', [TataUsahaController::class, 'destroyGuru']);
 
+
+        // PRESENSI
+        Route::get('presensi', [TataUsahaController::class, 'showPresensi']);
         // LOGS
         Route::get('logs', [TataUsahaController::class, 'logs']);
     });

@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::unprepared('DROP Procedure IF EXISTS CreateGuruBK');
+        DB::unprepared('DROP Procedure IF EXISTS CreateGuruPiket');
+        DB::unprepared('DROP Procedure IF EXISTS CreateWaliKelas');
+        DB::unprepared('DROP Procedure IF EXISTS CreateAkunSiswa');
         DB::unprepared("
         CREATE PROCEDURE CreateGuruBK(
             IN new_id_akun INT,

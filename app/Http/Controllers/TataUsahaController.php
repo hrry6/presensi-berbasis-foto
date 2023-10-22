@@ -69,6 +69,15 @@ class TataUsahaController extends Controller
         return view('tata-usaha.guru', $data);
     }
 
+    public function showPresensi()
+    {
+        $data = [
+            'presensi' => DB::table('view_presensi')->get()
+        ];
+        // dd($data);
+        return view('tata-usaha.presensi', $data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
