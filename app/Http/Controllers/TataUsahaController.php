@@ -54,7 +54,7 @@ class TataUsahaController extends Controller
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
-    public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket,Kelas $kelas)
+    public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas)
     {
         $data = [
             'guruBK' => $guru_bk
@@ -75,12 +75,12 @@ class TataUsahaController extends Controller
     public function createSiswa(Kelas $kelas)
     {
         $kelas = $kelas
-                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-                ->get();
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->get();
         return view('tata-usaha.tambah-siswa', ["kelas" => $kelas]);
     }
 
-        /**
+    /**
      * Show the form for creating a new resource.
      */
     public function createPengurus(Siswa $siswa)
@@ -89,8 +89,8 @@ class TataUsahaController extends Controller
         return view('tata-usaha.tambah-pengurus', ["siswa" => $siswa]);
     }
 
-    public function createGuru(GuruBk $guru_bk, GuruPiket $guru_piket,Kelas $kelas)
-    {   
+    public function createGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas)
+    {
         $data = [
             'kelas' => $kelas->where('id_wali_kelas', null)
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
@@ -114,7 +114,7 @@ class TataUsahaController extends Controller
         ]);
 
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
         $data['id_akun'] = $user->id_akun;
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
@@ -124,9 +124,10 @@ class TataUsahaController extends Controller
             $data['foto_siswa'] = $foto_nama;
         } else {
             return back()->with('error', 'File upload failed. Please select a valid file.');
-        }        
+        }
 
         if ($siswa->create($data)) {
+            notify()->success('Data siswa telah ditambah', 'Success');
             return redirect('tata-usaha/akun-siswa');
         }
 
@@ -139,9 +140,9 @@ class TataUsahaController extends Controller
             'nama_guru' => 'required',
             'foto_guru' => 'required'
         ]);
-        
+
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
         $data['id_akun'] = $user->id_akun;
 
@@ -152,44 +153,40 @@ class TataUsahaController extends Controller
             $data['foto_guru'] = $foto_nama;
         } else {
             return back()->with('error', 'File upload failed. Please select a valid file.');
-        }        
+        }
 
         $status = $request->input('status');
-        if($status == 'Guru BK')
-        {
+        if ($status == 'Guru BK') {
             DB::beginTransaction();
-            try{
+            try {
 
-                DB::statement("CALL CreateGuruBK(?,?,?,?)", [$user->id_akun, $data['nama_guru'],$foto_nama, $role_akun->nama_role]);
+                DB::statement("CALL CreateGuruBK(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
                 return redirect('tata-usaha/akun-guru');
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 DB::rollback();
                 dd($e->getMessage());
             }
         }
-        if($status == 'Guru Piket')
-        {
+        if ($status == 'Guru Piket') {
             DB::beginTransaction();
-            try{
-                DB::statement("CALL CreateGuruPiket(?,?,?,?)", [$user->id_akun, $data['nama_guru'],$foto_nama, $role_akun->nama_role]);
+            try {
+                DB::statement("CALL CreateGuruPiket(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
                 return redirect('tata-usaha/akun-guru');
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 DB::rollback();
                 dd($e->getMessage());
             }
-        }
-        else{
+        } else {
             DB::beginTransaction();
-            try{
-                DB::statement("CALL CreateWaliKelas(?,?,?,?,?)", [$user->id_akun, $data['nama_guru'],$foto_nama, $role_akun->nama_role,$request->input('status')]);
-            }catch(Exception $e){
+            try {
+                DB::statement("CALL CreateWaliKelas(?,?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role, $request->input('status')]);
+            } catch (Exception $e) {
                 DB::rollback();
                 dd($e->getMessage());
             }
-
             return redirect('tata-usaha/akun-guru');
         }
-        
+
         return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
@@ -202,12 +199,13 @@ class TataUsahaController extends Controller
 
 
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
 
         if ($pengurus->create($data)) {
-            return redirect('tata-usaha/akun-pengurus-kelas')->with('success', 'Data pengurus kelas berhasil ditambah');
+            notify()->success('Data pengurus kelas telah ditambah', 'Success');
+            return redirect('tata-usaha/akun-pengurus-kelas');
         }
 
         return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
@@ -216,47 +214,47 @@ class TataUsahaController extends Controller
 
 
     public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
-    {  
+    {
         $data = [
-            "siswa" => $siswa->where('id_siswa',$request->id)
-                               ->join("kelas","siswa.id_kelas","=","kelas.id_kelas")
-                               ->join("akun", "siswa.id_akun","=","akun.id_akun")
-                               ->first(),
-           "kelas" => $kelas
-                       ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-                       ->get()
+            "siswa" => $siswa->where('id_siswa', $request->id)
+                ->join("kelas", "siswa.id_kelas", "=", "kelas.id_kelas")
+                ->join("akun", "siswa.id_akun", "=", "akun.id_akun")
+                ->first(),
+            "kelas" => $kelas
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->get()
         ];
         return view('tata-usaha.edit-siswa',  $data);
     }
-    
-   public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
-   {
-       $pengurus = [
-           "pengurus" => $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
-                       ->where('id_pengurus','=', $request->id)
-                       ->first()
-       ];
-       // dd($pengurus);
-       return view('tata-usaha.edit-pengurus',  $pengurus);
-   }
 
-   public function editGuru(Request $request, Kelas $kelas, Guru $guru, GuruBk $guruBk, GuruPiket $guruPiket)
-   {
-       $guru = [
-           "guru" => $guru->where('id_guru', $request->id)->first(),
-           "guruBk" => $guruBk->where('id_guru', $request->id)->first(),
-           "guruPiket" => $guruPiket->where('id_guru', $request->id)->first(),
-           'kelas' => $kelas->all()
-       ];
-       // dd($guru);
-       return view('tata-usaha.edit-guru',  $guru);
-   }
+    public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
+    {
+        $pengurus = [
+            "pengurus" => $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
+                ->where('id_pengurus', '=', $request->id)
+                ->first()
+        ];
+        // dd($pengurus);
+        return view('tata-usaha.edit-pengurus',  $pengurus);
+    }
+
+    public function editGuru(Request $request, Kelas $kelas, Guru $guru, GuruBk $guruBk, GuruPiket $guruPiket)
+    {
+        $guru = [
+            "guru" => $guru->where('id_guru', $request->id)->first(),
+            "guruBk" => $guruBk->where('id_guru', $request->id)->first(),
+            "guruPiket" => $guruPiket->where('id_guru', $request->id)->first(),
+            'kelas' => $kelas->all()
+        ];
+        // dd($guru);
+        return view('tata-usaha.edit-guru',  $guru);
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function updatePengurus(Request $request, PengurusKelas $pengurus, Role $role)
-    {   
+    {
         // dd($request);
         $id_pengurus = $request->input('id_pengurus');
         $data = $request->validate([
@@ -265,18 +263,19 @@ class TataUsahaController extends Controller
         ]);
 
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
         if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
-            return redirect('/tata-usaha/akun-pengurus-kelas')->with('success', 'Data pengurus baru berhasil ditambah');
+            notify()->success('Data pengurus kelas telah diperbarui', 'Success');
+            return redirect('/tata-usaha/akun-pengurus-kelas');
         }
 
         return back()->with('error', 'Data pengurus gagal ditambahkan');
     }
 
     public function updateSiswa(Request $request, Siswa $siswa, Role $role)
-    { 
+    {
 
         $id_siswa = $request->input('id_siswa');
 
@@ -290,10 +289,10 @@ class TataUsahaController extends Controller
         ]);
 
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
         if ($id_siswa !== null) {
-            if ($request->hasFile('foto_siswa')&&$request->file('foto_siswa')->isValid()) {
+            if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
                 $foto_file = $request->file('foto_siswa');
                 $foto_extension = $foto_file->getClientOriginalExtension();
                 $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
@@ -308,18 +307,18 @@ class TataUsahaController extends Controller
             $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
 
             if ($dataUpdate) {
+                notify()->success('Data siswa telah diperbarui', 'Success');
                 return redirect('tata-usaha/akun-siswa')->with('success', 'Data berhasil diupdate');
             }
-
         }
 
-        
+
 
         return back()->with('error', 'Data gagal diupdate');
     }
 
     public function updateGuru(Request $request, Guru $guru, Role $role)
-    { 
+    {
 
         $id_guru = $request->input('id_guru');
 
@@ -330,11 +329,11 @@ class TataUsahaController extends Controller
         ]);
 
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
         if ($id_guru !== null) {
-            if ($request->hasFile('foto_guru')&&$request->file('foto_guru')->isValid()) {
+            if ($request->hasFile('foto_guru') && $request->file('foto_guru')->isValid()) {
                 $foto_file = $request->file('foto_guru');
                 $foto_extension = $foto_file->getClientOriginalExtension();
                 $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
@@ -377,52 +376,23 @@ class TataUsahaController extends Controller
             if ($dataUpdate) {
                 return redirect('tata-usaha/akun-siswa')->with('success', 'Data berhasil diupdate');
             }
-
         }
 
-        
+
 
         return back()->with('error', 'Data gagal diupdate');
-    }
-
-
-    
-    /**
-     * Display the specified resource.
-     */
-    public function show(TataUsaha $TataUsaha)
-    {
-        //
-    }
-    /**
-     * Store a newly created resource in storage.
-     */
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TataUsaha $TataUsaha)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TataUsaha $TataUsaha)
-    {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroySiswa(Request $request,Role $role)
+    public function destroySiswa(Request $request, Role $role)
     {
         $id_siswa = $request->input('id_siswa');
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        $aksi = Siswa::where('id_siswa', $id_siswa)->update($data);        
+        $aksi = Siswa::where('id_siswa', $id_siswa)->update($data);
         $aksi = Siswa::where('id_siswa', $id_siswa)->delete();
         if ($aksi) {
             $pesan = [
@@ -438,16 +408,16 @@ class TataUsahaController extends Controller
         return response()->json($pesan);
     }
 
-        /**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroyPengurus(Request $request, Role $role)
     {
         $id_pengurus = $request->input('id_pengurus');
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->update($data);        
+        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->update($data);
         $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->delete();
         if ($aksi) {
             $pesan = [
@@ -468,10 +438,10 @@ class TataUsahaController extends Controller
     {
         $id_guru = $request->input('id_guru');
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        if(Guru::where('id_guru', $id_guru)->get() == Kelas::where('id_wali_kelas', $id_guru)->get() ){
-            Kelas::where('id_wali_kelas', $id_guru)->update(['id_wali_kelas' => null]);        
+        if (Guru::where('id_guru', $id_guru)->get() == Kelas::where('id_wali_kelas', $id_guru)->get()) {
+            Kelas::where('id_wali_kelas', $id_guru)->update(['id_wali_kelas' => null]);
         }
         $pembuat = Guru::where('id_guru', $id_guru)->update($data);
         $hapus_guru = Guru::where('id_guru', $id_guru)->delete();
@@ -497,7 +467,7 @@ class TataUsahaController extends Controller
     {
         $data = [
             'logs' => $logs->all(),
-            
+
         ];
         return view('tata-usaha.logs', $data);
     }

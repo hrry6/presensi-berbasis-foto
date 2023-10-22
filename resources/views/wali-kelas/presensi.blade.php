@@ -42,6 +42,7 @@
                     <th scope="col">Kelas</th>
                     <th scope="col">Kehadiran</th>
                     <th scope="col">Foto Bukti</th>
+                    <th scope="col">Keterangan</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
@@ -60,8 +61,9 @@
                                     alt="Bukti" />
                             @endif
                         </td>
+                        <td>{{ $i->keterangan_lebih_lanjut }}</td>
                         <td>
-                            <a href="edit-siswa/{{ $i->id_presensi }}" class="btn btn-success">EDIT</a>
+                            <a href="edit-presensi-siswa/{{ $i->id_presensi }}" class="btn btn-success">EDIT</a>
                         </td>
                     </tr>
                 @endforeach

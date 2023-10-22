@@ -30,8 +30,8 @@ class WaliKelasController extends Controller
     {
         $data = [
             'siswa' => $siswa
-                    ->join('kelas','siswa.id_kelas','=','kelas.id_kelas')
-                    ->join('jurusan','kelas.id_jurusan','=','jurusan.id_jurusan')->get()
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
         ];
         // dd($data);
         return view('wali-kelas.siswa', $data);
@@ -125,7 +125,7 @@ class WaliKelasController extends Controller
 
 
         $user = Auth::user();
-        $role_akun = $role->where('id_role',$user->id_role)->first('nama_role');
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
 
@@ -166,6 +166,21 @@ class WaliKelasController extends Controller
         return view('tata-usaha.edit-pengurus',  $pengurus);
     }
 
+    public function editPresensi(Request $request, Kelas $kelas, PresensiSiswa $presensi)
+    {
+        $statusKehadiran = ['Hadir', 'Izin', 'Alpha'];
+
+        $data = [
+            "presensi" => $presensi->where('id_presensi', $request->id)->first(),
+            "kelas" => $kelas
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->get(),
+            "statusKehadiran" => $statusKehadiran,
+        ];
+
+        return view('wali-kelas.edit-presensi', $data);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -202,10 +217,12 @@ class WaliKelasController extends Controller
             $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
 
             if ($dataUpdate) {
-                return redirect('tata-usaha/akun-siswa')->with('success', 'Data berhasil diupdate');
+                notify()->success('Data siswa telah diperbarui', 'Success');
+                return redirect('wali-kelas/akun-siswa');
             }
         }
 
+        notify()->error('Data siswa telah gagal diperbarui', 'Error');
         return back()->with('error', 'Data gagal diupdate');
     }
 
@@ -224,11 +241,51 @@ class WaliKelasController extends Controller
         $data['pembuat'] = $role_akun->nama_role;
 
         if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
-            return redirect('/tata-usaha/akun-pengurus-kelas')->with('success', 'Data pengurus baru berhasil ditambah');
+            notify()->success('Data pengurus kelas telah diperbarui', 'Success');
+            return redirect('/wali-kelas/akun-pengurus-kelas');
         }
 
         return back()->with('error', 'Data pengurus gagal ditambahkan');
     }
+
+    public function updatePresensi(Request $request, PresensiSiswa $presensi)
+    {
+        $id_presensi = $request->input('id_presensi');
+        $id_siswa = $request->input('id_siswa');
+
+        $data = $request->validate([
+            'id_siswa' => 'required',
+            'status_kehadiran' => 'required',
+            'keterangan_lebih_lanjut' => 'sometimes',
+            'foto_bukti' => 'sometimes|file', 
+        ]);
+
+        $data['id_siswa'] = $id_siswa;
+
+        if ($id_presensi !== null) {
+            if ($request->hasFile('foto_bukti') && $request->file('foto_bukti')->isValid()) {
+                $foto_file = $request->file('foto_bukti');
+                $foto_extension = $foto_file->getClientOriginalExtension();
+                $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
+                $foto_file->move(public_path('foto'), $foto_nama);
+
+                $update_data = $presensi->where('id_presensi', $id_presensi)->first();
+                File::delete(public_path('foto') . '/' . $update_data->file);
+
+                $data['foto_bukti'] = $foto_nama;
+            }
+
+            $dataUpdate = $presensi->where('id_presensi', $id_presensi)->update($data);
+
+            if ($dataUpdate) {
+                notify()->success('Data presensi siswa telah diperbarui', 'Success');
+                return redirect('wali-kelas/presensi-siswa');
+            }
+        }
+
+        return back()->with('error', 'Data presensi gagal diupdate');
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -281,5 +338,4 @@ class WaliKelasController extends Controller
         ];
         return view('wali-kelas.logs', $data);
     }
-
 }
