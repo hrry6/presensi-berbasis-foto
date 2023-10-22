@@ -48,15 +48,17 @@
             </thead>
             <tbody>
                 @foreach ($logs as $i)
-                    <tr>
-                        <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $i->tabel }}</td>
-                        <td>{{ $i->aktor }}</td>
-                        <td>{{ $i->tanggal }}</td>
-                        <td>{{ $i->jam }}</td>
-                        <th>{{ $i->aksi }}</th>
-                        <th>{{ $i->record }}</th>
-                    </tr>
+                    @if ($i->tabel !== 'guru')
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $i->tabel }}</td>
+                            <td>{{ $i->aktor }}</td>
+                            <td>{{ $i->tanggal }}</td>
+                            <td>{{ $i->jam }}</td>
+                            <th>{{ $i->aksi }}</th>
+                            <th>{{ $i->record }}</th>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

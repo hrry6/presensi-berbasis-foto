@@ -248,7 +248,7 @@ class WaliKelasController extends Controller
         return back()->with('error', 'Data pengurus gagal ditambahkan');
     }
 
-    public function updatePresensi(Request $request, PresensiSiswa $presensi)
+    public function updatePresensi(Request $request, PresensiSiswa $presensi, Role $role)
     {
         $id_presensi = $request->input('id_presensi');
         $id_siswa = $request->input('id_siswa');
@@ -259,7 +259,10 @@ class WaliKelasController extends Controller
             'keterangan_lebih_lanjut' => 'sometimes',
             'foto_bukti' => 'sometimes|file', 
         ]);
-
+        
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
         $data['id_siswa'] = $id_siswa;
 
         if ($id_presensi !== null) {

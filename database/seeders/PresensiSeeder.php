@@ -29,6 +29,7 @@ class PresensiSeeder extends Seeder
                     'tanggal' => $faker->date(),
                     'status_kehadiran' => Arr::random(['Hadir', 'Izin', 'Alpha']),
                     'keterangan_lebih_lanjut' => implode(' ', $faker->words()),
+                    'pembuat' => 'Wali Kelas'
                 ]);
             }
         }

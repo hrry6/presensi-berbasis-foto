@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
         // AKUN SISWA
         Route::get('akun-siswa', [WaliKelasController::class, 'showSiswa']);
         Route::get('tambah-siswa', [WaliKelasController::class, 'createSiswa']);
-        Route::post('tambah-simpan', [WaliKelasController::class, 'storeSiswa']);
+        Route::post('simpan-siswa', [WaliKelasController::class, 'storeSiswa']);
         Route::get('edit-siswa/{id}', [WaliKelasController::class, 'editSiswa']);
         Route::post('edit-siswa/simpan', [WaliKelasController::class, 'updateSiswa']);
         Route::delete('hapus-siswa', [WaliKelasController::class, 'destroySiswa']);

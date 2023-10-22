@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->enum('status_kehadiran', ['Hadir', 'Izin', 'Alpha']);
             $table->text('keterangan_lebih_lanjut');
+            $table->string('pembuat', 60);
 
             // Foreign Key
 

@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="tambah-simpan" method="POST" enctype="multipart/form-data">
+                    <form action="simpan-siswa" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>

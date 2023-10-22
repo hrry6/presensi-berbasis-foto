@@ -33,6 +33,16 @@ return new class extends Migration
         ');
 
         DB::unprepared('
+        CREATE TRIGGER update_presensi_siswa
+        AFTER UPDATE ON presensi_siswa
+        FOR EACH ROW
+        BEGIN
+            INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
+            VALUES ("presensi_siswa", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
+        END
+        ');
+
+        DB::unprepared('
         CREATE TRIGGER delete_siswa
         AFTER DELETE ON siswa
         FOR EACH ROW
