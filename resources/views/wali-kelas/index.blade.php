@@ -1,5 +1,11 @@
 @extends('layout.layout')
 @section('judul', 'Dashboard Wali Kelas')
+<style>
+    .block {
+        padding: 100px;
+        text-align: center;
+    }
+</style>
 @section('sidenav')
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -26,43 +32,40 @@
     </nav>
 @endsection
 @section('isi')
-    <div class="container">
-        <!-- Row 1 -->
+    <div class="container mt-5 mx-5">
         <div class="row">
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 1</div>
+            <div class="col-sm-4 mb-5 mx-5">
+                <div class="block bg-white">
+                    <span class="">100</span>
+                    <span class="fs-3 text-nowrap">Jumlah Siswa</span>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 2</div>
-            </div>
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 3</div>
+            <div class="col-sm-4 mb-5 mx-5">
+                <div class="block bg-white">
+                    <div>
+                        100
+                    </div>
+                    <span class="fs-3 text-nowrap">Jumlah Hadir</span>
+                </div>
             </div>
         </div>
 
-        <!-- Row 2 -->
         <div class="row">
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 4</div>
+            <div class="col-sm-4 mb-5 mx-5">
+                <div class="block bg-white">
+                    <div>
+                        100
+                    </div>
+                    <span class="fs-3 text-nowrap">Jumlah Sakit/Izin</span>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 5</div>
-            </div>
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 6</div>
-            </div>
-        </div>
-
-        <!-- Row 3 -->
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 7</div>
-            </div>
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 8</div>
-            </div>
-            <div class="col-sm-4">
-                <div class="block bg-white">Block 9</div>
+            <div class="col-sm-4 mb-5 mx-5">
+                <div class="block bg-white">
+                    <div>
+                        100
+                    </div>
+                    <span class="fs-3 text-nowrap">Jumlah Tidak Hadir</span>
+                </div>
             </div>
         </div>
     </div>

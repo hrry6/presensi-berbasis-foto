@@ -15,6 +15,7 @@ use App\Models\PresensiSiswa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class WaliKelasController extends Controller
 {
@@ -111,11 +112,9 @@ class WaliKelasController extends Controller
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
-        // Menggunakan NIS untuk username
         $data['username'] = $data['nis'];
 
-        // Menghasilkan password acak
-        $data['password'] = random_int(100000, 999999);
+        $data['password'] = Hash::make(random_int(1000, 9999));
 
         
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {

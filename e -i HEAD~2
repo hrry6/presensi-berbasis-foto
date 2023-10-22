@@ -1,0 +1,417 @@
+[33mcommit 017e9d18c6df5a5d3729312e2a34f5416b870c91[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: CatsFootIronClaw <daffasingawinata2112@gmail.com>
+Date:   Sun Oct 22 17:57:01 2023 +0700
+
+    update:back into hash
+
+[33mcommit 5f091339d2fca6396953d49926ced98526157113[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sun Oct 22 16:41:58 2023 +0700
+
+    Membuat fitur update guru
+
+[33mcommit ff80b96e824fc4fda0658c215b7db2e86a53e438[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sun Oct 22 16:16:44 2023 +0700
+
+    update:storedProcedure
+
+[33mcommit f6db288a4dfe69c4ff1c6b84374a8c2a0d958128[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sun Oct 22 10:43:59 2023 +0700
+
+    update:trigger
+
+[33mcommit 41182364241e75308d2f3eeb0e1bfc6a02e22bb8[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sun Oct 22 10:07:39 2023 +0700
+
+    update:editPresensi
+
+[33mcommit 500ce83b20ed3320e3adacc8bec83a698d26c5e7[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sun Oct 22 07:17:11 2023 +0700
+
+    update: view Presensi Siswa
+
+[33mcommit dd52ca3b6e811b429c6525ce736993cd21be84da[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sun Oct 22 06:16:56 2023 +0700
+
+    update: pop up login and logs
+
+[33mcommit 289770a5f8c7785b8fc83774366eb788543804e4[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sun Oct 22 02:06:07 2023 +0700
+
+    Menambah guru di user tata usaha
+
+[33mcommit 9d12e6cf5bcf606bee4a3f575311f43d47fa78ee[m
+Merge: cd6c8da 5510d81
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 23:47:56 2023 +0700
+
+    Merge branch 'main' of https://github.com/hrry6/presensi-berbasis-lokasi
+
+[33mcommit cd6c8da502b5073de2eabca8f342ae8e19a3316f[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 23:47:53 2023 +0700
+
+    merge
+
+[33mcommit 5510d8181134e5c993c3877bd706a34882cd73a7[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sat Oct 21 23:01:16 2023 +0700
+
+    Percobaan menambah guru
+
+[33mcommit cd34086a1ac1aad187051c75b21b40213f584606[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sat Oct 21 21:58:16 2023 +0700
+
+    Menampilkan Guru
+
+[33mcommit 64c98e724be5289b5dd4325393603f066b98126e[m
+Merge: 1c6b3aa 6d8abfb
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sat Oct 21 21:39:31 2023 +0700
+
+    Merge branch 'main' of https://github.com/hrry6/presensi-berbasis-lokasi
+
+[33mcommit 1c6b3aab1fff23b4347b135bed5dd1fda20605a8[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sat Oct 21 21:39:27 2023 +0700
+
+    Proses Membuat guru
+
+[33mcommit 6d8abfb567017bb67fd776235e371c27fa261b3e[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 21:38:47 2023 +0700
+
+    update:pengurus-kelas, model
+
+[33mcommit 1f17d15f83db72d35e6b5eee00105c468d66d366[m
+Merge: 867b2d4 1f5bc40
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 21:03:47 2023 +0700
+
+    merge
+
+[33mcommit 867b2d407ca6c03060fe16b1efbbfcb7c259416e[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 21:02:19 2023 +0700
+
+    Committing local changes
+
+[33mcommit 1f5bc40dabbcdc53e0ceebe42eed7b2515f42fee[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Sat Oct 21 20:08:15 2023 +0700
+
+    Memperbaiki trigger siswa dan pengurus kelas
+
+[33mcommit 69819e2f6f6643a95953fdd0a19ca86527612af6[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 14:52:30 2023 +0700
+
+    remove
+
+[33mcommit 8910b9cabd7fafd822a45440dc03ebae3b57c8e2[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 21 10:46:05 2023 +0700
+
+    added: tinker
+
+[33mcommit 5e26a539c014da63d67ea8199bcf34c5ed1cb2c7[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 17:23:40 2023 +0700
+
+    Mengganti gambar form tata usaha
+
+[33mcommit a65ded818b4fe7fd521107f9ce706814aabb5bfe[m
+Merge: 0839053 f70a920
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 16:56:50 2023 +0700
+
+    edit siswa di tata usaha
+
+[33mcommit 0839053e74f9ed501b55cf0d5bd441f8bf427b8e[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 13:45:40 2023 +0700
+
+    merge
+
+[33mcommit f70a920138ddf6aa82401b01a218f557766a7f8a[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Fri Oct 20 13:42:42 2023 +0700
+
+    update:pengurus-kelas
+
+[33mcommit c98a7fde21e6b7853ee4452ddc9e044562cf57f9[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Fri Oct 20 11:00:23 2023 +0700
+
+    merge
+
+[33mcommit a36939ab09b7803a90a657c1bef9159e0ef8e4b5[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 10:49:46 2023 +0700
+
+    Menambah trigger siswa pada migration
+
+[33mcommit 22accb56699b8df4377a2652b001f2d02a75a890[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 07:43:12 2023 +0700
+
+    Menambahkan halaman log di tata usaha
+
+[33mcommit 28cef32bb530778ab77cfbd009d46a6d2823326a[m
+Merge: 79d201a ec79b50
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 07:02:13 2023 +0700
+
+    Merge branch 'main' of https://github.com/hrry6/presensi-berbasis-lokasi
+
+[33mcommit 79d201a461a3f05bb77e8470cca87c3d78b430bc[m
+Merge: dcd7960 93302df
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 07:01:53 2023 +0700
+
+    merge
+
+[33mcommit ec79b50dcce7059df2585e9f651e10658a31b725[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Fri Oct 20 07:01:12 2023 +0700
+
+    update:model akun
+
+[33mcommit dcd7960719510e878d58df8bc6c28d340efd1c3f[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Fri Oct 20 07:00:12 2023 +0700
+
+    Mencoba menambahkan edit akun siswa di tata usaha
+
+[33mcommit 93302df729a98fd426c57759939fc0aea8b604f4[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Fri Oct 20 06:58:55 2023 +0700
+
+    update:web.php
+
+[33mcommit 53ce40841e25daedb36af8b2ccf803844e026ea7[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Fri Oct 20 06:56:57 2023 +0700
+
+    update:change layout
+
+[33mcommit 1c4a07fee9691368932633905310e07f460c7104[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 19:01:37 2023 +0700
+
+    Menambah halaman siswa di user wali kelas
+
+[33mcommit c38a61775181e726a2f269e943897679d41fbcf6[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 18:49:11 2023 +0700
+
+    update:add siswa
+
+[33mcommit 165ca8db50ed4045f2feb82182bdc759bedc3b3e[m
+Merge: 6e50123 a4bc9c1
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 18:46:16 2023 +0700
+
+    Merge branch 'main' of https://github.com/hrry6/presensi-berbasis-lokasi
+
+[33mcommit 6e5012389dbaa7bffa28728fbcb019522007cf5a[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 18:46:14 2023 +0700
+
+    merge
+
+[33mcommit a4bc9c1ed8bf074b741ba60cb66e08868026007f[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 18:43:17 2023 +0700
+
+    Menghapus siswa
+
+[33mcommit 9cfecb02c65d17fddf25583ba647e2a183f57266[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 17:37:25 2023 +0700
+
+    Membuat form siswa
+
+[33mcommit ec62bec03e203a2090bf5c2a6d15ef5557917c51[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 16:07:25 2023 +0700
+
+    update:tambah-siswa
+
+[33mcommit f6bf6a4700a9b908360ff9c5bc4d08bee9b2d441[m
+Merge: 848c052 962f3f1
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 14:14:45 2023 +0700
+
+    testagain
+
+[33mcommit 848c0527f1d932b8b19628e8bb7abbe454a76889[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 14:12:44 2023 +0700
+
+    update:test commit
+
+[33mcommit 962f3f18659812be1cfefc77b29763a255722cfc[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 14:06:45 2023 +0700
+
+    Menampilkan siswa di akun tata usaha
+
+[33mcommit 294382eb7aeb73a4d7afd7f57408e4e0eb80ed56[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 13:08:07 2023 +0700
+
+    Menambahkan tombol logout
+
+[33mcommit 359e46a6ce62a73f2fef58e9c7827b1bb13ca8a6[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 13:02:53 2023 +0700
+
+    update:remove
+
+[33mcommit fc1c9c2912c1df965f34e6ef13d911463853997f[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 13:00:58 2023 +0700
+
+    added:jquery,sweetalert2
+
+[33mcommit e14fc362405d2a164e8738640e34691f294a84c5[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 13:00:08 2023 +0700
+
+    Menambahkan logout
+
+[33mcommit 56e56d4daeb04e4f4e19769a1074087f28543a72[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 12:56:06 2023 +0700
+
+    Perbaikan middleware
+
+[33mcommit 18f57f193b00228b275297d35e043db578619ed6[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 12:52:12 2023 +0700
+
+    update:fix middleware
+
+[33mcommit 5144755b874c7f115936742ee605fbba32ea5832[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 12:47:35 2023 +0700
+
+    Membuat layout
+
+[33mcommit 29bd5ae66760d654b4ee59f0ff8a23842279d475[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 11:31:51 2023 +0700
+
+    update:fix error login
+
+[33mcommit 5618b680fdeab1ca85593876179f7bc8dd29c1bd[m
+Merge: aadaa16 3608c46
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 11:16:25 2023 +0700
+
+    test
+
+[33mcommit aadaa16ecd4c607f8d56a56fd268b48d73ee698a[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 11:14:44 2023 +0700
+
+    Update
+
+[33mcommit 3608c46300cce59791dd950084b2f0c23bca26cd[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 11:09:33 2023 +0700
+
+    update:login with middleware
+
+[33mcommit 36e34b4a1ffe6b1631d4ba34071f969193516795[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 10:26:28 2023 +0700
+
+    Membuat halaman masing-masing user
+
+[33mcommit 2aa2b5ae42522e47eb1d15bb2a89c98f166de0d7[m
+Merge: dab0d35 90e9843
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 10:09:45 2023 +0700
+
+    Perbaikan error branch
+
+[33mcommit 90e9843626fffabcd7379acfcff4b2e991cc75d7[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Thu Oct 19 09:48:12 2023 +0700
+
+    login
+
+[33mcommit dab0d3515a2abc2379612880b2d0dbe9319d0989[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 09:36:14 2023 +0700
+
+    Menambahkan asset image form login
+
+[33mcommit bd737de3435b3fcbb4339a8776a3938afe662440[m
+Author: hrry6 <harrysiloam06@gmail.com>
+Date:   Thu Oct 19 09:06:29 2023 +0700
+
+    Menambahkan OtentikasiController
+
+[33mcommit 5b5779ed5c447f20b7051b8faf44eaf81a454e95[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Wed Oct 18 07:04:44 2023 +0700
+
+    update:relation model and added:bootstrap
+
+[33mcommit 0e12d155f846f8f7809111adf658a12e52df6907[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sun Oct 15 13:26:34 2023 +0700
+
+    added:logs,seeder
+
+[33mcommit 13040428a95b1f6fcd13ac9d73025515565843af[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 14 14:27:11 2023 +0700
+
+    update:perbaikan seeder role
+
+[33mcommit dd7d88136316a575d434ce3b02ea7788dd634b57[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 14 14:03:04 2023 +0700
+
+    update:Seeder and change table role
+
+[33mcommit e1bf328a238a8a289354268c87e05da6408461b5[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mrukaachan[m[33m)[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 14 12:03:00 2023 +0700
+
+    update:migration kelas
+
+[33mcommit 5df82e5d49ac0c4fb6d164c336943e70a4d8e563[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 14 11:40:46 2023 +0700
+
+    update:migration and added:model
+
+[33mcommit 9c7227ad3403541c60049a7d9bc63e3ea40a5ff4[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Sat Oct 14 10:39:05 2023 +0700
+
+    added:migration
+
+[33mcommit 2b497ad1b90d421b4c54805266e069d9aee8d478[m
+Author: rukaachan <novops911@gmail.com>
+Date:   Fri Oct 13 20:16:51 2023 +0700
+
+    first commit
+
+[33mcommit 9dd4cc90858152ae38cec08aeaf8bbb7f575d472[m
+Author: Harry <94610048+hrry6@users.noreply.github.com>
+Date:   Thu Oct 12 11:49:21 2023 +0700
+
+    Initial commit
