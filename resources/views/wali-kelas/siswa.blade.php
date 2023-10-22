@@ -26,8 +26,6 @@
 @endsection
 @section('isi')
 
-    <h1 class="fs-1 fw-bold text-center" style="margin-bottom: 2px">Biodata Siswa</h1>
-
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
@@ -73,8 +71,6 @@
             </tbody>
         </table>
     </div>
-
-    <h1 class="fs-1 fw-bold text-center" style="margin-top: 100px">Daftar Akun Siswa</h1>
 
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
