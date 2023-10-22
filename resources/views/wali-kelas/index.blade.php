@@ -27,41 +27,42 @@
 @endsection
 @section('isi')
     <div class="container">
+        <!-- Row 1 -->
         <div class="row">
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 1</div>
             </div>
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 2</div>
             </div>
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 3</div>
             </div>
         </div>
-    </div>
-    <div class="container">
+
+        <!-- Row 2 -->
         <div class="row">
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 4</div>
             </div>
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 5</div>
             </div>
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 6</div>
             </div>
         </div>
-    </div>
-    <div class="container">
+
+        <!-- Row 3 -->
         <div class="row">
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 7</div>
             </div>
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 8</div>
             </div>
-            <div class="col-sm">
-                One of three columns
+            <div class="col-sm-4">
+                <div class="block bg-white">Block 9</div>
             </div>
         </div>
     </div>
