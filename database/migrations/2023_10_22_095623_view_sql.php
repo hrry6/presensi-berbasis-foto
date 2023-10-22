@@ -29,6 +29,31 @@ return new class extends Migration
         LEFT JOIN kelas k ON s.id_kelas = k.id_kelas
         LEFT JOIN jurusan j ON k.id_jurusan = j.id_jurusan
         ");
+
+        DB::unprepared("DROP VIEW IF EXISTS view_siswa;");
+
+        DB::unprepared("
+            CREATE VIEW view_siswa AS
+            SELECT
+                s.id_siswa AS id_siswa,
+                s.nis AS nis,
+                s.nama_siswa AS nama_siswa,
+                s.id_kelas AS id_kelas,
+                s.jenis_kelamin AS jenis_kelamin,
+                s.nomer_hp AS nomer_hp,
+                s.foto_siswa AS foto_siswa,
+                a.id_akun AS id_akun,
+                a.username AS username,
+                a.password AS password,
+                k.tingkatan AS tingkatan,
+                k.nama_kelas AS nama_kelas, -- Include nama_kelas in the selection
+                j.nama_jurusan AS nama_jurusan
+            FROM siswa s
+            JOIN akun a ON s.id_akun = a.id_akun
+            JOIN kelas k ON s.id_kelas = k.id_kelas
+            JOIN jurusan j ON k.id_jurusan = j.id_jurusan
+            WHERE a.id_role = 1
+        ");;;
     }
 
     /**
@@ -37,5 +62,6 @@ return new class extends Migration
     public function down(): void
     {
         DB::unprepared("DROP VIEW IF EXISTS view_presensi;");
+        DB::unprepared("DROP VIEW IF EXISTS view_siswa;");
     }
 };

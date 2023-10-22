@@ -30,24 +30,11 @@ class WaliKelasController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    public function showSiswa(Siswa $siswa, Akun $akun)
+    public function showSiswa()
     {
-        $data = $siswa
-            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-            ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
-            ->leftjoin('role_akun', function ($join) {
-                $join->on('akun.id_role', '=', 'role_akun.id_role')
-                    ->where('akun.id_role', '=', 1);
-            })
-            ->select('siswa.*', 'akun.username', 'akun.password as password')
-            ->get();
-
-        // dd($data);
-        return view('wali-kelas.siswa', ['siswa' => $data, 'akun' => $akun]);
-    }
-
+        $data = DB::table('view_siswa')->get();
+        return view('wali-kelas.siswa', ['siswa' => $data]);
+    }    
 
     public function showPengurus(PengurusKelas $pengurus)
     {
