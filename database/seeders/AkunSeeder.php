@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AkunSeeder extends Seeder
 {
@@ -24,7 +24,7 @@ class AkunSeeder extends Seeder
                 DB::table('akun')->insert([
                     'id_role' => $data,
                     'username' => $faker->randomNumber(6, true),
-                    'password' => Hash::make('123')
+                    'password' => random_int(100000, 999999),
                 ]);
             }
         }

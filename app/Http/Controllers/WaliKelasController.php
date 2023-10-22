@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Akun;
 use App\Models\Logs;
 use App\Models\Role;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
 use App\Models\PresensiSiswa;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -26,16 +30,23 @@ class WaliKelasController extends Controller
      * Display a listing of the resource.
      */
 
-    public function showSiswa(Siswa $siswa)
+    public function showSiswa(Siswa $siswa, Akun $akun)
     {
-        $data = [
-            'siswa' => $siswa
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
-        ];
+        $data = $siswa
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
+            ->leftjoin('role_akun', function ($join) {
+                $join->on('akun.id_role', '=', 'role_akun.id_role')
+                    ->where('akun.id_role', '=', 1);
+            })
+            ->select('siswa.*', 'akun.username', 'akun.password as password')
+            ->get();
+
         // dd($data);
-        return view('wali-kelas.siswa', $data);
+        return view('wali-kelas.siswa', ['siswa' => $data, 'akun' => $akun]);
     }
+
 
     public function showPengurus(PengurusKelas $pengurus)
     {
@@ -96,24 +107,35 @@ class WaliKelasController extends Controller
         ]);
 
         $user = Auth::user();
+        $data['id_akun'] = $user->id_akun;
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        $data['id_akun'] = $user->id_akun;
+
+        // Menggunakan NIS untuk username
+        $data['username'] = $data['nis'];
+
+        // Menghasilkan password acak
+        $data['password'] = random_int(100000, 999999);
+
+        
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
             $foto_file->move(public_path('foto'), $foto_nama);
             $data['foto_siswa'] = $foto_nama;
-        } else {
-            return back()->with('error', 'File upload failed. Please select a valid file.');
         }
 
-        if ($siswa->create($data)) {
-            notify()->success('Data siswa telah ditambah', 'Success');
+        DB::beginTransaction();
+        try {
+            $siswaId = $siswa->create($data)->id_siswa;
+            DB::statement("CALL CreateAkunSiswa(?, ?, ?)", [$siswaId, $data['username'], $data['password']]);
+            DB::commit();
+            // notify()->success('Data siswa telah ditambah', 'Success');
             return redirect('wali-kelas/akun-siswa');
+        } catch (Exception $e) {
+            DB::rollback();
+            return back()->with('error', 'Data siswa gagal ditambahkan');
         }
-
-        return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
     public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
@@ -257,9 +279,9 @@ class WaliKelasController extends Controller
             'id_siswa' => 'required',
             'status_kehadiran' => 'required',
             'keterangan_lebih_lanjut' => 'sometimes',
-            'foto_bukti' => 'sometimes|file', 
+            'foto_bukti' => 'sometimes|file',
         ]);
-        
+
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;

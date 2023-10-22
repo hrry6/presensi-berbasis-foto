@@ -25,6 +25,9 @@
     </nav>
 @endsection
 @section('isi')
+
+    <h1 class="fs-1 fw-bold text-center" style="margin-bottom: 2px">Biodata Siswa</h1>
+
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
@@ -37,6 +40,7 @@
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
+                    <th scope="col">Kode Akun</th>
                     <th scope="col">Foto</th>
                     <th scope="col">NIS</th>
                     <th scope="col">Nama Lengkap</th>
@@ -49,6 +53,7 @@
                 @foreach ($siswa as $i)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $i->id_akun }}</td>
                         <td>
                             @if ($i->foto_siswa)
                                 <img src="{{ url('foto') . '/' . $i->foto_siswa }} " style="max-width: 100px; height: auto;"
@@ -67,10 +72,42 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+
+    <h1 class="fs-1 fw-bold text-center" style="margin-top: 100px">Daftar Akun Siswa</h1>
+
+    <div class="mt-4 ml-4 pt-3 container-md bg-white">
+        <div class="d-flex width-full justify-content-between mb-3">
+            <form action="">
+                <input type="text" placeholder="Search Siswa">
+                <button class="position-relative">Search</button>
+            </form>
+        </div>
+        <table class="table table-bordered DataTable">
+            <thead class="thead table-dark">
+                <tr class="">
+                    <th scope="col">No</th>
+                    <th scope="col">Kode Akun</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($siswa as $i)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $i->id_akun }}</td>
+                        <td>{{ $i->username }}</td>
+                        <td>{{ $i->password }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
     </div>
 
 @endsection
+
 
 @section('footer')
     <script type="module">

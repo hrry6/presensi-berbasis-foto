@@ -27,6 +27,8 @@
     </nav>
 @endsection
 @section('isi')
+
+    <h1 class="fs-1 fw-bold text-center" style="margin-bottom: 2px">Logs</h1>
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
@@ -47,19 +49,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($logs as $i)
-                    @if ($i->tabel !== 'guru')
+                @php
+                    $counter = 0;
+                @endphp
+
+                @for ($i = 0; $i < count($logs); $i++)
+                    @if ($logs[$i]->tabel !== 'guru' && $logs[$i]->aktor !== 'Tata Usaha')
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $i->tabel }}</td>
-                            <td>{{ $i->aktor }}</td>
-                            <td>{{ $i->tanggal }}</td>
-                            <td>{{ $i->jam }}</td>
-                            <th>{{ $i->aksi }}</th>
-                            <th>{{ $i->record }}</th>
+                            <td>{{ $counter++ }}</td>
+                            <td>{{ $logs[$i]->tabel }}</td>
+                            <td>{{ $logs[$i]->aktor }}</td>
+                            <td>{{ $logs[$i]->tanggal }}</td>
+                            <td>{{ $logs[$i]->jam }}</td>
+                            <th>{{ $logs[$i]->aksi }}</th>
+                            <th>{{ $logs[$i]->record }}</th>
                         </tr>
                     @endif
-                @endforeach
+                @endfor
+
             </tbody>
         </table>
 

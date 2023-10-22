@@ -24,6 +24,9 @@
     </nav>
 @endsection
 @section('isi')
+
+    <h1 class="fs-1 fw-bold text-center" style="margin-bottom: 2px">Pengurus Kelas</h1>
+
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">

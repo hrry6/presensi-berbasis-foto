@@ -69,6 +69,28 @@ return new class extends Migration
             UPDATE kelas SET id_wali_kelas = new_id_wali_kelas WHERE id_kelas = new_id_kelas;
         END
         ");
+
+        DB::unprepared("
+        CREATE PROCEDURE CreateAkunSiswa(
+            IN p_id_siswa INT,
+            IN p_username VARCHAR(60),
+            IN p_password VARCHAR(225)
+        )
+        BEGIN
+            DECLARE p_id_akun INT;
+            
+            -- Insert data akun
+            INSERT INTO akun (id_role, username, password)
+            VALUES (1, p_username, p_password);
+            
+            SET p_id_akun = LAST_INSERT_ID();  -- Mendapatkan ID akun yang baru dibuat
+            
+            -- Update siswa dengan ID akun yang baru
+            UPDATE siswa
+            SET id_akun = p_id_akun
+            WHERE id_siswa = p_id_siswa;
+        END 
+        ");
     }
 
     /**
@@ -79,5 +101,6 @@ return new class extends Migration
         DB::unprepared('DROP Procedure IF EXISTS CreateGuruBK');
         DB::unprepared('DROP Procedure IF EXISTS CreateGuruPiket');
         DB::unprepared('DROP Procedure IF EXISTS CreateWaliKelas');
+        DB::unprepared('DROP Procedure IF EXISTS CreateAkunSiswa');
     }
 };
