@@ -26,8 +26,17 @@ class TataUsahaController extends Controller
      */
     public function index()
     {
-        return view('tata-usaha.index');
+        $totalGuru = DB::select('SELECT CountTeachers() AS totalGuru')[0]->totalGuru;
+        $totalGuruBk = DB::select('SELECT CountBkTeachers() AS totalGuruBk')[0]->totalGuruBk;
+        $totalGuruPiket = DB::select('SELECT CountPiketTeachers() AS totalGuruPiket')[0]->totalGuruPiket;
+        $totalKelas = DB::select('SELECT CountClasses() AS totalKelas')[0]->totalKelas;
+        $totalPengurusKelas = DB::select('SELECT CountClassMembers() AS totalPengurusKelas')[0]->totalPengurusKelas;
+        $totalWaliKelas = DB::select('SELECT CountWaliKelas() AS totalWaliKelas')[0]->totalWaliKelas;
+        $totalSiswa = DB::select('SELECT CountTotalStudents() AS totalSiswa')[0]->totalSiswa;
+
+        return view('tata-usaha.index', compact('totalGuru', 'totalGuruBk', 'totalGuruPiket', 'totalKelas', 'totalPengurusKelas', 'totalSiswa', 'totalWaliKelas'));
     }
+
 
     /**
      * Display a listing of the resource.
@@ -328,10 +337,10 @@ class TataUsahaController extends Controller
 
         return back()->with('error', 'Data gagal diupdate');
     }
-    
+
     public function updateGuru(Request $request, Guru $guru, Role $role, Kelas $kelas, GuruBk $guruBk, GuruPiket $guruPiket)
     {
-        
+
         $id_guru = $request->input('id_guru');
         $data = $request->validate([
             'nama_guru' => 'sometimes',
@@ -341,7 +350,7 @@ class TataUsahaController extends Controller
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        
+
         // dd($data);
         if ($id_guru !== null) {
             if ($request->hasFile('foto_guru') && $request->file('foto_guru')->isValid()) {
@@ -353,12 +362,12 @@ class TataUsahaController extends Controller
                 File::delete(public_path('foto') . '/' . $update_data->file);
                 $data['foto_guru'] = $foto_nama;
             }
-            
+
             if ($data) {
                 $status = $request->input('status');
-                
+
                 if ($kelas->where('id_wali_kelas', $id_guru)->first()) {
-                    $kelas->where('id_wali_kelas', $id_guru)->update(['id_wali_kelas'=> null]);
+                    $kelas->where('id_wali_kelas', $id_guru)->update(['id_wali_kelas' => null]);
                 }
                 if ($guruPiket->where('id_guru', $id_guru)->first()) {
                     $guruPiket->where('id_guru', $id_guru)->delete();
@@ -368,17 +377,17 @@ class TataUsahaController extends Controller
                 }
 
                 $guru->where('id_guru', $id_guru)->update($data);
-        
+
                 if ($status != 'Guru BK' && $status != 'Guru Piket') {
-                    $kelas->where('id_kelas', $status)->update(['id_wali_kelas'=> $id_guru]);
+                    $kelas->where('id_kelas', $status)->update(['id_wali_kelas' => $id_guru]);
                 }
                 if ($status == 'Guru BK') {
-                    $guruBk->create(['id_guru'=> $id_guru]);
+                    $guruBk->create(['id_guru' => $id_guru]);
                 }
                 if ($status == 'Guru Piket') {
-                    $guruPiket->create(['id_guru'=> $id_guru]);
+                    $guruPiket->create(['id_guru' => $id_guru]);
                 }
-            
+
                 return redirect('tata-usaha/akun-guru');
             }
         }
@@ -445,9 +454,9 @@ class TataUsahaController extends Controller
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        
+
         if ($kelas->where('id_wali_kelas', $id_guru)->first()) {
-            $kelas->where('id_wali_kelas', $id_guru)->update(['id_wali_kelas'=> null]);
+            $kelas->where('id_wali_kelas', $id_guru)->update(['id_wali_kelas' => null]);
         }
         if ($guruPiket->where('id_guru', $id_guru)->first()) {
             $guruPiket->where('id_guru', $id_guru)->delete();

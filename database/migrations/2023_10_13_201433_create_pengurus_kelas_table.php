@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('id_siswa');
             $table->string('jabatan', 20);
             $table->string('pembuat', 60);
+            
             // Foreign Key
 
             $table->foreign('id_siswa')->on('siswa')

@@ -24,13 +24,12 @@ class WaliKelasController extends Controller
      */
     public function index()
     {
-        $totalStudents = DB::select("SELECT CountTotalStudents() as total")[0]->total;
+        $totalSiswa = DB::select("SELECT CountTotalStudents() as totalSiswa")[0]->totalSiswa;
+        $totalHadir = DB::select("SELECT CountStatus('Hadir') as totalHadir")[0]->totalHadir;
+        $totalIzin = DB::select("SELECT CountStatus('Izin') as totalIzin")[0]->totalIzin;
+        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
 
-        $totalHadir = DB::select("SELECT CountStatus('Hadir') as total")[0]->total;
-        $totalIzin = DB::select("SELECT CountStatus('Izin') as total")[0]->total;
-        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as total")[0]->total;
-
-        return view('wali-kelas.index', compact('totalStudents', 'totalHadir', 'totalIzin', 'totalAlpha'));
+        return view('wali-kelas.index', compact('totalSiswa', 'totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
     /**
