@@ -9,7 +9,7 @@ class PengurusKelas extends Model
 {
     use HasFactory;
     protected $table = 'pengurus_kelas';
-    protected $fillable = ['id_siswa', 'jabatan', 'pengurus'];
+    protected $fillable = ['id_siswa', 'jabatan', 'pengurus', 'pembuat'];
     protected $primaryKey = 'id_pengurus';
     public $timestamps = false;
 }

@@ -48,7 +48,6 @@ class WaliKelasController extends Controller
                 ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get()
         ];
-        // dd($data);
         return view('wali-kelas.pengurus-kelas', $data);
     }
 
@@ -121,7 +120,7 @@ class WaliKelasController extends Controller
             $siswaId = $siswa->create($data)->id_siswa;
             DB::statement("CALL CreateAkunSiswa(?, ?, ?)", [$siswaId, $data['username'], $data['password']]);
             DB::commit();
-            // notify()->success('Data siswa telah ditambah', 'Success');
+            notify()->success('Data siswa telah ditambah', 'Success');
             return redirect('wali-kelas/akun-siswa');
         } catch (Exception $e) {
             DB::rollback();
@@ -135,7 +134,6 @@ class WaliKelasController extends Controller
             'id_siswa' => 'required',
             'jabatan' => 'required'
         ]);
-
 
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
