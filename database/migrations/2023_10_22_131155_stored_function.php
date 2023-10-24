@@ -12,6 +12,16 @@ return new class extends Migration
      */
     public function up()
     {
+        DB::unprepared('DROP FUNCTION IF EXISTS CountTeachers');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountBkTeachers');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountPiketTeachers');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountClasses');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountClassMembers');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountWaliKelas');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountStudents');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountTotalStudents');
+        DB::unprepared('DROP FUNCTION IF EXISTS CountStatus');
+        
         DB::unprepared('
             CREATE FUNCTION CountTeachers() RETURNS INT
             BEGIN
