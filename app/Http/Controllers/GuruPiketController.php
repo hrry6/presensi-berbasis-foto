@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GuruPiket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GuruPiketController extends Controller
 {
@@ -12,7 +13,11 @@ class GuruPiketController extends Controller
      */
     public function index()
     {
-        return view('guru-piket.index');
+        $data = [
+            'presensi' => DB::table('view_presensi')->get()
+        ];
+        // dd($data);
+        return view('guru-piket.presensi', $data);
     }
 
     /**

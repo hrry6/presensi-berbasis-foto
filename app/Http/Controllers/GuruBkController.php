@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GuruBk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GuruBkController extends Controller
 {
@@ -12,7 +13,11 @@ class GuruBkController extends Controller
      */
     public function index()
     {
-        return view('guru-bk.index');
+        $data = [
+            'presensi' => DB::table('view_presensi')->get()
+        ];
+        // dd($data);
+        return view('guru-bk.presensi', $data);
     }
 
     /**

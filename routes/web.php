@@ -64,17 +64,19 @@ Route::middleware(['auth'])->group(function () {
 
     // GURU BK
     Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
-        Route::get('dashboard', [GuruBkController::class, 'index']);
+        // Route::get('dashboard', [GuruBkController::class, 'index']);
+        Route::get('presensi', [GuruBkController::class, 'index']);
     });
 
     // GURU PIKET
     Route::prefix('guru-piket')->middleware('akses:4')->group(function () {
-        Route::get('dashboard', [GuruPiketController::class, 'index']);
+        // Route::get('dashboard', [GuruPiketController::class, 'index']);
+        Route::get('presensi', [GuruPiketController::class, 'index']);
     });
 
     // PENGURUS KELAS
     Route::prefix('pengurus-kelas')->middleware('akses:3')->group(function () {
-        Route::get('dashboard', [PengurusKelasController::class, 'index']);
+        Route::get('presensi', [PengurusKelasController::class, 'index']);
     });
 
     // WALI KELAS
