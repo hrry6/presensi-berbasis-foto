@@ -13,14 +13,20 @@
                         @csrf
                         <div class="form-group">
                             <label>Nama Siswa</label>
-                            <input type="text" class="form-control" name="nama_siswa" value="{{ $pengurus->nama_siswa}}" disabled id="">
-                            <input type="hidden" class="form-control" name="id_pengurus" value="{{ $pengurus->id_pengurus}}">
+                            <input type="text" class="form-control" name="nama_siswa" value="{{ $pengurus->nama_siswa }}"
+                                disabled id="">
+                            <input type="hidden" class="form-control" name="id_pengurus"
+                                value="{{ $pengurus->id_pengurus }}">
                         </div>
                         <div class="form-group">
                             <label for="nama_siswa">Jabatan</label>
-                            <input type="text" class="form-control" value="{{ $pengurus->jabatan}}" name="jabatan">
+                            <input type="text" class="form-control" value="{{ $pengurus->jabatan }}" name="jabatan">
                         </div> <br><br>
-                        <button type="submit" class="btn btn-primary">SUBMIT</button>
+                        <a href="{{ url('wali-kelas/akun-pengurus-kelas') }}"
+                            class="btn text-decoration-underline text-light fw-bold rounded-3"
+                            style="background-color: #14C345">KEMBALI</a>
+                        <button type="submit" class="btn text-decoration-underline text-light fw-bold"
+                            style="background-color: #F9812A ">SUBMIT</button>
                     </form>
                 </div>
             </div>

@@ -42,18 +42,13 @@ return new class extends Migration
                 s.jenis_kelamin AS jenis_kelamin,
                 s.nomer_hp AS nomer_hp,
                 s.foto_siswa AS foto_siswa,
-                a.id_akun AS id_akun,
-                a.username AS username,
-                a.password AS password,
                 k.tingkatan AS tingkatan,
-                k.nama_kelas AS nama_kelas, -- Include nama_kelas in the selection
+                k.nama_kelas AS nama_kelas, 
                 j.nama_jurusan AS nama_jurusan
             FROM siswa s
-            JOIN akun a ON s.id_akun = a.id_akun
             JOIN kelas k ON s.id_kelas = k.id_kelas
             JOIN jurusan j ON k.id_jurusan = j.id_jurusan
-            WHERE a.id_role = 1
-        ");;;
+        ");
     }
 
     /**

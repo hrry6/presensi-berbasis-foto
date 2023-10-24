@@ -23,7 +23,8 @@
                             <label>Kelas</label>
                             <select name="id_kelas" class="form-control">
                                 @foreach ($kelas as $i)
-                                    <option value="{{ $i->id_kelas }}">{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}
+                                    <option value="{{ $i->id_kelas }}">
+                                        {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
                                     </option>
                                 @endforeach
                             </select>
@@ -45,8 +46,11 @@
                             <input type="file" class="form-control" name="foto_siswa" />
                         </div>
                         <div class="mt-3">
-                            {{-- <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a> --}}
-                            <button type="submit" class="btn btn-primary">SUBMIT</button>
+                            <a href="{{ url('wali-kelas/akun-siswa') }}"
+                                class="btn text-decoration-underline text-light fw-bold rounded-3"
+                                style="background-color: #14C345">KEMBALI</a>
+                            <button type="submit" class="btn text-decoration-underline text-light fw-bold"
+                                style="background-color: #F9812A ">SUBMIT</button>
                         </div>
                     </form>
                 </div>

@@ -87,7 +87,7 @@ class WaliKelasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function storeSiswa(Request $request, Siswa $siswa, Role $role)
+    public function storeSiswa(Request $request, Role $role)
     {
         $data = $request->validate([
             'nis' => 'required',
@@ -101,11 +101,7 @@ class WaliKelasController extends Controller
         $user = Auth::user();
         $data['id_akun'] = $user->id_akun;
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
-        $data['pembuat'] = $role_akun->nama_role;
-
-        $data['username'] = $data['nis'];
-
-        $data['password'] = Hash::make(random_int(1000, 9999));
+        $data['pembuat'] = $role_akun->nama_role;;
 
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
@@ -114,8 +110,7 @@ class WaliKelasController extends Controller
             $data['foto_siswa'] = $foto_nama;
         }
 
-        $siswaId = $siswa->create($data)->id_siswa;
-        DB::statement("CALL CreateAkunSiswa(?, ?, ?)", [$siswaId, $data['username'], $data['password']]);
+        DB::statement("CALL CreateSiswa(?, ?, ?, ?, ?, ?, ?, ?)", [$user->id_akun, $data['nis'], $data['nama_siswa'], $data['id_kelas'], $data['jenis_kelamin'], $data['nomer_hp'], $foto_nama, $role_akun->nama_role]);
 
         notify()->success('Data siswa telah ditambah', 'Success');
         return redirect('wali-kelas/akun-siswa');

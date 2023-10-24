@@ -18,13 +18,14 @@
                         <div class="form-group">
                             <label>Status</label>
                             <select name="status" class="form-control">
-                                    <option value="Guru BK">Guru BK</option>
-                                    <option value="Guru Piket">Guru Piket</option>
-                                    @foreach ($kelas as $i)     
-                                        @if ($i->id_wali_kelas == null)
-                                            <option value="{{ $i->id_kelas }}">Wali Kelas {{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</option>
-                                        @endif
-                                    @endforeach
+                                <option value="Guru BK">Guru BK</option>
+                                <option value="Guru Piket">Guru Piket</option>
+                                @foreach ($kelas as $i)
+                                    @if ($i->id_wali_kelas == null)
+                                        <option value="{{ $i->id_kelas }}">Wali Kelas
+                                            {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -32,8 +33,11 @@
                             <input type="file" class="form-control" name="foto_guru" />
                         </div>
                         <div class="mt-3">
-                            {{-- <a href="#" onclick="window.history.back();" class="btn btn-success">KEMBALI</a> --}}
-                            <button type="submit" class="btn btn-primary">SUBMIT</button>
+                            <a href="{{ url('tata-usaha/akun-guru') }}"
+                                class="btn text-decoration-underline text-light fw-bold rounded-3"
+                                style="background-color: #14C345">KEMBALI</a>
+                            <button type="submit" class="btn text-decoration-underline text-light fw-bold"
+                                style="background-color: #F9812A ">SUBMIT</button>
                         </div>
                     </form>
                 </div>
