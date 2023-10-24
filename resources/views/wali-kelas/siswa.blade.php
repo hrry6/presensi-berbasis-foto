@@ -39,7 +39,6 @@
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
-                    <th scope="col">Kode Akun</th>
                     <th scope="col">Foto</th>
                     <th scope="col">NIS</th>
                     <th scope="col">Nama Lengkap</th>
@@ -52,7 +51,6 @@
                 @foreach ($siswa as $i)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $i->id_akun }}</td>
                         <td>
                             @if ($i->foto_siswa)
                                 <img src="{{ url('foto') . '/' . $i->foto_siswa }} " style="max-width: 100px; height: auto;"
@@ -84,7 +82,6 @@
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
-                    <th scope="col">Kode Akun</th>
                     <th scope="col">Username</th>
                     <th scope="col">Password</th>
                 </tr>
@@ -93,7 +90,6 @@
                 @foreach ($siswa as $i)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $i->id_akun }}</td>
                         <td>{{ $i->username }}</td>
                         <td>{{ $i->password }}</td>
                     </tr>

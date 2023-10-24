@@ -107,7 +107,6 @@ class WaliKelasController extends Controller
 
         $data['password'] = Hash::make(random_int(1000, 9999));
 
-
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
@@ -115,18 +114,13 @@ class WaliKelasController extends Controller
             $data['foto_siswa'] = $foto_nama;
         }
 
-        DB::beginTransaction();
-        try {
-            $siswaId = $siswa->create($data)->id_siswa;
-            DB::statement("CALL CreateAkunSiswa(?, ?, ?)", [$siswaId, $data['username'], $data['password']]);
-            DB::commit();
-            notify()->success('Data siswa telah ditambah', 'Success');
-            return redirect('wali-kelas/akun-siswa');
-        } catch (Exception $e) {
-            DB::rollback();
-            return back()->with('error', 'Data siswa gagal ditambahkan');
-        }
+        $siswaId = $siswa->create($data)->id_siswa;
+        DB::statement("CALL CreateAkunSiswa(?, ?, ?)", [$siswaId, $data['username'], $data['password']]);
+
+        notify()->success('Data siswa telah ditambah', 'Success');
+        return redirect('wali-kelas/akun-siswa');
     }
+
 
     public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
     {
