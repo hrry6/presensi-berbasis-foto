@@ -29,7 +29,7 @@
 @section('isi')
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
-            <form action="">
+            <form action="tambah-guru">
                 <input type="text" placeholder="Search Guru">
                 <button class="position-relative">Search</button>
             </form>

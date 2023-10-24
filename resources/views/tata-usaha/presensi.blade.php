@@ -16,10 +16,10 @@
                 <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Akun Siswa</span>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+                <a href="/tata-usaha/presensi" class="list-group-item list-group-item-action py-2 ripple active">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action py-2 ripple">
+                <a href="/tata-usaha/logs" class="list-group-item list-group-item-action py-2 ripple">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Logs</span>
                 </a>
             </div>
