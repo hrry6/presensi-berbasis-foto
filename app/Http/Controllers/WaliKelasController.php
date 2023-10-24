@@ -347,7 +347,7 @@ class WaliKelasController extends Controller
     public function logs(Logs $logs)
     {
         $data = [
-            'logs' => $logs->all(),
+            'logs' => $logs::orderBy('id_log', 'desc')->get(),
 
         ];
         return view('wali-kelas.logs', $data);

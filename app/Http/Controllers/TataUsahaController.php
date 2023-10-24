@@ -488,7 +488,7 @@ class TataUsahaController extends Controller
     public function logs(Logs $logs)
     {
         $data = [
-            'logs' => $logs->all(),
+            'logs' => $logs::orderBy('id_log', 'desc')->get(),
 
         ];
         return view('tata-usaha.logs', $data);
