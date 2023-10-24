@@ -33,7 +33,7 @@ return new class extends Migration
                 SET pesan_error = '001';
             END;
         
-            START TRANSACTION; -- Start the transaction
+            START TRANSACTION; -- Memulai transaction
         
             INSERT INTO guru (id_akun, nama_guru, foto_guru, pembuat)
             VALUES (new_id_akun, new_nama_guru, new_foto_guru, new_pembuat);
@@ -43,9 +43,9 @@ return new class extends Migration
             INSERT INTO guru_bk (id_guru) VALUES (new_id_guru);
         
             IF pesan_error = '000' THEN
-                COMMIT; -- Commit the transaction if no error occurs
+                COMMIT; -- Commit jika tidak ada error
             ELSE
-                ROLLBACK; -- Rollback the transaction if an error occurs
+                ROLLBACK; -- Rollback jika terdapat error
             END IF;
         END
         ");
@@ -66,7 +66,7 @@ return new class extends Migration
                 SET pesan_error = '001';
             END;
         
-            START TRANSACTION; -- Start the transaction
+            START TRANSACTION; -- Memulai transaction
         
             INSERT INTO guru (id_akun, nama_guru, foto_guru, pembuat)
             VALUES (new_id_akun, new_nama_guru, new_foto_guru, new_pembuat);
@@ -76,9 +76,9 @@ return new class extends Migration
             INSERT INTO guru_piket (id_guru) VALUES (new_id_guru);
 
             IF pesan_error = '000' THEN
-                COMMIT; -- Commit the transaction if no error occurs
+                COMMIT; -- Commit jika tidak ada error
             ELSE
-                ROLLBACK; -- Rollback the transaction if an error occurs
+                ROLLBACK; -- Rollback jika terdapat error
             END IF;
         END
         ");
@@ -100,7 +100,7 @@ return new class extends Migration
                 SET pesan_error = '001';
             END;
         
-            START TRANSACTION; -- Start the transaction
+            START TRANSACTION; -- Memulai transaction
             
             INSERT INTO guru (id_akun, nama_guru, foto_guru, pembuat)
             VALUES (new_id_akun, new_nama_guru, new_foto_guru, new_pembuat);
@@ -110,9 +110,9 @@ return new class extends Migration
             UPDATE kelas SET id_wali_kelas = new_id_wali_kelas WHERE id_kelas = new_id_kelas;
 
             IF pesan_error = '000' THEN
-                COMMIT; -- Commit the transaction if no error occurs
+                COMMIT; -- Commit jika tidak ada error
             ELSE
-                ROLLBACK; -- Rollback the transaction if an error occurs
+                ROLLBACK; -- Rollback jika terdapat error
             END IF;
         END
         ");
@@ -133,23 +133,21 @@ return new class extends Migration
                 SET pesan_error = '001';
             END;
         
-            START TRANSACTION; -- Start the transaction
+            START TRANSACTION; -- Memulai transaction
             
-            -- Insert data akun
             INSERT INTO akun (id_role, username, password)
             VALUES (1, p_username, p_password);
             
-            SET p_id_akun = LAST_INSERT_ID();  -- Mendapatkan ID akun yang baru dibuat
+            SET p_id_akun = LAST_INSERT_ID();  
             
-            -- Update siswa dengan ID akun yang baru
             UPDATE siswa
             SET id_akun = p_id_akun
             WHERE id_siswa = p_id_siswa;
 
             IF pesan_error = '000' THEN
-                COMMIT; -- Commit the transaction if no error occurs
+                COMMIT; -- Commit jika tidak ada error
             ELSE
-                ROLLBACK; -- Rollback the transaction if an error occurs
+                ROLLBACK; -- Rollback jika terdapat error
             END IF;
         END 
         ");
