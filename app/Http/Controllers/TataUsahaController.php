@@ -175,40 +175,34 @@ class TataUsahaController extends Controller
 
         $status = $request->input('status');
         if ($status == 'Guru BK') {
-            DB::beginTransaction();
-            try {
-
-                DB::statement("CALL CreateGuruBK(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
-                DB::commit();
+            $sukses = DB::statement("CALL CreateGuruBK(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
+            if($sukses)
+            {
                 return redirect('tata-usaha/akun-guru');
-            } catch (Exception $e) {
-                DB::rollback();
-                dd($e->getMessage());
+            }else
+            {
+                return back()->with('error', 'Data guru gagal ditambahkan');
             }
-        }
+         }
         if ($status == 'Guru Piket') {
-            DB::beginTransaction();
-            try {
-                DB::statement("CALL CreateGuruPiket(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
-                DB::commit();
+            $sukses = DB::statement("CALL CreateGuruPiket(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
+            if($sukses)
+            {
                 return redirect('tata-usaha/akun-guru');
-            } catch (Exception $e) {
-                DB::rollback();
-                dd($e->getMessage());
+            }else
+            {
+                return back()->with('error', 'Data guru gagal ditambahkan');
             }
         } else {
-            DB::beginTransaction();
-            try {
-                DB::statement("CALL CreateWaliKelas(?,?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role, $request->input('status')]);
-                DB::commit();
+            $sukses = DB::statement("CALL CreateWaliKelas(?,?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role, $request->input('status')]);
+            if($sukses)
+            {
                 return redirect('tata-usaha/akun-guru');
-            } catch (Exception $e) {
-                DB::rollback();
-                dd($e->getMessage());
+            }else
+            {
+                return back()->with('error', 'Data guru gagal ditambahkan');
             }
         }
-
-        return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
     public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
