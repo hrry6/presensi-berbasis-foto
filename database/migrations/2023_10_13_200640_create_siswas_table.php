@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_siswa', 60);
             $table->string('nomer_hp', 20);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
-            $table->text('foto_siswa')->nullable(true);
+            $table->text('foto_siswa');
             $table->string('pembuat', 60);
 
             // Foreign Key

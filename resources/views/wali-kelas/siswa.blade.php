@@ -71,34 +71,6 @@
         </table>
     </div>
 
-    <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <div class="d-flex width-full justify-content-between mb-3">
-            <form action="">
-                <input type="text" placeholder="Search Siswa">
-                <button class="position-relative">Search</button>
-            </form>
-        </div>
-        <table class="table table-bordered DataTable">
-            <thead class="thead table-dark">
-                <tr class="">
-                    <th scope="col">No</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Password</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($siswa as $i)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $i->username }}</td>
-                        <td>{{ $i->password }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-    </div>
-
 @endsection
 
 
