@@ -33,13 +33,21 @@
                                         <p class="mb-3 fw-bold fs-3">Log In</p>
 
                                         <div class="form-outline mb-4">
+                                            @error('username')
+                                                <div class="text-danger p-0 m-0">{{ $message }}</div>
+                                            @enderror
                                             <input type="text" class="form-control" placeholder="Username"
-                                                name="username" required />
+                                                name="username" value="{{ old('username') }}"
+                                                class="@error('username') is-invalid @enderror" />
                                         </div>
 
-                                        <div class="form-outline mb-4">
+                                        <div class="form-outline
+                                                mb-4">
+                                            @error('password')
+                                                <div class="text-danger p-0 m-0">{{ $message }}</div>
+                                            @enderror
                                             <input type="password" class="form-control" placeholder="Password"
-                                                name="password" required />
+                                                name="password" class="@error('password') is-invalid @enderror" />
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">

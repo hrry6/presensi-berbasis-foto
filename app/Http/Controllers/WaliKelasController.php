@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\Akun;
 use App\Models\Logs;
 use App\Models\Role;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
 use App\Models\PresensiSiswa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 
 class WaliKelasController extends Controller
 {
@@ -336,7 +332,7 @@ class WaliKelasController extends Controller
     public function logs(Logs $logs)
     {
         $data = [
-            'logs' => $logs::orderBy('id_log', 'desc')->get(),
+            'logs' => $logs::orderBy('id_log', 'desc')->paginate(10),
 
         ];
         return view('wali-kelas.logs', $data);
