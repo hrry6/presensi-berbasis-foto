@@ -54,7 +54,7 @@
                         <td>{{ $index++ }}</td>
                         <td>
                             @if ($i->foto_guru)
-                                <img src="{{ url('foto') . '/' . $i->foto_guru }} "
+                                <img src="{{ url('guru') . '/' . $i->foto_guru }} "
                                     style="max-width: 100px; height: auto;" />
                             @endif
                         </td>
@@ -67,39 +67,39 @@
                     </tr>
                 @endforeach
                 @foreach ($guruPiket as $p)
-                <tr>
-                    <td>{{ $index++ }}</td>
-                    <td>
-                        @if ($p->foto_guru)
-                            <img src="{{ url('foto') . '/' . $p->foto_guru }} "
-                                style="max-width: 100px; height: auto;" />
-                        @endif
-                    </td>
-                    <th>{{ $p->nama_guru }}</th>
-                    <th>Guru Piket</th>
-                    <td>
-                        <a href="/tata-usaha/edit-guru/{{ $p->id_guru }}" class="btn btn-success">EDIT</a>
-                        <btn class="btn btn-danger btnHapus" idHapus="{{ $p->id_guru }}">HAPUS</btn>
-                    </td>
-                </tr>
-            @endforeach
-            @foreach ($kelas as $k)
-            <tr>
-                <td>{{ $index++ }}</td>
-                <td>
-                    @if ($k->foto_guru)
-                        <img src="{{ url('foto') . '/' . $k->foto_guru }} "
-                            style="max-width: 100px; height: auto;" />
-                    @endif
-                </td>
-                <th>{{ $k->nama_guru }}</th>
-                <th>Wali Kelas {{ $k->tingkatan." ".$k->nama_jurusan." ".$k->nama_kelas}}</th>
-                <td>
-                    <a href="/tata-usaha/edit-guru/{{ $k->id_guru }}" class="btn btn-success">EDIT</a>
-                    <btn class="btn btn-danger btnHapus" idHapus="{{ $k->id_guru }}">HAPUS</btn>
-                </td>
-            </tr>
-        @endforeach
+                    <tr>
+                        <td>{{ $index++ }}</td>
+                        <td>
+                            @if ($p->foto_guru)
+                                <img src="{{ url('guru') . '/' . $p->foto_guru }} "
+                                    style="max-width: 100px; height: auto;" />
+                            @endif
+                        </td>
+                        <th>{{ $p->nama_guru }}</th>
+                        <th>Guru Piket</th>
+                        <td>
+                            <a href="/tata-usaha/edit-guru/{{ $p->id_guru }}" class="btn btn-success">EDIT</a>
+                            <btn class="btn btn-danger btnHapus" idHapus="{{ $p->id_guru }}">HAPUS</btn>
+                        </td>
+                    </tr>
+                @endforeach
+                @foreach ($kelas as $k)
+                    <tr>
+                        <td>{{ $index++ }}</td>
+                        <td>
+                            @if ($k->foto_guru)
+                                <img src="{{ url('guru') . '/' . $k->foto_guru }} "
+                                    style="max-width: 100px; height: auto;" />
+                            @endif
+                        </td>
+                        <th>{{ $k->nama_guru }}</th>
+                        <th>Wali Kelas {{ $k->tingkatan . ' ' . $k->nama_jurusan . ' ' . $k->nama_kelas }}</th>
+                        <td>
+                            <a href="/tata-usaha/edit-guru/{{ $k->id_guru }}" class="btn btn-success">EDIT</a>
+                            <btn class="btn btn-danger btnHapus" idHapus="{{ $k->id_guru }}">HAPUS</btn>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 

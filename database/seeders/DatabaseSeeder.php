@@ -14,6 +14,7 @@ use Database\Seeders\JurusanSeeder;
 use Database\Seeders\PresensiSeeder;
 use Database\Seeders\GuruPiketSeeder;
 use Database\Seeders\PengurusKelasSeeder;
+use Database\Seeders\TataUsahaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,7 +33,8 @@ class DatabaseSeeder extends Seeder
             KelasSeeder::class,
             SiswaSeeder::class,
             PresensiSeeder::class,
-            PengurusKelasSeeder::class
+            PengurusKelasSeeder::class,
+            TataUsahaSeeder::class,
         ];
     
         foreach ($seeders as $seeder) {

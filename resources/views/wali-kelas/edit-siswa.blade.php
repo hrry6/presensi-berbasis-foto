@@ -32,12 +32,18 @@
                         </div>
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
-                            <select name="jenis_kelamin" class="form-control">
-                                <option value="Laki-Laki" {{ $siswa->jenis_kelamin === 'Laki-Laki' ? 'selected' : '' }}>
-                                    Laki-Laki</option>
-                                <option value="Perempuan" {{ $siswa->jenis_kelamin === 'Perempuan' ? 'selected' : '' }}>
-                                    Perempuan</option>
-                            </select>
+                            <div>
+                                @foreach ($jenisKelamin as $option)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" style="cursor: pointer" type="radio"
+                                            name="jenis_kelamin" id="{{ $option }}" value="{{ $option }}"
+                                            {{ $siswa->jenis_kelamin === $option ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="{{ $option }}">
+                                            {{ $option }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="nomer_hp">Nomer Hp</label>

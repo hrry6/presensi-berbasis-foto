@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akun;
 use App\Models\Guru;
 use App\Models\GuruBk;
 use App\Models\GuruPiket;
-use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
 use App\Models\PengurusKelas;
 use App\Models\Role;
 use App\Models\Siswa;
-use App\Models\TataUsaha;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 
 class TataUsahaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $totalGuru = DB::select('SELECT CountTeachers() AS totalGuru')[0]->totalGuru;
@@ -38,9 +30,6 @@ class TataUsahaController extends Controller
     }
 
 
-    /**
-     * Display a listing of the resource.
-     */
     public function showSiswa(Siswa $siswa)
     {
         $data = [
@@ -48,7 +37,6 @@ class TataUsahaController extends Controller
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
         ];
-        // dd($data);
         return view('tata-usaha.siswa', $data);
     }
 
@@ -59,7 +47,6 @@ class TataUsahaController extends Controller
                 ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get()
         ];
-        // dd($data);
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
@@ -74,7 +61,6 @@ class TataUsahaController extends Controller
                 ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
         ];
-        // dd($data);
         return view('tata-usaha.guru', $data);
     }
 
@@ -83,24 +69,21 @@ class TataUsahaController extends Controller
         $data = [
             'presensi' => DB::table('view_presensi')->get()
         ];
-        // dd($data);
         return view('tata-usaha.presensi', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function createSiswa(Kelas $kelas)
+    public function createSiswa(Kelas $kelas, Siswa $siswa)
     {
+        $jenisKelamin = ['Laki-Laki', 'Perempuan'];
+
         $kelas = $kelas
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
             ->get();
-        return view('tata-usaha.tambah-siswa', ["kelas" => $kelas]);
+            
+        $siswa->all();
+        return view('tata-usaha.tambah-siswa', ["kelas" => $kelas, 'jenisKelamin' => $jenisKelamin, 'siswa' => $siswa]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function createPengurus(Siswa $siswa)
     {
         $siswa = $siswa->all();
@@ -113,13 +96,9 @@ class TataUsahaController extends Controller
             'kelas' => $kelas->where('id_wali_kelas', null)
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
         ];
-        // dd($data);
         return view('tata-usaha.tambah-guru', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function storeSiswa(Request $request, Siswa $siswa, Role $role)
     {
         $data = $request->validate([
@@ -138,7 +117,7 @@ class TataUsahaController extends Controller
         if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
             $foto_file = $request->file('foto_siswa');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
-            $foto_file->move(public_path('foto'), $foto_nama);
+            $foto_file->move(public_path('siswa'), $foto_nama);
             $data['foto_siswa'] = $foto_nama;
         } else {
             return back()->with('error', 'File upload failed. Please select a valid file.');
@@ -167,7 +146,7 @@ class TataUsahaController extends Controller
         if ($request->hasFile('foto_guru') && $request->file('foto_guru')->isValid()) {
             $foto_file = $request->file('foto_guru');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
-            $foto_file->move(public_path('foto'), $foto_nama);
+            $foto_file->move(public_path('guru'), $foto_nama);
             $data['foto_guru'] = $foto_nama;
         } else {
             return back()->with('error', 'File upload failed. Please select a valid file.');
@@ -176,30 +155,24 @@ class TataUsahaController extends Controller
         $status = $request->input('status');
         if ($status == 'Guru BK') {
             $sukses = DB::statement("CALL CreateGuruBK(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
-            if($sukses)
-            {
+            if ($sukses) {
                 return redirect('tata-usaha/akun-guru');
-            }else
-            {
+            } else {
                 return back()->with('error', 'Data guru gagal ditambahkan');
             }
-         }
+        }
         if ($status == 'Guru Piket') {
             $sukses = DB::statement("CALL CreateGuruPiket(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
-            if($sukses)
-            {
+            if ($sukses) {
                 return redirect('tata-usaha/akun-guru');
-            }else
-            {
+            } else {
                 return back()->with('error', 'Data guru gagal ditambahkan');
             }
         } else {
             $sukses = DB::statement("CALL CreateWaliKelas(?,?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role, $request->input('status')]);
-            if($sukses)
-            {
+            if ($sukses) {
                 return redirect('tata-usaha/akun-guru');
-            }else
-            {
+            } else {
                 return back()->with('error', 'Data guru gagal ditambahkan');
             }
         }
@@ -230,6 +203,8 @@ class TataUsahaController extends Controller
 
     public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
     {
+        $jenisKelamin = ['Laki-Laki', 'Perempuan'];
+
         $data = [
             "siswa" => $siswa->where('id_siswa', $request->id)
                 ->join("kelas", "siswa.id_kelas", "=", "kelas.id_kelas")
@@ -237,10 +212,13 @@ class TataUsahaController extends Controller
                 ->first(),
             "kelas" => $kelas
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-                ->get()
+                ->get(),
+            'jenisKelamin' => $jenisKelamin,
+            
         ];
         return view('tata-usaha.edit-siswa',  $data);
     }
+
 
     public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
     {
@@ -265,9 +243,6 @@ class TataUsahaController extends Controller
         return view('tata-usaha.edit-guru',  $guru);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function updatePengurus(Request $request, PengurusKelas $pengurus, Role $role)
     {
         // dd($request);
@@ -291,7 +266,6 @@ class TataUsahaController extends Controller
 
     public function updateSiswa(Request $request, Siswa $siswa, Role $role)
     {
-
         $id_siswa = $request->input('id_siswa');
 
         $data = $request->validate([
@@ -300,21 +274,26 @@ class TataUsahaController extends Controller
             'id_kelas' => 'sometimes',
             'jenis_kelamin' => 'sometimes',
             'nomer_hp' => 'sometimes',
-            'foto_siswa' => 'sometimes'
+            'foto_siswa' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
+
         if ($id_siswa !== null) {
             if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
                 $foto_file = $request->file('foto_siswa');
                 $foto_extension = $foto_file->getClientOriginalExtension();
                 $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
-                $foto_file->move(public_path('foto'), $foto_nama);
+                $foto_file->move(public_path('siswa'), $foto_nama);
 
                 $update_data = $siswa->where('id_siswa', $id_siswa)->first();
-                File::delete(public_path('foto') . '/' . $update_data->file);
+                $old_file_path = public_path('siswa') . '/' . $update_data->foto_siswa;
+
+                if (file_exists($old_file_path)) {
+                    unlink($old_file_path);
+                }
 
                 $data['foto_siswa'] = $foto_nama;
             }
@@ -327,10 +306,9 @@ class TataUsahaController extends Controller
             }
         }
 
-
-
         return back()->with('error', 'Data gagal diupdate');
     }
+
 
     public function updateGuru(Request $request, Guru $guru, Role $role, Kelas $kelas, GuruBk $guruBk, GuruPiket $guruPiket)
     {
@@ -338,25 +316,29 @@ class TataUsahaController extends Controller
         $id_guru = $request->input('id_guru');
         $data = $request->validate([
             'nama_guru' => 'sometimes',
-            'foto_guru' => 'sometimes'
+            'foto_guru' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
-        // dd($data);
         if ($id_guru !== null) {
             if ($request->hasFile('foto_guru') && $request->file('foto_guru')->isValid()) {
                 $foto_file = $request->file('foto_guru');
                 $foto_extension = $foto_file->getClientOriginalExtension();
                 $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
-                $foto_file->move(public_path('foto'), $foto_nama);
+                $foto_file->move(public_path('guru'), $foto_nama);
                 $update_data = $guru->where('id_guru', $id_guru)->first();
-                File::delete(public_path('foto') . '/' . $update_data->file);
+    
+                $old_file_path = public_path('guru') . '/' . $update_data->foto_guru;
+                if (file_exists($old_file_path)) {
+                    unlink($old_file_path);
+                }
+    
                 $data['foto_guru'] = $foto_nama;
             }
-
+    
             if ($data) {
                 $status = $request->input('status');
 
@@ -391,34 +373,47 @@ class TataUsahaController extends Controller
         return back()->with('error', 'Data gagal diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroySiswa(Request $request, Role $role)
     {
         $id_siswa = $request->input('id_siswa');
         $user = Auth::user();
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
-        $aksi = Siswa::where('id_siswa', $id_siswa)->update($data);
-        $aksi = Siswa::where('id_siswa', $id_siswa)->delete();
-        if ($aksi) {
-            $pesan = [
-                'success' => true,
-                'pesan' => 'Data berhasil di hapus'
-            ];
+
+        $siswa = Siswa::where('id_siswa', $id_siswa)->first();
+
+        if ($siswa) {
+            $foto_siswa = $siswa->foto_siswa;
+
+            $aksi = $siswa->delete();
+
+            $filePath = public_path('siswa') . '/' . $foto_siswa;
+
+            if (file_exists($filePath) && unlink($filePath)) {
+                return response()->json(['success' => true]);
+            }
+
+            if ($aksi) {
+                $pesan = [
+                    'success' => true,
+                    'pesan' => 'Data berhasil dihapus'
+                ];
+            } else {
+                $pesan = [
+                    'success' => false,
+                    'pesan' => 'Data gagal dihapus'
+                ];
+            }
         } else {
             $pesan = [
                 'success' => false,
-                'pesan' => 'Data gagal di hapus'
+                'pesan' => 'Siswa not found'
             ];
         }
+
         return response()->json($pesan);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroyPengurus(Request $request, Role $role)
     {
         $id_pengurus = $request->input('id_pengurus');
@@ -449,36 +444,50 @@ class TataUsahaController extends Controller
         $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
         $data['pembuat'] = $role_akun->nama_role;
 
-        if ($kelas->where('id_wali_kelas', $id_guru)->first()) {
-            $kelas->where('id_wali_kelas', $id_guru)->update(['id_wali_kelas' => null]);
-        }
-        if ($guruPiket->where('id_guru', $id_guru)->first()) {
-            $guruPiket->where('id_guru', $id_guru)->delete();
-        }
-        if ($guruBk->where('id_guru', $id_guru)->first()) {
-            $guruBk->where('id_guru', $id_guru)->delete();
-        }
+        $guru = Guru::where('id_guru', $id_guru)->first();
 
-        $pembuat = Guru::where('id_guru', $id_guru)->update($data);
-        $hapus_guru = Guru::where('id_guru', $id_guru)->delete();
+        if ($guru) {
+            if ($kelas->where('id_wali_kelas', $id_guru)->first()) {
+                $kelas->where('id_wali_kelas', $id_guru)->update(['id_wali_kelas' => null]);
+            }
+            if ($guruPiket->where('id_guru', $id_guru)->first()) {
+                $guruPiket->where('id_guru', $id_guru)->delete();
+            }
+            if ($guruBk->where('id_guru', $id_guru)->first()) {
+                $guruBk->where('id_guru', $id_guru)->delete();
+            }
 
-        if ($pembuat || $hapus_guru) {
-            $pesan = [
-                'success' => true,
-                'pesan' => 'Data berhasil di hapus'
-            ];
+            $pembuat = $guru->update($data);
+            $hapus_guru = $guru->delete();
+
+            $filePath = public_path('guru') . '/' . $guru->foto_guru;
+
+            if (file_exists($filePath) && unlink($filePath)) {
+                return response()->json(['success' => true]);
+            }
+
+            if ($pembuat || $hapus_guru) {
+                $pesan = [
+                    'success' => true,
+                    'pesan' => 'Data berhasil dihapus'
+                ];
+            } else {
+                $pesan = [
+                    'success' => false,
+                    'pesan' => 'Data gagal dihapus'
+                ];
+            }
         } else {
             $pesan = [
                 'success' => false,
-                'pesan' => 'Data gagal di hapus'
+                'pesan' => 'Guru tidak ditemukan'
             ];
         }
+
         return response()->json($pesan);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function logs(Logs $logs)
     {
         $data = [

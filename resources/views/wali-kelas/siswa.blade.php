@@ -53,8 +53,8 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>
                             @if ($i->foto_siswa)
-                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} " style="max-width: 100px; height: auto;"
-                                    alt="Profile" />
+                                <img src="{{ url('siswa') . '/' . $i->foto_siswa }} "
+                                    style="max-width: 100px; height: auto;" alt="Profile" />
                             @endif
                         </td>
                         <td>{{ $i->nis }}</td>

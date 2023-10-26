@@ -14,15 +14,15 @@ class TataUsahaSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $faker = Faker::create('id_ID');
 
         $datas = [6];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 1; $i++) {
+            for ($i = 1; $i <= 6; $i++) {
                 DB::table('tata_usaha')->insert([
                     'id_akun' => $data,
-                    'nama_kesiswaan' => $faker->userName(),
+                    'nama_kesiswaan' => $faker->name(),
                     'foto_kesiswaan' => $faker->image(),
                 ]);
             }

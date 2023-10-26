@@ -17,8 +17,8 @@
                             <div>
                                 @foreach ($statusKehadiran as $option)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status_kehadiran"
-                                            id="{{ $option }}" value="{{ $option }}"
+                                        <input class="form-check-input" style="cursor: pointer" type="radio"
+                                            name="status_kehadiran" id="{{ $option }}" value="{{ $option }}"
                                             {{ $presensi->status_kehadiran === $option ? 'checked' : '' }}>
                                         <label class="form-check-label" for="{{ $option }}">
                                             {{ $option }}

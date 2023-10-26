@@ -59,7 +59,7 @@
                         <td>{{ $i->status_kehadiran }}</td>
                         <td>
                             @if ($i->foto_bukti)
-                                <img src="{{ url('foto') . '/' . $i->foto_bukti }} "
+                                <img src="{{ url('presensi_bukti') . '/' . $i->foto_bukti }} "
                                     style="max-width: 100px; height: auto;" alt="Bukti" />
                             @endif
                         </td>

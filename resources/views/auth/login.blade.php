@@ -38,7 +38,7 @@
                                             @enderror
                                             <input type="text" class="form-control" placeholder="Username"
                                                 name="username" value="{{ old('username') }}"
-                                                class="@error('username') is-invalid @enderror" />
+                                                class="@error('username') is-invalid @enderror" autofocus />
                                         </div>
 
                                         <div class="form-outline

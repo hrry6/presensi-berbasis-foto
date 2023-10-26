@@ -53,14 +53,14 @@
                         <td>{{ $loop->index + 1 }}</td>
                         <td>
                             @if ($i->foto_siswa)
-                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
+                                <img src="{{ url('siswa') . '/' . $i->foto_siswa }} "
                                     style="max-width: 100px; height: auto;" />
                             @endif
                         </td>
                         <td>{{ $i->nis }}</td>
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
-                        <th>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</th>
+                        <th>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</th>
                         <td>
                             <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}" class="btn btn-success">EDIT</a>
                             <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">HAPUS</btn>

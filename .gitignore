@@ -3,7 +3,9 @@
 /public/build
 /public/hot
 /public/storage
-/public/foto
+/public/siswa
+/public/guru
+/public/presensi_bukti
 /storage/*.key
 /vendor
 .env

@@ -31,11 +31,18 @@
                         </div>
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
-                            <select name="jenis_kelamin" class="form-control">
-                                <option disabled selected>Jenis Kelamin</option>
-                                <option value="Laki-Laki">Laki-Laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                            </select>
+                            <div>
+                                @foreach ($jenisKelamin as $option)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin"
+                                            id="{{ $option }}" value="{{ $option }}"
+                                            {{ $siswa->jenis_kelamin === $option ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="{{ $option }}">
+                                            {{ $option }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="nomer_hp">Nomer Hp</label>
