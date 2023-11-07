@@ -16,6 +16,10 @@ return new class extends Migration
             $table->integer('id_role');
             $table->string('username', 60);
             $table->string('password', 225);
+
+            // Index
+            $table->index('id_akun');
+            $table->index('id_role');
             
             // Foreign Key
 

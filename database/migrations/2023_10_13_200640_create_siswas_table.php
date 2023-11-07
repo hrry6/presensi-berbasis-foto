@@ -22,6 +22,9 @@ return new class extends Migration
             $table->text('foto_siswa');
             $table->string('pembuat', 60);
 
+            // Index
+            $table->index('id_akun');
+
             // Foreign Key
             $table->foreign('id_akun')->on('akun')
                 ->references('id_akun')->onDelete('cascade')->onUpdate('cascade');

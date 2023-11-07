@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('role_akun', function (Blueprint $table) {
             $table->integer('id_role', true);
             $table->string('nama_role', 60);
+
+            // Index
+            $table->index('id_role');
         });
     }
 
