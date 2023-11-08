@@ -22,7 +22,6 @@ class SiswaSeeder extends Seeder
         foreach ($datas as $data) {
             for ($i = 1; $i <= 1; $i++) {
                 DB::table('siswa')->insert([
-                    'id_siswa' => $data,
                     'id_akun' => $data,
                     'id_kelas' => $data,
                     'nis' => $faker->numerify('2########'),
@@ -30,6 +29,8 @@ class SiswaSeeder extends Seeder
                     'nomer_hp' => $faker->numerify('08##########'),
                     'jenis_kelamin' => Arr::random(['laki-laki', 'perempuan']),
                     'angkatan' => Arr::random(['1', '2', '3', '4', '5']),
+                    'status_siswa' => 'aktif',
+                    'status_jabatan' => Arr::random(['sekretaris', 'ketua_kelas', 'wakil_kelas', 'bendahara', 'siswa']),
                     'foto_siswa' => $faker->image(),
                     'pembuat' =>  'Tata Usaha'
                 ]);

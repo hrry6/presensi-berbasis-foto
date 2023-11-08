@@ -21,6 +21,7 @@ class PengurusKelasSeeder extends Seeder
             for ($i = 1; $i <= 1; $i++) {
                 DB::table('pengurus_kelas')->insert([
                     'id_siswa' => $data,
+                    'jabatan' => 'Pengurus Kelas',
                     'pembuat' =>  'Tata Usaha'
                 ]);
             }

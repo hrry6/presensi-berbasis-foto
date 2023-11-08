@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nomer_hp', 20);
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->enum('status_siswa', ['aktif', 'tinggal_kelas', 'lulus']);
+            $table->enum('status_jabatan', ['sekretaris', 'ketua_kelas', 'wakil_kelas', 'bendahara', 'siswa'])->nullable(true);
             $table->integer('angkatan');
             $table->text('foto_siswa');
             $table->string('pembuat', 60);

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('surat_keterangan', function (Blueprint $table) {
-            $table->integer('id_presensi');
-            $table->text('surat_keterangan');
+            $table->integer('id_presensi')->nullable(true);
+            $table->text('surat_keterangan')->nullable(true);
 
             // Foreign Key
 
