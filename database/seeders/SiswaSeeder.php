@@ -29,6 +29,7 @@ class SiswaSeeder extends Seeder
                     'nama_siswa' => $faker->name(),
                     'nomer_hp' => $faker->numerify('08##########'),
                     'jenis_kelamin' => Arr::random(['laki-laki', 'perempuan']),
+                    'angkatan' => Arr::random(['1', '2', '3', '4', '5']),
                     'foto_siswa' => $faker->image(),
                     'pembuat' =>  'Tata Usaha'
                 ]);
