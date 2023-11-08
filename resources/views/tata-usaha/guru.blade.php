@@ -1,7 +1,7 @@
 @extends('layout.layout')
 @section('judul', 'Akun Guru')
 @section('sidenav')
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
                 <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
@@ -31,7 +31,7 @@
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Guru....">
+                    <input type="text" class="form-control" name="keyword" placeholder="Search Guru....">
                     <div class="input-group-append">
                       <button class="input-group-text bg-primary" >
                         <img src="/img/icon_Search.svg" alt="">
@@ -91,7 +91,7 @@
                         <th>{{ $p->nama_guru }}</th>
                         <th>Guru Piket</th>
                         <td>
-                            <a href="/tata-usaha/detail-guru/{{ $i->id_guru }}" class="btn btn-primary">
+                            <a href="/tata-usaha/detail-guru/{{ $p->id_guru }}" class="btn btn-primary">
                                 <img src="{{ asset('img/icon_Search.svg')}}" alt="">
                             </a>
                             <a href="/tata-usaha/edit-guru/{{ $p->id_guru }}" class="btn btn-warning">
@@ -115,7 +115,7 @@
                         <th>{{ $k->nama_guru }}</th>
                         <th>Wali Kelas {{ $k->tingkatan . ' ' . $k->nama_jurusan . ' ' . $k->nama_kelas }}</th>
                         <td>
-                            <a href="/tata-usaha/detail-guru/{{ $i->id_guru }}" class="btn btn-primary">
+                            <a href="/tata-usaha/detail-guru/{{ $k->id_guru }}" class="btn btn-primary">
                                 <img src="{{ asset('img/icon_Search.svg')}}" alt="">
                             </a>
                             <a href="/tata-usaha/edit-guru/{{ $k->id_guru }}" class="btn btn-warning">

@@ -1,7 +1,7 @@
 @extends('layout.layout')
 @section('judul', 'Akun Siswa')
 @section('sidenav')
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
                 <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
@@ -31,7 +31,7 @@
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Pengurus Kelas....">
+                    <input type="text" class="form-control" placeholder="Search Siswa....">
                     <div class="input-group-append">
                       <button class="input-group-text bg-primary" >
                         <img src="/img/icon_Search.svg" alt="">

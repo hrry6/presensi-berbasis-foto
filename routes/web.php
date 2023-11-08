@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('presensi', [TataUsahaController::class, 'showPresensi']);
         // LOGS
         Route::get('logs', [TataUsahaController::class, 'logs']);
+        Route::post('hapus-logs', [TataUsahaController::class, 'deleteLogs']);
     });
 
     // GURU BK
