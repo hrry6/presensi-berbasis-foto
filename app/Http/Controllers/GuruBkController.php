@@ -13,10 +13,18 @@ class GuruBkController extends Controller
      */
     public function index()
     {
+        $totalHadir = DB::select("SELECT CountStatus('Hadir') as totalHadir")[0]->totalHadir;
+        $totalIzin = DB::select("SELECT CountStatus('Izin') as totalIzin")[0]->totalIzin;
+        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
+
+        return view('guru-bk.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
+    }
+
+    public function showPresensi()
+    {
         $data = [
             'presensi' => DB::table('view_presensi')->get()
         ];
-        // dd($data);
         return view('guru-bk.presensi', $data);
     }
 

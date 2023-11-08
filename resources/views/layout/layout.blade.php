@@ -49,12 +49,24 @@
             overflow-y: auto;
             /* Scrollable contents if viewport is shorter than content. */
         }
-
         /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
+        }
+
+        .icon{
+            width: 27px;
+            height: 27px;
+        }
+
+        .block{
+            padding: 50px
+        }
+
+        .navbar{
+            z-index: 100 !important;
         }
 
         /* Firefox */
@@ -94,13 +106,14 @@
                     <img src="/img/logo.png" width="150" alt="" loading="lazy" />
                 </a>
                 <!-- Right links -->
-                <ul class="navbar-nav ms-auto d-flex flex-row">
-                    <a href="/logout" class="btn btn-danger">
-                        Logout
+                <ul class="navbar-nav ms-auto d-flex flex-row gap-3">
+                    <a href="/logout" class="btn btn-danger flex gap-2 justify-center items-center">
+                        <p class="p-0 m-0">LOG OUT</p>
+                        <img class="icon" src="{{ asset('img/icon_Logout.svg')}}" alt="">
                     </a>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown p-10">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle"
-                            height="22" alt="" width="22" loading="lazy" />
+                            height="42" alt="" width="42" loading="lazy" />
                     </li>
                 </ul>
             </div>

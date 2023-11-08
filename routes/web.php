@@ -64,14 +64,13 @@ Route::middleware(['auth'])->group(function () {
 
     // GURU BK
     Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
-        // Route::get('dashboard', [GuruBkController::class, 'index']);
-        Route::get('presensi', [GuruBkController::class, 'index']);
+        Route::get('dashboard', [GuruBkController::class, 'index']);
+        Route::get('presensi', [GuruBkController::class, 'showPresensi']);
     });
 
     // GURU PIKET
     Route::prefix('guru-piket')->middleware('akses:4')->group(function () {
-        // Route::get('dashboard', [GuruPiketController::class, 'index']);
-        Route::get('presensi', [GuruPiketController::class, 'index']);
+        Route::get('presensi', [GuruPiketController::class, 'showPresensi']);
     });
 
     // PENGURUS KELAS
@@ -113,6 +112,7 @@ Route::middleware(['auth'])->group(function () {
     // SISWA
     Route::prefix('siswa')->middleware('akses:1')->group(function () {
         Route::get('dashboard', [SiswaController::class, 'index']);
+        Route::get('presensi', [SiswaController::class, 'showPresensi']);
     });
 
 });

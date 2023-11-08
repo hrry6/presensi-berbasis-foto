@@ -39,17 +39,7 @@ class TataUsahaController extends Controller
         ];
         return view('tata-usaha.siswa', $data);
     }
-
-    public function showPengurus(PengurusKelas $pengurus)
-    {
-        $data = [
-            'pengurus' => $pengurus
-                ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get()
-        ];
-        return view('tata-usaha.pengurus-kelas', $data);
-    }
-
+    
     public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas)
     {
         $data = [
@@ -63,6 +53,17 @@ class TataUsahaController extends Controller
         ];
         return view('tata-usaha.guru', $data);
     }
+
+    public function showPengurus(PengurusKelas $pengurus)
+    {
+        $data = [
+            'pengurus' => $pengurus
+                ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get()
+        ];
+        return view('tata-usaha.pengurus-kelas', $data);
+    }
+
 
     public function showPresensi()
     {

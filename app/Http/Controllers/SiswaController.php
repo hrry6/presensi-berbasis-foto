@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
 {
@@ -12,15 +13,22 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        return view('siswa.index');
+        $totalHadir = DB::select("SELECT CountStatus('Hadir') as totalHadir")[0]->totalHadir;
+        $totalIzin = DB::select("SELECT CountStatus('Izin') as totalIzin")[0]->totalIzin;
+        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
+
+        return view('siswa.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function showPresensi()
     {
-        //
+        $data = [
+            'presensi' => DB::table('view_presensi')->get()
+        ];
+        return view('siswa.presensi', $data);
     }
 
     /**

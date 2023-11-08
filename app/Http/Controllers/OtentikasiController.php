@@ -16,7 +16,7 @@ class OtentikasiController extends Controller
 
         $user = Auth::user();
         $redirectMap = [
-            6 => 'tata-usaha/akun-siswa',
+            6 => 'tata-usaha/dashboard',
             5 => 'guru-bk/dashboard',
             4 => 'guru-piket/dashboard',
             3 => 'pengurus-kelas/dashboard',
@@ -48,7 +48,7 @@ class OtentikasiController extends Controller
             $user = Auth::user();
             Session::regenerateToken();
             $redirectMap = [
-                6 => 'tata-usaha/akun-siswa',
+                6 => 'tata-usaha/dashboard',
                 5 => 'guru-bk/dashboard',
                 4 => 'guru-piket/dashboard',
                 3 => 'pengurus-kelas/dashboard',
