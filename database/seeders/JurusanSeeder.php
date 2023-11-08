@@ -22,7 +22,7 @@ class JurusanSeeder extends Seeder
         ];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 1; $i++) {
+            for ($i = 1; $i <= 6; $i++) {
                 DB::table('jurusan')->insert([
                     'nama_jurusan' => $data,
                 ]);

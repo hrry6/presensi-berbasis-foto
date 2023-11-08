@@ -19,11 +19,11 @@ class TataUsahaSeeder extends Seeder
         $datas = [6];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 6; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
                 DB::table('tata_usaha')->insert([
                     'id_akun' => $data,
-                    'nama_kesiswaan' => $faker->name(),
-                    'foto_kesiswaan' => $faker->image(),
+                    'nama_tata_usaha' => $faker->name(),
+                    'foto_tata_usaha' => $faker->image(),
                 ]);
             }
         }

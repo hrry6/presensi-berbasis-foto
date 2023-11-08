@@ -56,7 +56,7 @@ class WaliKelasController extends Controller
 
     public function createSiswa(Kelas $kelas, Siswa $siswa)
     {
-        $jenisKelamin = ['Laki-Laki', 'Perempuan'];
+        $jenisKelamin = ['laki-laki', 'perempuan'];
 
         $kelas = $kelas
             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
@@ -124,7 +124,7 @@ class WaliKelasController extends Controller
 
     public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
     {
-        $jenisKelamin = ['Laki-Laki', 'Perempuan'];
+        $jenisKelamin = ['laki-laki', 'perempuan'];
 
         $data = [
             "siswa" => $siswa->where('id_siswa', $request->id)
@@ -241,7 +241,7 @@ class WaliKelasController extends Controller
         $data = $request->validate([
             'id_siswa' => 'required',
             'status_kehadiran' => 'required',
-            'keterangan_lebih_lanjut' => 'sometimes',
+            'keterangan' => 'sometimes',
             'foto_bukti' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

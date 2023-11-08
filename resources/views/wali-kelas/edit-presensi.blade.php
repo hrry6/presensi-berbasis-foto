@@ -28,9 +28,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="keterangan_lebih_lanjut">Keterangan Lebih Lanjut</label>
-                            <input type="text" class="form-control" name="keterangan_lebih_lanjut"
-                                value="{{ $presensi->keterangan_lebih_lanjut }}">
+                            <label for="keterangan">Keterangan Lebih Lanjut</label>
+                            <input type="text" class="form-control" name="keterangan"
+                                value="{{ $presensi->keterangan }}">
                         </div>
                         <div class="form-group">
                             <label>Upload Bukti Izin/Sakit</label>

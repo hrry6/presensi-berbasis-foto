@@ -25,7 +25,7 @@ class KelasSeeder extends Seeder
                     'id_jurusan' => $i,
                     'nama_kelas' => 'Kelas '. Arr::random(['A', 'B', 'C']),
                     'tingkatan' => Arr::random(['X', 'XI', 'XII']),
-                    'status_kelas' => Arr::random(['aktif', 'tidak aktif']),
+                    'status_kelas' => Arr::random(['aktif', 'tidak_aktif']),
                 ]);
             }
         }

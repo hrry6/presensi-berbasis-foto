@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 class PengurusKelasSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class PengurusKelasSeeder extends Seeder
             for ($i = 1; $i <= 1; $i++) {
                 DB::table('pengurus_kelas')->insert([
                     'id_siswa' => $data,
-                    'jabatan' => 'Sekretaris',
+                    'jabatan' => Arr::random(['sekretaris','ketuakelas','wakilkelas', 'siswa']),
                     'pembuat' =>  'Tata Usaha'
                 ]);
             }

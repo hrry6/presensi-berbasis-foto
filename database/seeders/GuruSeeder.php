@@ -22,7 +22,7 @@ class GuruSeeder extends Seeder
         $datas = [2, 4, 5];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 3; $i++) {
                 DB::table('guru')->insert([
                     'id_akun' => $data,
                     'nama_guru' => $faker->name(). Arr::random(['S.Pd', 'S.Kom']),

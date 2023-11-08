@@ -63,7 +63,7 @@
                                     style="max-width: 100px; height: auto;" alt="Bukti" />
                             @endif
                         </td>
-                        <td>{{ $i->keterangan_lebih_lanjut }}</td>
+                        <td>{{ $i->keterangan }}</td>
                         <td>
                             <a href="edit-presensi-siswa/{{ $i->id_presensi }}" class="btn btn-success">EDIT</a>
                         </td>

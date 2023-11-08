@@ -18,7 +18,9 @@ return new class extends Migration
             $table->integer('nis');
             $table->string('nama_siswa', 60);
             $table->string('nomer_hp', 20);
-            $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
+            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
+            $table->enum('status_siswa', ['aktif', 'tinggal_kelas', 'lulus']);
+            $table->integer('angkatan');
             $table->text('foto_siswa');
             $table->string('pembuat', 60);
 

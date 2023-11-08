@@ -124,7 +124,7 @@ return new class extends Migration
             IN p_nis INT,
             IN p_nama_siswa VARCHAR(60),
             IN p_id_kelas INT,
-            IN p_jenis_kelamin ENUM('Laki-Laki', 'Perempuan'),
+            IN p_jenis_kelamin ENUM('laki-laki', 'perempuan'),
             IN p_nomer_hp VARCHAR(20),
             IN p_foto_siswa VARCHAR(255),
             IN p_pembuat VARCHAR(60)

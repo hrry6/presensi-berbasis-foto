@@ -10,7 +10,7 @@ class TataUsaha extends Model
 {
     use HasFactory;
     protected $table = 'tata_usaha';
-    protected $fillable = ['id_akun', 'nama_kesiswaan', 'foto_kesiswaan'];
-    protected $primaryKey = 'id_kesiswaan';
+    protected $fillable = ['id_akun', 'nama_tata_usaha', 'foto_tata_usaha'];
+    protected $primaryKey = 'id_tata_usaha';
     public $timestamps = false;
 }
