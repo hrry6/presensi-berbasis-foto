@@ -31,7 +31,7 @@
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Siswa....">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search Siswa....">
                     <div class="input-group-append">
                       <button class="input-group-text bg-primary" >
                         <img src="/img/icon_Search.svg" alt="">
@@ -82,9 +82,7 @@
                 @endforeach
             </tbody>
         </table>
-
     </div>
-
 @endsection
 
 @section('footer')

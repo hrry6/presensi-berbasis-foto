@@ -29,12 +29,10 @@ class TataUsahaController extends Controller
         return view('tata-usaha.index', compact('totalGuru', 'totalGuruBk', 'totalGuruPiket', 'totalKelas', 'totalPengurusKelas', 'totalSiswa', 'totalWaliKelas'));
     }
 
-
     // GURU
     public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas, Request $request)
     {
-
-        if($request->keyword == null)
+        if($request->keyword == null && $request->filter_status == null)
         {
             $data = [
                 'guruBK' => $guru_bk
@@ -45,19 +43,44 @@ class TataUsahaController extends Controller
                     ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
                     ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get(),
             ];
-        }if($request->keyword != null)
+        }else
         {
-            $data = [
-                'guruBK' => $guru_bk
-                    ->join('guru', 'guru_bk.id_guru', '=', 'guru.id_guru')->where('nama_guru', 'LIKE', "%$request->keyword%")->get(),
-                'guruPiket' => $guru_piket
-                    ->join('guru', 'guru_piket.id_guru', '=', 'guru.id_guru')->where('nama_guru', 'LIKE', "%$request->keyword%")->get(),
-                'kelas' => $kelas
-                    ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
-                    ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->where('nama_guru', 'LIKE', "%$request->keyword%")->get(),
-            ];
+            if( $request->filter_status == null)
+            {
+                $data = [
+                    'guruBK' => $guru_bk
+                        ->join('guru', 'guru_bk.id_guru', '=', 'guru.id_guru')->where('nama_guru', 'LIKE', "%$request->keyword%")->get(),
+                    'guruPiket' => $guru_piket
+                        ->join('guru', 'guru_piket.id_guru', '=', 'guru.id_guru')->where('nama_guru', 'LIKE', "%$request->keyword%")->get(),
+                    'kelas' => $kelas
+                        ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
+                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->where('nama_guru', 'LIKE', "%$request->keyword%")->get(),
+                ];
+            }
+            if( $request->filter_status == "1")
+            {
+                $data = [
+                    'guruBK' => $guru_bk
+                        ->join('guru', 'guru_bk.id_guru', '=', 'guru.id_guru')->where('nama_guru', 'LIKE', "%$request->keyword%")->get()
+                ];
+            }
+            if( $request->filter_status == "2")
+            {
+                $data = [
+                    'guruPiket' => $guru_piket
+                        ->join('guru', 'guru_piket.id_guru', '=', 'guru.id_guru')->where('nama_guru', 'LIKE', "%$request->keyword%")->get()
+                ];
+            }
+            if( $request->filter_status == "3")
+            {
+                $data = [
+                    'kelas' => $kelas
+                        ->join('guru', 'kelas.id_wali_kelas', '=', 'guru.id_guru')
+                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->where('nama_guru', 'LIKE', "%$request->keyword%")->get()
+                ];
+            }
         }
-
+        // dd($data);
         return view('tata-usaha.guru', $data);
     }
 
@@ -238,38 +261,121 @@ class TataUsahaController extends Controller
 
         return response()->json($pesan);
     }
-
-    // SISwA
-
-    public function showSiswa(Siswa $siswa)
-    {
-        $data = [
-            'siswa' => $siswa
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
-        ];
-        return view('tata-usaha.siswa', $data);
-    }
-
-
-
-    public function showPengurus(PengurusKelas $pengurus)
+    
+    //PENGURUS KELAS 
+    public function showPengurus(PengurusKelas $pengurus,Request $request)
     {
         $data = [
             'pengurus' => $pengurus
                 ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')->get()
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->where('nama_siswa','LIKE',"%$request->keyword%")
+                ->orwhere('nis','LIKE',"%$request->keyword%")
+                ->orwhere('jabatan','LIKE',"%$request->keyword%")
+                ->orwhere('nama_kelas','LIKE',"%$request->keyword%")
+                ->orwhere('tingkatan','LIKE',"%$request->keyword%")->get()
         ];
+        // dd($data);
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
+    public function createPengurus(Siswa $siswa)
+    {
+        $siswa = $siswa->all();
+        return view('tata-usaha.tambah-pengurus', ["siswa" => $siswa]);
+    }
 
-    public function showPresensi()
+    public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
+    {
+        $data = $request->validate([
+            'id_siswa' => 'required',
+            'jabatan' => 'required'
+        ]);
+
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+
+
+        if ($pengurus->create($data)) {
+            notify()->success('Data pengurus kelas telah ditambah', 'Success');
+            return redirect('tata-usaha/akun-pengurus-kelas');
+        }
+
+        return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
+    }
+
+    public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
+    {
+        $pengurus = [
+            "pengurus" => $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
+                ->where('id_pengurus', '=', $request->id)
+                ->first()
+        ];
+        // dd($pengurus);
+        return view('tata-usaha.edit-pengurus',  $pengurus);
+    }
+
+    public function updatePengurus(Request $request, PengurusKelas $pengurus, Role $role)
+    {
+        // dd($request);
+        $id_pengurus = $request->input('id_pengurus');
+        $data = $request->validate([
+            'id_pengurus' => 'required',
+            'jabatan' => 'required',
+        ]);
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+
+        if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
+            notify()->success('Data pengurus kelas telah diperbarui', 'Success');
+            return redirect('/tata-usaha/akun-pengurus-kelas');
+        }
+
+        return back()->with('error', 'Data pengurus gagal ditambahkan');
+    }
+
+    public function destroyPengurus(Request $request, Role $role)
+    {
+        $id_pengurus = $request->input('id_pengurus');
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->update($data);
+        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->delete();
+        if ($aksi) {
+            $pesan = [
+                'success' => true,
+                'pesan' => 'Data berhasil di hapus'
+            ];
+        } else {
+            $pesan = [
+                'success' => false,
+                'pesan' => 'Data gagal di hapus'
+            ];
+        }
+        return response()->json($pesan);
+    }
+    // SISWA
+
+    public function showSiswa(Siswa $siswa, Request $request)
     {
         $data = [
-            'presensi' => DB::table('view_presensi')->get()
+            'siswa' => $siswa
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where('nis', 'LIKE', "%$request->keyword%")
+                ->orWhere('nama_siswa', 'LIKE', "%$request->keyword%")
+                ->orWhere('jenis_kelamin', 'LIKE', "%$request->keyword%")
+                ->orWhere('tingkatan', 'LIKE', "%$request->keyword%")
+                ->orWhere('nama_jurusan', 'LIKE', "%$request->keyword%")
+                ->orWhere('nama_kelas', 'LIKE', "%$request->keyword%")->get()
         ];
-        return view('tata-usaha.presensi', $data);
+        // dd($data);
+        return view('tata-usaha.siswa', $data);
     }
 
     public function createSiswa(Kelas $kelas, Siswa $siswa)
@@ -283,15 +389,6 @@ class TataUsahaController extends Controller
         $siswa->all();
         return view('tata-usaha.tambah-siswa', ["kelas" => $kelas, 'jenisKelamin' => $jenisKelamin, 'siswa' => $siswa]);
     }
-
-    public function createPengurus(Siswa $siswa)
-    {
-        $siswa = $siswa->all();
-        return view('tata-usaha.tambah-pengurus', ["siswa" => $siswa]);
-    }
-
-
-
     public function storeSiswa(Request $request, Siswa $siswa, Role $role)
     {
         $data = $request->validate([
@@ -324,29 +421,6 @@ class TataUsahaController extends Controller
         return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
-    public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
-    {
-        $data = $request->validate([
-            'id_siswa' => 'required',
-            'jabatan' => 'required'
-        ]);
-
-
-        $user = Auth::user();
-        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
-        $data['pembuat'] = $role_akun->nama_role;
-
-
-        if ($pengurus->create($data)) {
-            notify()->success('Data pengurus kelas telah ditambah', 'Success');
-            return redirect('tata-usaha/akun-pengurus-kelas');
-        }
-
-        return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
-    }
-
-
-
     public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
     {
         $jenisKelamin = ['Laki-Laki', 'Perempuan'];
@@ -363,39 +437,6 @@ class TataUsahaController extends Controller
             
         ];
         return view('tata-usaha.edit-siswa',  $data);
-    }
-
-
-    public function editPengurus(Request $request, Kelas $kelas, PengurusKelas $pengurus)
-    {
-        $pengurus = [
-            "pengurus" => $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
-                ->where('id_pengurus', '=', $request->id)
-                ->first()
-        ];
-        // dd($pengurus);
-        return view('tata-usaha.edit-pengurus',  $pengurus);
-    }
-
-    public function updatePengurus(Request $request, PengurusKelas $pengurus, Role $role)
-    {
-        // dd($request);
-        $id_pengurus = $request->input('id_pengurus');
-        $data = $request->validate([
-            'id_pengurus' => 'required',
-            'jabatan' => 'required',
-        ]);
-
-        $user = Auth::user();
-        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
-        $data['pembuat'] = $role_akun->nama_role;
-
-        if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
-            notify()->success('Data pengurus kelas telah diperbarui', 'Success');
-            return redirect('/tata-usaha/akun-pengurus-kelas');
-        }
-
-        return back()->with('error', 'Data pengurus gagal ditambahkan');
     }
 
     public function updateSiswa(Request $request, Siswa $siswa, Role $role)
@@ -484,28 +525,21 @@ class TataUsahaController extends Controller
         return response()->json($pesan);
     }
 
-    public function destroyPengurus(Request $request, Role $role)
+    // PRESENSI
+    public function showPresensi(Request $request)
     {
-        $id_pengurus = $request->input('id_pengurus');
-        $user = Auth::user();
-        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
-        $data['pembuat'] = $role_akun->nama_role;
-        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->update($data);
-        $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->delete();
-        if ($aksi) {
-            $pesan = [
-                'success' => true,
-                'pesan' => 'Data berhasil di hapus'
-            ];
-        } else {
-            $pesan = [
-                'success' => false,
-                'pesan' => 'Data gagal di hapus'
-            ];
-        }
-        return response()->json($pesan);
+        $data = [
+            'presensi' => DB::table('view_presensi')
+                        ->where('nama_siswa', 'LIKE', "%$request->keyword%")
+                        ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
+                        ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
+                        ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
+                        ->orwhere('jurusan', 'LIKE', "%$request->keyword%")
+                        ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%")->get()
+        ];
+        // dd($data);
+        return view('tata-usaha.presensi', $data);
     }
-
 
     public function logs(Logs $logs, Request $request)
     {
