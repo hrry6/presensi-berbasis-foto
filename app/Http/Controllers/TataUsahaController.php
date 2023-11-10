@@ -31,6 +31,86 @@ class TataUsahaController extends Controller
         return view('tata-usaha.index', compact('totalGuru', 'totalGuruBk', 'totalGuruPiket', 'totalKelas', 'totalPengurusKelas', 'totalSiswa', 'totalWaliKelas'));
     }
 
+    //Jurusan
+    public function showJurusan(Jurusan $jurusan, Request $request)
+    {
+        $data = [
+            'jurusan' => $jurusan->where('nama_jurusan','LIKE',"%$request->keyword%")->get()
+        ];
+        return view('tata-usaha.jurusan', $data);
+    } 
+    public function createJurusan()
+    {
+        return view('tata-usaha.tambah-jurusan');
+    }
+
+    public function storeJurusan(Jurusan $jurusan,Request $request)
+    {
+        $data = $request->validate([
+            'nama_jurusan'=> 'required',
+        ]);
+
+        if($jurusan->create($data))
+        {
+            notify()->success('Data jurusan telah berhasil ditambahkan', 'Success');
+            return redirect('tata-usaha/jurusan');
+        }else
+        {
+            return back()->with('error', 'Data jurusan gagal ditambahkan');
+        }
+    }
+
+    public function editJurusan(Jurusan $jurusan, Request $request)
+    {
+        $data = $jurusan->where('id_jurusan', $request->id)->first();
+        return view('tata-usaha.edit-jurusan', ['data' => $data]);
+    }
+
+    public function updateJurusan(Jurusan $jurusan, Request $request)
+    {
+        $id_jurusan = $request->input('id_jurusan');
+        $data = $request->validate([
+            'nama_jurusan' => 'sometimes'
+        ]); 
+        // dd($request);
+        
+        if($jurusan->where('id_jurusan', $id_jurusan)->update($data))
+        {
+            notify()->success('Data jurusan telah berhasil diupdate', 'Success');
+            return redirect('tata-usaha/jurusan');
+        }else
+        {
+            return back()->with('error', 'Data jurusan gagal diupdate');
+        }
+    }
+
+    public function destroyJurusan(Jurusan $jurusan, Request $request)
+    {
+        $id_jurusan = $request->input('id_jurusan');
+
+        if($jurusan->where('id_jurusan', $id_jurusan)->delete())
+        {
+            $pesan = [
+                'success' => true,
+                'pesan' => 'Data berhasil dihapus'
+            ];
+        }else
+        {
+            $pesan = [
+                'success' => false,
+                'pesan' => 'Data gagal dihapus'
+            ];
+        }
+
+        return response()->json($pesan);
+    }
+
+    // Kelas
+    public function showKelas()
+    {
+        return view('tata-usaha.kelas');
+    } 
+
     // GURU
     public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas, Request $request)
     {

@@ -7,6 +7,12 @@
                 <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
                 </a>
+                <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
+                </a>
+                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
+                </a>
                 <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Guru</span>
                 </a>
@@ -60,36 +66,6 @@
                 </select>
             </div>
         </form>
-        {{-- <div class="d-flex width-full justify-content-between mb-3">
-            <form action="" method="get" class="flex gap-3 w-auto" id="form">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Siswa....">
-                    <div class="input-group-append">
-                      <button class="input-group-text bg-primary" > 
-                        <img src="/img/icon_Search.svg" alt="">
-                      </button>
-                    </div>
-                  </div>
-                <select class="form-select filter" name="filter_jenkel" value="">
-                    <option value="" {{ old('filter_jenkel', request('filter_jenkel'))==""?"selected" : "" }}>Pilih Jankel</option>
-                    <option value="laki-laki" {{ old('filter_jenkel', request('filter_jenkel'))=="laki-laki"?"selected" : "" }}>Laki-laki</option>
-                    <option value="perempuan" {{ old('filter_jenkel', request('filter_jenkel'))=="perempuan"?"selected" : "" }}>Perempuan</option>
-                </select>
-                <select class="form-select filter" name="filter_tingkatan" value="">
-                    <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
-                    <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
-                    <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
-                    <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
-                </select>
-                <select class="form-select filter" name="filter_jurusan" value="">
-                    <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
-                    @foreach ($jurusan as $j)
-                        <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
-                    @endforeach
-                </select>
-            </form>
-            <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
-        </div> --}}
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
                 <tr class="">

@@ -1,23 +1,23 @@
 @extends('layout.layout')
-@section('judul', 'Akun Pengurus Kelas')
+@section('judul', 'Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                <a href="resources/views/tata-usaha/pengurus-kelas.blade.php/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
                 </a>
-                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
+                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active" aria-current="true">
+                    <img src="{{ asset('img/icon_Home_White.svg')}}" alt=""><span>Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Guru</span>
                 </a>
-                <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                    <img src="{{ asset('img/icon_Profile_White.svg')}}" alt=""><span>Pengurus Kelas</span>
+                <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Pengurus Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Siswa</span>
@@ -59,12 +59,12 @@
                     <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
                     <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
                 </select>
-                <select class="form-select filter" name="filter_jurusan" value="">
+                {{-- <select class="form-select filter" name="filter_jurusan" value="">
                     <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
                     @foreach ($jurusan as $j)
                     <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
                     @endforeach
-                </select>
+                </select> --}}
             </div>
         </form>
         <table class="table table-bordered DataTable">
@@ -80,7 +80,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pengurus as $i)
+                {{-- @foreach ($pengurus as $i)
                     <tr>
                         <th>{{ $loop->iteration }}</th>
                         <td>
@@ -105,7 +105,7 @@
                             </btn>
                         </td>
                     </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
 
@@ -130,7 +130,7 @@
                     console.log(idHapus)
                     $.ajax({
                         type: 'DELETE',
-                        url: '/tata-usaha/hapus-pengurus-kelas',
+                        url: 'hapus-pengurus-kelas',
                         data: {
                             id_pengurus: idHapus,
                             _token: "{{ csrf_token() }}"
