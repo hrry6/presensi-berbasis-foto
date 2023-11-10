@@ -28,18 +28,37 @@
 @endsection
 @section('isi')
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <div class="d-flex width-full justify-content-between mb-3">
-            <form action="">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="keyword" placeholder="Search Presensi....">
-                    <div class="input-group-append">
-                      <button class="input-group-text bg-primary" >
+        <form action="" method="get" class="flex gap-3 flex-col w-auto mb-3" id="form">
+            <div class="flex">
+                <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Presensi....">
+                <div class="input-group-append">
+                    <button class="input-group-text bg-primary" > 
                         <img src="/img/icon_Search.svg" alt="">
-                      </button>
-                    </div>
-                  </div>
-            </form>
-        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <input type="date" class="form-control filter" id="tanggal" value="{{ old('filter_tanggal', request('filter_tanggal'))}}" name="filter_tanggal" placeholder="Pilih Tanggal">
+                <select class="form-select filter" name="filter_kehadiran" value="">
+                    <option value="" {{ old('filter_kehadiran', request('filter_kehadiran'))==""?"selected" : "" }}>Pilih Status Kehadiran</option>
+                    <option value="hadir" {{ old('filter_kehadiran', request('filter_kehadiran'))=="hadir"?"selected" : "" }}>Hadir</option>
+                    <option value="alpha" {{ old('filter_kehadiran', request('filter_kehadiran'))=="alpha"?"selected" : "" }}>Alpha</option>
+                    <option value="izin" {{ old('filter_kehadiran', request('filter_kehadiran'))=="izin"?"selected" : "" }}>Izin</option>
+                </select>
+                <select class="form-select filter" name="filter_tingkatan" value="">
+                    <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
+                    <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
+                    <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
+                    <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
+                </select>
+                <select class="form-select filter" name="filter_jurusan" value="">
+                    <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
+                    @foreach ($jurusan as $j)
+                    <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
                 <tr class="">
@@ -67,4 +86,11 @@
 
     </div>
 
+@endsection
+@section('footer')
+    <script type="module">
+        $(".filter").on('change', function() {
+            $("#form").submit();
+        })
+    </script>
 @endsection

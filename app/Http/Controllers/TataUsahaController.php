@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Guru;
 use App\Models\GuruBk;
 use App\Models\GuruPiket;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
 use App\Models\PengurusKelas;
@@ -118,6 +119,7 @@ class TataUsahaController extends Controller
         if ($status == 'Guru BK') {
             $sukses = DB::statement("CALL CreateGuruBK(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
             if ($sukses) {
+                notify()->success('Data guru telah berhasil ditambahkan', 'Success');
                 return redirect('tata-usaha/akun-guru');
             } else {
                 return back()->with('error', 'Data guru gagal ditambahkan');
@@ -126,6 +128,7 @@ class TataUsahaController extends Controller
         if ($status == 'Guru Piket') {
             $sukses = DB::statement("CALL CreateGuruPiket(?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role]);
             if ($sukses) {
+                notify()->success('Data guru telah berhasil ditambahkan', 'Success');
                 return redirect('tata-usaha/akun-guru');
             } else {
                 return back()->with('error', 'Data guru gagal ditambahkan');
@@ -133,6 +136,7 @@ class TataUsahaController extends Controller
         } else {
             $sukses = DB::statement("CALL CreateWaliKelas(?,?,?,?,?)", [$user->id_akun, $data['nama_guru'], $foto_nama, $role_akun->nama_role, $request->input('status')]);
             if ($sukses) {
+                notify()->success('Data guru telah berhasil berhasil ditambahkan', 'Success');
                 return redirect('tata-usaha/akun-guru');
             } else {
                 return back()->with('error', 'Data guru gagal ditambahkan');
@@ -204,7 +208,7 @@ class TataUsahaController extends Controller
                 if ($status == 'Guru Piket') {
                     $guruPiket->create(['id_guru' => $id_guru]);
                 }
-
+                notify()->success('Data guru telah berhasil diupdate', 'Success');
                 return redirect('tata-usaha/akun-guru');
             }
         }
@@ -263,19 +267,39 @@ class TataUsahaController extends Controller
     }
     
     //PENGURUS KELAS 
-    public function showPengurus(PengurusKelas $pengurus,Request $request)
+    public function showPengurus(PengurusKelas $pengurus, Jurusan $jurusan,Request $request)
     {
-        $data = [
-            'pengurus' => $pengurus
+        $filter = $pengurus
                 ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->where('nama_siswa','LIKE',"%$request->keyword%")
-                ->orwhere('nis','LIKE',"%$request->keyword%")
-                ->orwhere('jabatan','LIKE',"%$request->keyword%")
-                ->orwhere('nama_kelas','LIKE',"%$request->keyword%")
-                ->orwhere('tingkatan','LIKE',"%$request->keyword%")->get()
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where(function ($query) use ($request) {
+                    $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
+                        ->orWhere('nis', 'LIKE', "%$request->keyword%")
+                        ->orWhere('jabatan', 'LIKE', "%$request->keyword%")
+                        ->orWhere('nama_kelas', 'LIKE', "%$request->keyword%")
+                        ->orWhere('tingkatan', 'LIKE', "%$request->keyword%");
+                });
+
+        if($request->filter_jabatan != null)
+        {
+            $filter = $filter->where('status_jabatan',$request->filter_jabatan );
+        }
+
+        if($request->filter_tingkatan != null)
+        {
+            $filter = $filter->where('tingkatan', $request->filter_tingkatan);
+        }
+
+        if($request->filter_jurusan != null)
+        {
+            $filter = $filter->where('nama_jurusan', $request->filter_jurusan);
+        }
+
+        $data = [
+            'pengurus' => $filter->get(),
+            'jurusan' => $jurusan->get()
         ];
-        // dd($data);
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
@@ -299,7 +323,7 @@ class TataUsahaController extends Controller
 
 
         if ($pengurus->create($data)) {
-            notify()->success('Data pengurus kelas telah ditambah', 'Success');
+            notify()->success('Data pengurus kelas telah berhasil ditambahkan', 'Success');
             return redirect('tata-usaha/akun-pengurus-kelas');
         }
 
@@ -331,7 +355,7 @@ class TataUsahaController extends Controller
         $data['pembuat'] = $role_akun->nama_role;
 
         if ($pengurus->where('id_pengurus', $id_pengurus)->update($data)) {
-            notify()->success('Data pengurus kelas telah diperbarui', 'Success');
+            notify()->success('Data pengurus kelas telah berhasil diupdate', 'Success');
             return redirect('/tata-usaha/akun-pengurus-kelas');
         }
 
@@ -361,18 +385,35 @@ class TataUsahaController extends Controller
     }
     // SISWA
 
-    public function showSiswa(Siswa $siswa, Request $request)
+    public function showSiswa(Siswa $siswa, Jurusan $jurusan,Request $request)
     {
-        $data = [
-            'siswa' => $siswa
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-                ->where('nis', 'LIKE', "%$request->keyword%")
+        $filter = $siswa
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->where(function ($query) use ($request) {
+            $query->where('nis', 'LIKE', "%$request->keyword%")
                 ->orWhere('nama_siswa', 'LIKE', "%$request->keyword%")
                 ->orWhere('jenis_kelamin', 'LIKE', "%$request->keyword%")
                 ->orWhere('tingkatan', 'LIKE', "%$request->keyword%")
                 ->orWhere('nama_jurusan', 'LIKE', "%$request->keyword%")
-                ->orWhere('nama_kelas', 'LIKE', "%$request->keyword%")->get()
+                ->orWhere('nama_kelas', 'LIKE', "%$request->keyword%");
+        });
+
+        if($request->filter_jenkel != null) {
+            $filter->where("jenis_kelamin", $request->filter_jenkel);
+        }
+
+        if($request->filter_tingkatan != null) {
+            $filter->where("tingkatan", $request->filter_tingkatan);
+        }
+
+        if($request->filter_jurusan != null) {
+            $filter->where("nama_jurusan", $request->filter_jurusan);
+        }
+
+        $data = [
+            'siswa' => $filter->get(),
+            'jurusan' => $jurusan->get()
         ];
         // dd($data);
         return view('tata-usaha.siswa', $data);
@@ -414,7 +455,7 @@ class TataUsahaController extends Controller
         }
 
         if ($siswa->create($data)) {
-            notify()->success('Data siswa telah ditambah', 'Success');
+            notify()->success('Data siswa telah berhasil ditambahkan', 'Success');
             return redirect('tata-usaha/akun-siswa');
         }
 
@@ -476,7 +517,7 @@ class TataUsahaController extends Controller
             $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
 
             if ($dataUpdate) {
-                notify()->success('Data siswa telah diperbarui', 'Success');
+                notify()->success('Data siswa  telah berhasil diupdate', 'Success');
                 return redirect('tata-usaha/akun-siswa')->with('success', 'Data berhasil diupdate');
             }
         }
@@ -526,16 +567,42 @@ class TataUsahaController extends Controller
     }
 
     // PRESENSI
-    public function showPresensi(Request $request)
+    public function showPresensi(Request $request, Jurusan $jurusan)
     {
+
+        $filter = DB::table('view_presensi')
+        ->where(function ($query) use ($request) {
+            $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
+            ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
+            ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
+            ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
+            ->orwhere('jurusan', 'LIKE', "%$request->keyword%")
+            ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
+        });
+
+        if($request->filter_tanggal != null)
+        {
+            $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%" );
+        }
+
+        if($request->filter_kehadiran != null)
+        {
+            $filter = $filter->where('status_kehadiran',$request->filter_kehadiran );
+        }
+
+        if($request->filter_tingkatan != null)
+        {
+            $filter = $filter->where('tingkatan',$request->filter_tingkatan );
+        }
+
+        if($request->filter_jurusan != null)
+        {
+            $filter = $filter->where('jurusan',$request->filter_jurusan );
+        }
+
         $data = [
-            'presensi' => DB::table('view_presensi')
-                        ->where('nama_siswa', 'LIKE', "%$request->keyword%")
-                        ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
-                        ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
-                        ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
-                        ->orwhere('jurusan', 'LIKE', "%$request->keyword%")
-                        ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%")->get()
+            'presensi' => $filter->get(),
+            'jurusan' =>  $jurusan->get()
         ];
         // dd($data);
         return view('tata-usaha.presensi', $data);
@@ -543,18 +610,40 @@ class TataUsahaController extends Controller
 
     public function logs(Logs $logs, Request $request)
     {
+        $filter = $logs::orderBy('id_log', 'desc')
+        ->where(function ($query) use ($request) {
+        $query->where('tabel', 'LIKE', "%$request->keyword%")
+            ->orWhere('aktor', 'LIKE', "%$request->keyword%")
+            ->orWhere('tanggal', 'LIKE', "%$request->keyword%")
+            ->orWhere('jam', 'LIKE', "%$request->keyword%")
+            ->orWhere('aksi', 'LIKE', "%$request->keyword%");
+        })
+        ->where('status', 'aktif');
+
+        if($request->filter_tabel != null)
+        {
+            $filter = $filter->where('tabel',$request->filter_tabel );
+        }
+
+        if($request->filter_aktor != null)
+        {
+            $filter = $filter->where('aktor',$request->filter_aktor );
+        }
+
+        if($request->filter_tanggal != null)
+        {
+            $filter = $filter->where('tanggal',$request->filter_tanggal );
+        }
+
+        if($request->filter_aksi != null)
+        {
+            $filter = $filter->where('aksi',$request->filter_aksi );
+        }
+
         $data = [
-            'logs' => $logs::orderBy('id_log', 'desc')
-                    ->where(function ($query) use ($request) {
-                    $query->where('tabel', 'LIKE', "%$request->keyword%")
-                        ->orWhere('aktor', 'LIKE', "%$request->keyword%")
-                        ->orWhere('tanggal', 'LIKE', "%$request->keyword%")
-                        ->orWhere('jam', 'LIKE', "%$request->keyword%")
-                        ->orWhere('aksi', 'LIKE', "%$request->keyword%");
-                    })
-                    ->where('status', 'aktif')
-                    ->get()
+            'logs' => $filter->get()
         ];
+        // dd($filter->get());
         return view('tata-usaha.logs', $data);
     }
 
@@ -567,6 +656,7 @@ class TataUsahaController extends Controller
                 $logs::where('id_log', $p)->update(['status' => 'tidak_aktif']);    
             }
         }
+        notify()->success('Data logs telah berhasil dihapus', 'Success');
         return redirect('/tata-usaha/logs')->with('success', 'Data logs berhasil dihapus');
     }
 }

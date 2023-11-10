@@ -28,19 +28,68 @@
 @endsection
 @section('isi')
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <div class="d-flex width-full justify-content-between mb-3">
-            <form action="">
-                <div class="input-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="Search Siswa....">
+        <form action="" method="get" class="flex gap-3 flex-col w-auto mb-3" id="form">
+            <div class=" flex w-full justify-content-between">
+                <div class="flex">
+                    <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Siswa....">
                     <div class="input-group-append">
-                      <button class="input-group-text bg-primary" >
+                        <button class="input-group-text bg-primary" > 
+                            <img src="/img/icon_Search.svg" alt="">
+                        </button>
+                    </div>
+                </div>
+                <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
+            </div> 
+            <div class="flex gap-3">
+                <select class="form-select filter" name="filter_jenkel" value="">
+                    <option value="" {{ old('filter_jenkel', request('filter_jenkel'))==""?"selected" : "" }}>Pilih Jankel</option>
+                    <option value="laki-laki" {{ old('filter_jenkel', request('filter_jenkel'))=="laki-laki"?"selected" : "" }}>Laki-laki</option>
+                    <option value="perempuan" {{ old('filter_jenkel', request('filter_jenkel'))=="perempuan"?"selected" : "" }}>Perempuan</option>
+                </select>
+                <select class="form-select filter" name="filter_tingkatan" value="">
+                    <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
+                    <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
+                    <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
+                    <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
+                </select>
+                <select class="form-select filter" name="filter_jurusan" value="">
+                    <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
+                    @foreach ($jurusan as $j)
+                        <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
+        {{-- <div class="d-flex width-full justify-content-between mb-3">
+            <form action="" method="get" class="flex gap-3 w-auto" id="form">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Siswa....">
+                    <div class="input-group-append">
+                      <button class="input-group-text bg-primary" > 
                         <img src="/img/icon_Search.svg" alt="">
                       </button>
                     </div>
                   </div>
+                <select class="form-select filter" name="filter_jenkel" value="">
+                    <option value="" {{ old('filter_jenkel', request('filter_jenkel'))==""?"selected" : "" }}>Pilih Jankel</option>
+                    <option value="laki-laki" {{ old('filter_jenkel', request('filter_jenkel'))=="laki-laki"?"selected" : "" }}>Laki-laki</option>
+                    <option value="perempuan" {{ old('filter_jenkel', request('filter_jenkel'))=="perempuan"?"selected" : "" }}>Perempuan</option>
+                </select>
+                <select class="form-select filter" name="filter_tingkatan" value="">
+                    <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
+                    <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
+                    <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
+                    <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
+                </select>
+                <select class="form-select filter" name="filter_jurusan" value="">
+                    <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
+                    @foreach ($jurusan as $j)
+                        <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
+                    @endforeach
+                </select>
             </form>
             <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
-        </div>
+        </div> --}}
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
                 <tr class="">
@@ -118,5 +167,8 @@
                 }
             });
         });
+        $(".filter").on('change', function() {
+            $("#form").submit();
+        })
     </script>
 @endsection

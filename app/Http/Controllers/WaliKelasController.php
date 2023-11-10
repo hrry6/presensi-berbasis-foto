@@ -274,7 +274,6 @@ class WaliKelasController extends Controller
                 return redirect('wali-kelas/presensi-siswa');
             }
         }
-
         return back()->with('error', 'Data gagal diperbarui');
     }
 
