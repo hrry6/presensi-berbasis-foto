@@ -14,6 +14,7 @@ use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class TataUsahaController extends Controller
 {
@@ -569,7 +570,17 @@ class TataUsahaController extends Controller
     // PRESENSI
     public function showPresensi(Request $request, Jurusan $jurusan)
     {
+        $filter = $this->filterPresensi($request);
+        $data = [
+            'presensi' => $filter,
+            'jurusan' =>  $jurusan->get()
+        ];
+        // dd($data);
+        return view('tata-usaha.presensi', $data);
+    }
 
+    private function filterPresensi(Request $request)
+    {
         $filter = DB::table('view_presensi')
         ->where(function ($query) use ($request) {
             $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
@@ -579,34 +590,33 @@ class TataUsahaController extends Controller
             ->orwhere('jurusan', 'LIKE', "%$request->keyword%")
             ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
         });
-
         if($request->filter_tanggal != null)
         {
             $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%" );
         }
-
         if($request->filter_kehadiran != null)
         {
             $filter = $filter->where('status_kehadiran',$request->filter_kehadiran );
         }
-
         if($request->filter_tingkatan != null)
         {
             $filter = $filter->where('tingkatan',$request->filter_tingkatan );
         }
-
         if($request->filter_jurusan != null)
         {
             $filter = $filter->where('jurusan',$request->filter_jurusan );
         }
-
-        $data = [
-            'presensi' => $filter->get(),
-            'jurusan' =>  $jurusan->get()
-        ];
-        // dd($data);
-        return view('tata-usaha.presensi', $data);
+        return $filter->get();
     }
+
+    public function exportPresensi(Request $request)
+    {
+        $filter = $this->filterPresensi($request); 
+        $pdf = PDF::loadView('presensi-pdf', ['presensi' => $filter]);
+        // $pdf = PDF::loadView('presensi-pdf');
+        return $pdf->download('presensi.pdf');
+    }
+
 
     public function logs(Logs $logs, Request $request)
     {

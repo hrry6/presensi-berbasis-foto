@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
 
         // PRESENSI
         Route::get('presensi', [TataUsahaController::class, 'showPresensi']);
+        Route::get('presensi-pdf', [TataUsahaController::class, 'exportPresensi']);
         // LOGS
         Route::get('logs', [TataUsahaController::class, 'logs']);
         Route::post('hapus-logs', [TataUsahaController::class, 'deleteLogs']);

@@ -8,13 +8,13 @@
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Guru</span>
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Guru</span>
                 </a>
                 <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Pengurus Kelas</span>
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Pengurus Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Siswa</span>
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Siswa</span>
                 </a>
                 <a href="/tata-usaha/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
                     <img src="{{ asset('img/icon_Location_White.svg')}}" alt=""><span>Presensi</span>
@@ -28,14 +28,17 @@
 @endsection
 @section('isi')
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <form action="" method="get" class="flex gap-3 flex-col w-auto mb-3" id="form">
-            <div class="flex">
-                <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Presensi....">
-                <div class="input-group-append">
-                    <button class="input-group-text bg-primary" > 
-                        <img src="/img/icon_Search.svg" alt="">
-                    </button>
+        <form class="flex gap-3 flex-col w-auto mb-3" action="" method="get" id="form" >
+            <div class="flex justify-content-between">
+                <div class="flex">
+                    <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Presensi....">
+                    <div class="input-group-append">
+                        <button class="input-group-text bg-primary" > 
+                            <img src="/img/icon_Search.svg" alt="">
+                        </button>
+                    </div>
                 </div>
+                <button class="btn btn-success" id="downloadPDF">Download PDF</button>
             </div>
             <div class="flex gap-3">
                 <input type="date" class="form-control filter" id="tanggal" value="{{ old('filter_tanggal', request('filter_tanggal'))}}" name="filter_tanggal" placeholder="Pilih Tanggal">
@@ -59,7 +62,7 @@
                 </select>
             </div>
         </form>
-        <table class="table table-bordered DataTable">
+        <table class="table table-bordered">
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
@@ -91,6 +94,9 @@
     <script type="module">
         $(".filter").on('change', function() {
             $("#form").submit();
+        })
+        $('#downloadPDF').on('click', function(e){    
+            $("#form").attr('action', '/tata-usaha/presensi-pdf').submit();
         })
     </script>
 @endsection
