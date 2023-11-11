@@ -83,7 +83,12 @@
                 @foreach ($presensi as $i)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $i->foto_bukti }}</td>
+                        <td>
+                            @if ($i->foto_bukti)
+                            <img src="{{ url('presensi_bukti') . '/' . $i->foto_bukti }} "
+                                style="max-width: 100px; height: auto;" alt="Bukti" alt="Bukti" />
+                            @endif
+                        </td>
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->tanggal }}</td>
                         <td>{{ $i->status_kehadiran }}</td>

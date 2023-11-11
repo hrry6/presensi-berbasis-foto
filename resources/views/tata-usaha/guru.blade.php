@@ -74,7 +74,7 @@
                             <td>
                                 @if ($i->foto_guru)
                                     <img src="{{ url('guru') . '/' . $i->foto_guru }} "
-                                        style="max-width: 100px; height: auto;" />
+                                        style="max-width: 100px; height: auto;" alt="Guru BK" />
                                 @endif
                             </td>
                             <th>{{ $i->nama_guru }}</th>
@@ -100,7 +100,7 @@
                             <td>
                                 @if ($p->foto_guru)
                                     <img src="{{ url('guru') . '/' . $p->foto_guru }} "
-                                        style="max-width: 100px; height: auto;" />
+                                        style="max-width: 100px; height: auto;" alt="Guru Piket"/>
                                 @endif
                             </td>
                             <th>{{ $p->nama_guru }}</th>
@@ -126,7 +126,7 @@
                             <td>
                                 @if ($k->foto_guru)
                                     <img src="{{ url('guru') . '/' . $k->foto_guru }} "
-                                        style="max-width: 100px; height: auto;" />
+                                        style="max-width: 100px; height: auto;" alt="Wali Kelas" />
                                 @endif
                             </td>
                             <th>{{ $k->nama_guru }}</th>

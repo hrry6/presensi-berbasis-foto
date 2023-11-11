@@ -86,7 +86,7 @@
                         <td>
                             @if ($i->foto_siswa)
                                 <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
-                                    style="max-width: 100px; height: auto;" />
+                                    style="max-width: 100px; height: auto;" alt="Siswa"/>
                             @endif
                         </td>
                         <td>{{ $i->nis }}</td>

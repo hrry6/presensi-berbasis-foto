@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/siswa.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="/tata-usaha/edit-siswa/update" method="POST" enctype="multipart/form-data">
+                    <form action="update" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>
@@ -48,6 +48,10 @@
                         <div class="form-group">
                             <label for="nomer_hp">Nomer Hp</label>
                             <input type="number" class="form-control" name="nomer_hp" value="{{ $siswa->nomer_hp }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="angkatan">Angkatan</label>
+                            <input type="number" class="form-control" name="angkatan" value="{{ $siswa->angkatan }}">
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Siswa</label>

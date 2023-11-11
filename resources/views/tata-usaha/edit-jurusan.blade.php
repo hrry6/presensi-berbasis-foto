@@ -16,7 +16,7 @@
                             <input type="hidden" name="id_jurusan" value="{{ $data->id_jurusan }}" />
                             <input type="text" class="form-control" value="{{ $data->nama_jurusan }}" name="nama_jurusan">
                         </div> <br><br>
-                        <a href="{{ url('tata-usaha/akun-pengurus-kelas') }}"
+                        <a href="{{ url('tata-usaha/jurusan') }}"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"
                             style="background-color: #14C345">KEMBALI</a>
                         <button type="submit" class="btn text-decoration-underline text-light fw-bold"

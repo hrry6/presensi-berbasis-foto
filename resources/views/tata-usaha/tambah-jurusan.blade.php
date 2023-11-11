@@ -15,7 +15,7 @@
                             <label for="nama_jurusan">Jurusan</label>
                             <input type="text" class="form-control" name="nama_jurusan">
                         </div> <br><br>
-                        <a href="{{ url('tata-usaha/akun-pengurus-kelas') }}"
+                        <a href="{{ url('tata-usaha/jurusan') }}"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"
                             style="background-color: #14C345">KEMBALI</a>
                         <button type="submit" class="btn text-decoration-underline text-light fw-bold"

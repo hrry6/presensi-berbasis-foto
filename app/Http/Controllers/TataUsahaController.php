@@ -101,15 +101,112 @@ class TataUsahaController extends Controller
                 'pesan' => 'Data gagal dihapus'
             ];
         }
-
         return response()->json($pesan);
     }
 
     // Kelas
-    public function showKelas()
+    public function showKelas(Kelas $kelas, Jurusan $jurusan, Request $request)
     {
-        return view('tata-usaha.kelas');
+        $filter = $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->where(function ($query) use ($request) {
+            $query->where('tingkatan', 'LIKE', "%$request->keyword%")
+            ->orWhere('nama_jurusan', 'LIKE', "%$request->keyword%")
+            ->orWhere('nama_kelas', 'LIKE', "%$request->keyword%")
+            ->orWhere('status_kelas', 'LIKE', "%$request->keyword%");
+        });
+        // dd($request->filter_jurusan);
+        if($request->filter_tingkatan != null) 
+        {
+            $filter = $filter->where("tingkatan", $request->filter_tingkatan);
+        }
+
+        if($request->filter_jurusan != null) 
+        {
+            $filter = $filter->where("jurusan.id_jurusan", $request->filter_jurusan);
+        }
+
+        if($request->filter_status != null) 
+        {
+            $filter = $filter->where('status_kelas', $request->filter_status);
+        }
+
+        $data = [
+            'kelas' => $filter->get(),
+            'jurusan' => $jurusan->get()
+        ];
+        return view('tata-usaha.kelas', $data);
     } 
+
+    public function createKelas(Jurusan $jurusan)
+    {
+        return view('tata-usaha.tambah-kelas', ['jurusan' => $jurusan->get()]);
+    }
+
+    public function storeKelas(Kelas $kelas, Request $request)
+    {
+        $data = $request->validate([
+            'tingkatan' => 'required',
+            'id_jurusan' => 'required',
+            'nama_kelas' => 'required',
+            'status_kelas' => 'required'
+        ]);
+        
+        if($kelas->create($data))
+        {
+            notify()->success('Data kelas telah berhasil ditambahkan', 'Success');
+            return redirect('tata-usaha/kelas');
+        }else
+        {
+            return back()->with('error', 'Data kelas gagal ditambahkan');
+        }   
+    }
+
+    public function editKelas(Kelas $kelas,Jurusan $jurusan, Request $request)
+    {
+        $data = [
+            'kelas' => $kelas->where('id_kelas', $request->id)->first(),
+            'jurusan' => $jurusan->get()
+        ];
+        // dd($data);
+        return view('tata-usaha.edit-kelas', $data);
+    }
+
+    public function updateKelas(Kelas $kelas,Request $request)
+    {
+        $id_kelas = $request->input('id_kelas');
+        $data = $request->validate([
+            'tingkatan' => 'required',
+            'id_jurusan' => 'required',
+            'nama_kelas' => 'required',
+            'status_kelas' => 'required'
+        ]);
+        if($kelas->where('id_kelas', $id_kelas)->update($data))
+        {
+            notify()->success('Data kelas telah berhasil diupdate', 'Success');
+            return redirect('tata-usaha/kelas');
+        }else
+        {
+            return back()->with('error', 'Data kelas gagal diupdate');
+        }   
+    }
+
+    public function destroyKelas(Kelas $kelas,Request $request)
+    {
+        $id_kelas = $request->input('id_kelas');
+        if($kelas->where('id_kelas', $id_kelas)->delete()){
+            $pesan = [
+                'success' => true,
+                'pesan' => 'Data berhasil dihapus'
+            ];
+        }else
+        {
+            $pesan = [
+                'success' => false,
+                'pesan' => 'Data gagal dihapus'
+            ];
+        }
+        return response()->json($pesan);
+    }
 
     // GURU
     public function showGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas, Request $request)
@@ -165,6 +262,7 @@ class TataUsahaController extends Controller
         // dd($data);
         return view('tata-usaha.guru', $data);
     }
+    
 
     public function createGuru(GuruBk $guru_bk, GuruPiket $guru_piket, Kelas $kelas)
     {
@@ -374,7 +472,7 @@ class TataUsahaController extends Controller
 
         if($request->filter_jurusan != null)
         {
-            $filter = $filter->where('nama_jurusan', $request->filter_jurusan);
+            $filter = $filter->where('jurusan.id_jurusan', $request->filter_jurusan);
         }
 
         $data = [
@@ -489,7 +587,7 @@ class TataUsahaController extends Controller
         }
 
         if($request->filter_jurusan != null) {
-            $filter->where("nama_jurusan", $request->filter_jurusan);
+            $filter->where("jurusan.id_jurusan", $request->filter_jurusan);
         }
 
         $data = [
@@ -519,6 +617,7 @@ class TataUsahaController extends Controller
             'id_kelas' => 'required',
             'jenis_kelamin' => 'required',
             'nomer_hp' => 'required',
+            'angkatan' => 'required',
             'foto_siswa' => 'required',
         ]);
 
@@ -571,6 +670,7 @@ class TataUsahaController extends Controller
             'id_kelas' => 'sometimes',
             'jenis_kelamin' => 'sometimes',
             'nomer_hp' => 'sometimes',
+            'angkatan' => 'sometimes',
             'foto_siswa' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
