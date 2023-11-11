@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
         Route::get('dashboard', [GuruBkController::class, 'index']);
         Route::get('presensi', [GuruBkController::class, 'showPresensi']);
+        Route::get('presensi-pdf', [GuruBkController::class, 'exportPresensi']);
     });
 
     // GURU PIKET

@@ -18,15 +18,16 @@ class JurusanSeeder extends Seeder
         $datas = [
             'Rekayasa Perangkat Lunak', 'Teknik Komputer dan Jaringan',
             'Teknik Pengelasan', 'Teknik Permesinan', 'Teknik Kendaraan Ringan dan Otomotif',
-            'Multimedia', 'Akutanasi', 'Tata Busana'
+            'Multimedia', 'Akuntansi', 'Tata Busana'
         ];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 6; $i++) {
+            // for ($i = 1; $i <= 6; $i++) {
                 DB::table('jurusan')->insert([
                     'nama_jurusan' => $data,
+                    'pembuat' => 'Tata Usaha',
                 ]);
-            }
+            // }
         }
     }
 }

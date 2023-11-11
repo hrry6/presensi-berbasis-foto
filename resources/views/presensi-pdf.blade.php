@@ -1,4 +1,4 @@
-{{-- hello --}}
+hello
 
     <!DOCTYPE html>
 <html>
@@ -33,20 +33,24 @@
         <table id="customers">
             <tr class="">
                 <th scope="col">No</th>
+                <th scope="col">Nis</th>
                 <th scope="col">Nama Siswa</th>
-                <th scope="col">Tanggal </th>
-                <th scope="col">Status Kehadiran</th>
+                <th scope="col">Tanggal</th>
                 <th scope="col">Kelas</th>
+                <th scope="col">Kehadiran</th>
+                <th scope="col">Keterangan</th>
             </tr>
-            @foreach ($presensi as $i)
+            @foreach ($presensi as $p)
             <tr>
                 <td>{{ $loop->index + 1 }}</td>
-                <td>{{ $i->nama_siswa }}</td>
-                <td>{{ $i->tanggal }}</td>
-                <td>{{ $i->status_kehadiran }}</td>
-                <td>{{ $i->tingkatan." ".$i->jurusan." ".$i->nama_kelas}}</td>
+                <td>{{ $p->nis }}</td>
+                <td>{{ $p->nama_siswa }}</td>
+                <td>{{ $p->tanggal }}</td>
+                <td>{{ $p->tingkatan." ".$p->nama_jurusan." ".$p->nama_kelas}}</td>
+                <td>{{ $p->status_kehadiran }}</td>
+                <td>{{ $p->keterangan }}</td>
             </tr>
-            @endforeach
+        @endforeach
         </table>
     </div>
 </body>

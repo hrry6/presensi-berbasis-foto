@@ -9,6 +9,7 @@ use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
 use App\Models\PengurusKelas;
+use App\Models\PresensiSiswa;
 use App\Models\Role;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -44,11 +45,15 @@ class TataUsahaController extends Controller
         return view('tata-usaha.tambah-jurusan');
     }
 
-    public function storeJurusan(Jurusan $jurusan,Request $request)
+    public function storeJurusan(Jurusan $jurusan,Request $request, Role $role)
     {
         $data = $request->validate([
             'nama_jurusan'=> 'required',
         ]);
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
 
         if($jurusan->create($data))
         {
@@ -66,13 +71,16 @@ class TataUsahaController extends Controller
         return view('tata-usaha.edit-jurusan', ['data' => $data]);
     }
 
-    public function updateJurusan(Jurusan $jurusan, Request $request)
+    public function updateJurusan(Jurusan $jurusan, Request $request, Role $role)
     {
         $id_jurusan = $request->input('id_jurusan');
         $data = $request->validate([
             'nama_jurusan' => 'sometimes'
         ]); 
-        // dd($request);
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
         
         if($jurusan->where('id_jurusan', $id_jurusan)->update($data))
         {
@@ -84,9 +92,14 @@ class TataUsahaController extends Controller
         }
     }
 
-    public function destroyJurusan(Jurusan $jurusan, Request $request)
+    public function destroyJurusan(Jurusan $jurusan, Request $request, Role $role)
     {
         $id_jurusan = $request->input('id_jurusan');
+
+        $user = Auth::user();
+        $pembuat = $role->where('id_role', $user->id_role)->first('nama_role')->nama_role;
+
+        $jurusan->where('id_jurusan', $id_jurusan)->update(['pembuat' => $pembuat]);
 
         if($jurusan->where('id_jurusan', $id_jurusan)->delete())
         {
@@ -131,7 +144,7 @@ class TataUsahaController extends Controller
         }
 
         $data = [
-            'kelas' => $filter->get(),
+            'kelas' => $filter->orderBy('id_kelas', 'asc')->get(),
             'jurusan' => $jurusan->get()
         ];
         return view('tata-usaha.kelas', $data);
@@ -142,7 +155,7 @@ class TataUsahaController extends Controller
         return view('tata-usaha.tambah-kelas', ['jurusan' => $jurusan->get()]);
     }
 
-    public function storeKelas(Kelas $kelas, Request $request)
+    public function storeKelas(Kelas $kelas, Request $request, Role $role)
     {
         $data = $request->validate([
             'tingkatan' => 'required',
@@ -151,6 +164,10 @@ class TataUsahaController extends Controller
             'status_kelas' => 'required'
         ]);
         
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+
         if($kelas->create($data))
         {
             notify()->success('Data kelas telah berhasil ditambahkan', 'Success');
@@ -171,7 +188,7 @@ class TataUsahaController extends Controller
         return view('tata-usaha.edit-kelas', $data);
     }
 
-    public function updateKelas(Kelas $kelas,Request $request)
+    public function updateKelas(Kelas $kelas,Request $request, Role $role)
     {
         $id_kelas = $request->input('id_kelas');
         $data = $request->validate([
@@ -180,6 +197,11 @@ class TataUsahaController extends Controller
             'nama_kelas' => 'required',
             'status_kelas' => 'required'
         ]);
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+        $data['pembuat'] = $role_akun->nama_role;
+
         if($kelas->where('id_kelas', $id_kelas)->update($data))
         {
             notify()->success('Data kelas telah berhasil diupdate', 'Success');
@@ -190,9 +212,15 @@ class TataUsahaController extends Controller
         }   
     }
 
-    public function destroyKelas(Kelas $kelas,Request $request)
+    public function destroyKelas(Kelas $kelas,Request $request, Role $role)
     {
         $id_kelas = $request->input('id_kelas');
+
+        $user = Auth::user();
+        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role')->nama_role;
+        
+        $kelas->where('id_kelas', $id_kelas)->update(['pembuat' => $role_akun]);
+
         if($kelas->where('id_kelas', $id_kelas)->delete()){
             $pesan = [
                 'success' => true,
@@ -748,28 +776,30 @@ class TataUsahaController extends Controller
     }
 
     // PRESENSI
-    public function showPresensi(Request $request, Jurusan $jurusan)
+    public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)
     {
-        $filter = $this->filterPresensi($request);
+        $filter = $this->filterPresensi($request, $presensi);
         $data = [
             'presensi' => $filter,
             'jurusan' =>  $jurusan->get()
         ];
-        // dd($data);
         return view('tata-usaha.presensi', $data);
     }
 
-    private function filterPresensi(Request $request)
+    private function filterPresensi(Request $request, PresensiSiswa $presensi)
     {
-        $filter = DB::table('view_presensi')
-        ->where(function ($query) use ($request) {
-            $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
-            ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
-            ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
-            ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
-            ->orwhere('jurusan', 'LIKE', "%$request->keyword%")
-            ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
-        });
+        $filter = $presensi
+                ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where(function ($query) use ($request) {
+                    $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
+                    ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
+                    ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
+                    ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
+                    ->orwhere('nama_jurusan', 'LIKE', "%$request->keyword%")
+                    ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
+                });
         if($request->filter_tanggal != null)
         {
             $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%" );
@@ -784,14 +814,14 @@ class TataUsahaController extends Controller
         }
         if($request->filter_jurusan != null)
         {
-            $filter = $filter->where('jurusan',$request->filter_jurusan );
+            $filter = $filter->where('nama_jurusan',$request->filter_jurusan );
         }
         return $filter->get();
     }
 
-    public function exportPresensi(Request $request)
+    public function exportPresensi(Request $request, PresensiSiswa $presensi)
     {
-        $filter = $this->filterPresensi($request); 
+        $filter = $this->filterPresensi($request, $presensi); 
         $pdf = PDF::loadView('presensi-pdf', ['presensi' => $filter]);
         // $pdf = PDF::loadView('presensi-pdf');
         return $pdf->download('presensi.pdf');
@@ -800,7 +830,7 @@ class TataUsahaController extends Controller
 
     public function logs(Logs $logs, Request $request)
     {
-        $filter = $logs::orderBy('id_log', 'desc')
+        $filter = $logs->orderBy('id_log', 'desc')
         ->where(function ($query) use ($request) {
         $query->where('tabel', 'LIKE', "%$request->keyword%")
             ->orWhere('aktor', 'LIKE', "%$request->keyword%")

@@ -9,7 +9,7 @@ class Kelas extends Model
 {
     use HasFactory;
     protected $table = 'kelas';
-    protected $fillable = ['id_wali_kelas', 'id_jurusan', 'nama_kelas', 'tingkatan', 'status_kelas'];
+    protected $fillable = ['id_wali_kelas', 'id_jurusan', 'nama_kelas', 'tingkatan', 'status_kelas', 'pembuat'];
     protected $primaryKey = 'id_kelas';
     public $timestamps = false;
 }

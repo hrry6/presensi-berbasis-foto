@@ -9,7 +9,7 @@ class Jurusan extends Model
 {
     use HasFactory;
     protected $table = 'jurusan';
-    protected $fillable = ['nama_jurusan'];
+    protected $fillable = ['nama_jurusan', 'pembuat'];
     protected $primaryKey = 'id_jurusan';
     public $timestamps = false;
 }

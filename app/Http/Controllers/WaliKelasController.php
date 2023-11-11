@@ -49,8 +49,6 @@ class WaliKelasController extends Controller
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
                 ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->get()
         ];
-
-        // dd($data);
         return view('wali-kelas.presensi', $data);
     }
 

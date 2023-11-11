@@ -48,12 +48,6 @@
             </div>
             <div class="flex gap-3">
                 <input type="date" class="form-control filter" id="tanggal" value="{{ old('filter_tanggal', request('filter_tanggal'))}}" name="filter_tanggal" placeholder="Pilih Tanggal">
-                <select class="form-select filter" name="filter_kehadiran" value="">
-                    <option value="" {{ old('filter_kehadiran', request('filter_kehadiran'))==""?"selected" : "" }}>Pilih Status Kehadiran</option>
-                    <option value="hadir" {{ old('filter_kehadiran', request('filter_kehadiran'))=="hadir"?"selected" : "" }}>Hadir</option>
-                    <option value="alpha" {{ old('filter_kehadiran', request('filter_kehadiran'))=="alpha"?"selected" : "" }}>Alpha</option>
-                    <option value="izin" {{ old('filter_kehadiran', request('filter_kehadiran'))=="izin"?"selected" : "" }}>Izin</option>
-                </select>
                 <select class="form-select filter" name="filter_tingkatan" value="">
                     <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
                     <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
@@ -66,33 +60,43 @@
                     <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
                     @endforeach
                 </select>
+                <select class="form-select filter" name="filter_kehadiran" value="">
+                    <option value="" {{ old('filter_kehadiran', request('filter_kehadiran'))==""?"selected" : "" }}>Pilih Status Kehadiran</option>
+                    <option value="hadir" {{ old('filter_kehadiran', request('filter_kehadiran'))=="hadir"?"selected" : "" }}>Hadir</option>
+                    <option value="alpha" {{ old('filter_kehadiran', request('filter_kehadiran'))=="alpha"?"selected" : "" }}>Alpha</option>
+                    <option value="izin" {{ old('filter_kehadiran', request('filter_kehadiran'))=="izin"?"selected" : "" }}>Izin</option>
+                </select>
             </div>
         </form>
         <table class="table table-bordered">
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
-                    <th scope="col">Foto Bukti</th>
+                    <th scope="col">Nis</th>
                     <th scope="col">Nama Siswa</th>
-                    <th scope="col">Tanggal </th>
-                    <th scope="col">Status Kehadiran</th>
+                    <th scope="col">Tanggal</th>
                     <th scope="col">Kelas</th>
+                    <th scope="col">Kehadiran</th>
+                    <th scope="col">Foto Bukti</th>
+                    <th scope="col">Keterangan</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($presensi as $i)
+                @foreach ($presensi as $p)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
+                        <td>{{ $p->nis }}</td>
+                        <td>{{ $p->nama_siswa }}</td>
+                        <td>{{ $p->tanggal }}</td>
+                        <td>{{ $p->tingkatan." ".$p->nama_jurusan." ".$p->nama_kelas}}</td>
+                        <td>{{ $p->status_kehadiran }}</td>
                         <td>
-                            @if ($i->foto_bukti)
-                            <img src="{{ url('presensi_bukti') . '/' . $i->foto_bukti }} "
+                            {{-- @if ($p->foto_bukti) --}}
+                            <img src="{{ url('presensi_bukti') . '/' . $p->foto_bukti }} "
                                 style="max-width: 100px; height: auto;" alt="Bukti" alt="Bukti" />
-                            @endif
+                            {{-- @endif --}}
                         </td>
-                        <td>{{ $i->nama_siswa }}</td>
-                        <td>{{ $i->tanggal }}</td>
-                        <td>{{ $i->status_kehadiran }}</td>
-                        <td>{{ $i->tingkatan." ".$i->jurusan." ".$i->nama_kelas}}</td>
+                        <td>{{ $p->keterangan }}</td>
                     </tr>
                 @endforeach
             </tbody>
