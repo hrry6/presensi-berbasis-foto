@@ -87,7 +87,12 @@ Route::middleware(['auth'])->group(function () {
 
     // GURU PIKET
     Route::prefix('guru-piket')->middleware('akses:4')->group(function () {
+        Route::get('dashboard', [GuruPiketController::class, 'index']);
+        Route::get('akun-pengurus-kelas', [GuruPiketController::class, 'showPengurus']);
         Route::get('presensi', [GuruPiketController::class, 'showPresensi']);
+        Route::get('edit-presensi/{id}', [GuruPiketController::class, 'editPresensi']);
+        Route::post('edit-presensi/update', [GuruPiketController::class, 'updatePresensi']);
+        Route::get('presensi-pdf', [GuruPiketController::class, 'exportPresensi']);
     });
 
     // PENGURUS KELAS

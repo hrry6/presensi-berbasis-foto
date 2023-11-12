@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GuruBk;
 use App\Models\Jurusan;
 use App\Models\PresensiSiswa;
 use Illuminate\Http\Request;
