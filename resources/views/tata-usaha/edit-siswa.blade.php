@@ -22,6 +22,7 @@
                         <div class="form-group">
                             <label>Kelas</label>
                             <select name="id_kelas" class="form-control">
+                                <option value="" disabled>Pilih Kelas</option>
                                 @foreach ($kelas as $i)
                                     <option value="{{ $i->id_kelas }}"
                                         {{ $siswa->id_kelas === $i->id_kelas ? 'selected' : '' }}>
@@ -52,6 +53,14 @@
                         <div class="form-group">
                             <label for="angkatan">Angkatan</label>
                             <input type="number" class="form-control" name="angkatan" value="{{ $siswa->angkatan }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username" value="{{$siswa->username}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password">
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Siswa</label>

@@ -92,7 +92,7 @@
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
                         <th>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</th>
-                        <td>
+                        <td class="flex gap-1">
                             <a href="/tata-usaha/detail-siswa/{{ $i->id_siswa }}" class="btn btn-primary">
                                 <img src="{{ asset('img/icon_Search.svg')}}" alt="">
                             </a>

@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label>Tingkatan</label>
                             <select name="tingkatan" class="form-control">
-                                <option value="" selected>
+                                <option value="" selected disabled>
                                     Pilih Tingkatan
                                 </option>
                                 <option value="X">
@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label>Jurusan</label>
                             <select name="id_jurusan" class="form-control">
-                                <option value="" selected>
+                                <option value="" selected disabled>
                                     Pilih Jurusan
                                 </option>
                                 @foreach ($jurusan as $j)
@@ -48,6 +48,9 @@
                         <div class="form-group">
                             <label>Status Kelas</label>
                             <select name="status_kelas" class="form-control">
+                            <option value="" selected disabled>
+                                Pilih Status
+                            </option>
                             <option value="aktif" selected>
                                 Aktif
                             </option>

@@ -14,6 +14,7 @@
                         <div class="form-group">
                             <label>Nama Siswa</label>
                             <select name="id_siswa" class="form-control">
+                                <option value="" selected disabled>Pilih Siswa</option>
                                 @foreach ($siswa as $s)
                                     <option value="{{ $s->id_siswa }}">{{ $s->nama_siswa }}
                                     </option>
@@ -21,8 +22,14 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="nama_siswa">Jabatan</label>
-                            <input type="text" class="form-control" name="jabatan">
+                            <label for="status_jabatan">Jabatan</label>
+                            <select name="status_jabatan" class="form-control">
+                                <option value="" selected disabled>Pilih Jabatan</option>
+                                <option value="ketua_kelas">Ketua Kelas</option>
+                                <option value="wakil_kelas">Wakil Kelas</option>
+                                <option value="sekretaris">Sekretaris</option>
+                                <option value="bendahara">Bendahara</option>
+                            </select>
                         </div> <br><br>
                         <a href="{{ url('tata-usaha/akun-pengurus-kelas') }}"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"

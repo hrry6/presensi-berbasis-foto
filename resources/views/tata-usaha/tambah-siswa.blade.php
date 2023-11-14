@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <label>Kelas</label>
                             <select name="id_kelas" class="form-control">
-                                <option value="" selected>Pilih Kelas</option>
+                                <option value="" selected disabled>Pilih Kelas</option>
                                 @foreach ($kelas as $i)
                                     <option value="{{ $i->id_kelas }}">
                                         {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
@@ -52,6 +52,14 @@
                         <div class="form-group">
                             <label for="angkatan">Angkatan</label>
                             <input type="number" class="form-control" name="angkatan">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password">
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Siswa</label>

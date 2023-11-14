@@ -44,7 +44,7 @@ return new class extends Migration
 
         DB::unprepared('
         CREATE TRIGGER delete_siswa
-        AFTER DELETE ON siswa
+        BEFORE DELETE ON siswa
         FOR EACH ROW
         BEGIN
             INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
@@ -104,7 +104,7 @@ return new class extends Migration
     
         DB::unprepared('
         CREATE TRIGGER delete_guru
-        AFTER DELETE ON guru
+        BEFORE DELETE ON guru
         FOR EACH ROW
         BEGIN
             INSERT logs(tabel, aktor, tanggal, jam, aksi, record)

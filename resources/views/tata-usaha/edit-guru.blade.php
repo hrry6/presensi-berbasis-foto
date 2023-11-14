@@ -18,6 +18,7 @@
                         <div class="form-group">
                             <label>Status</label>
                             <select name="status" class="form-control">
+                                <option value="" disabled>Pilih Status</option>
                                 <option value="Guru BK" {{ $guruBk === null ? '' : 'selected' }}>Guru BK</option>
                                 <option value="Guru Piket" {{ $guruPiket === null ? '' : 'selected' }}>Guru Piket</option>
                                 @foreach ($kelas as $i)
