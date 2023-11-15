@@ -137,6 +137,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('siswa')->middleware('akses:1')->group(function () {
         Route::get('dashboard', [SiswaController::class, 'index']);
 
+        Route::get('histori', [SiswaController::class, 'showHistori']);
+
 
         // PRESENSI
         Route::get('/presensi', [SiswaController::class, 'openCam']);

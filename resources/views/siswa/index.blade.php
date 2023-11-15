@@ -23,6 +23,9 @@
                 <a href="/siswa/presensi" class="list-group-item list-group-item-action py-2 ripple">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
                 </a>
+                <a href="/siswa/histori" class="list-group-item list-group-item-action py-2 ripple">
+                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Histori</span>
+                </a>
             </div>
         </div>
     </nav>

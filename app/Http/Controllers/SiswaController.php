@@ -23,68 +23,86 @@ class SiswaController extends Controller
         return view('siswa.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function showPresensi()
+    public function showHistori(Request $request)
     {
-        $data = [
-            'presensi' => DB::table('view_presensi')->get()
+        $bulanList = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
+            6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober',
+            11 => 'November', 12 => 'Desember',
         ];
-        return view('siswa.presensi', $data);
+
+        $mingguList = [1, 2, 3, 4];
+        $selectedMonth = $request->input('bulan', null);
+        $selectedWeek = $request->input('minggu', null);
+
+        $data = PresensiSiswa::selectRaw("*, 
+        CASE
+            WHEN DAY(tanggal) <= 7 THEN 'Minggu ke-1'
+            WHEN DAY(tanggal) <= 14 THEN 'Minggu ke-2'
+            WHEN DAY(tanggal) <= 21 THEN 'Minggu ke-3'
+            ELSE 'Minggu ke-4'
+        END AS minggu")
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->where('siswa.id_akun', Auth::user()->id_akun)
+            ->when($selectedMonth, function ($query, $selectedMonth) {
+                $query->whereMonth('tanggal', $selectedMonth);
+            })
+            ->when($selectedWeek, function ($query, $selectedWeek) {
+                $query->whereRaw("
+                CASE
+                    WHEN DAY(tanggal) > 21 AND ? = 4 THEN 1
+                    WHEN DAY(tanggal) > 14 AND ? = 3 THEN 1
+                    WHEN DAY(tanggal) > 7 AND ? = 2 THEN 1
+                    WHEN DAY(tanggal) <= 7 AND ? = 1 THEN 1
+                    ELSE 0
+                END = 1
+            ", [$selectedWeek, $selectedWeek, $selectedWeek, $selectedWeek]);
+            })
+            ->get();
+
+        return view('siswa.histori', compact('data', 'bulanList', 'mingguList', 'selectedMonth', 'selectedWeek'));
     }
 
     public function checkSnapshot(Request $request)
     {
-        $id_siswa = $request->input('id_siswa');
-        $exists = PresensiSiswa::where('id_siswa', $id_siswa)
+        $exists = PresensiSiswa::where('id_siswa', $request->input('id_siswa'))
             ->whereDate('created_at', today())
             ->exists();
 
         return response()->json(['exists' => $exists]);
     }
 
-
     public function openCam(Siswa $siswa)
     {
         $user = Auth::user()->id_akun;
+        $siswaData = $siswa->join("akun", "siswa.id_akun", "=", "akun.id_akun")
+            ->where('siswa.id_akun', $user)
+            ->first();
 
-        $data = [
-            'siswa' => $siswa
-                ->join("akun", "siswa.id_akun", "=", "akun.id_akun")
-                ->where('siswa.id_akun', $user)
-                ->first()
-        ];
-
-
-        // dd($data);
-        return view('siswa.presensi', $data);
+        return view('siswa.presensi', ['siswa' => $siswaData]);
     }
-
-
 
     public function store(Request $request)
     {
-        $img = $request->image;
+        $image = $request->image;
         $folderPath = "presensi_bukti";
 
-        $image_parts = explode(";base64,", $img);
-        $image_base64 = base64_decode($image_parts[1]);
+        list(, $imageData) = explode(";base64,", $image);
+        $imageBase64 = base64_decode($imageData);
+
         $fileName = Str::uuid() . '.png';
+        $filePath = public_path("$folderPath/$fileName");
 
-        $filePath = public_path($folderPath . '/' . $fileName);
-
-        file_put_contents($filePath, $image_base64);
-
-        $presensiSiswa = new PresensiSiswa;
-        $presensiSiswa->id_siswa = $request->input('id_siswa');
-        $presensiSiswa->foto_bukti = $fileName;
-        $presensiSiswa->jam_masuk = now('Asia/Jakarta')->format('H:i:s');
-        $presensiSiswa->tanggal = now('Asia/Jakarta')->toDateString();
-        $presensiSiswa->status_kehadiran = 'hadir';
-        $presensiSiswa->keterangan = 'Some description';
-        $presensiSiswa->pembuat = 'Siswa';
-        $presensiSiswa->save();
+        file_put_contents($filePath, $imageBase64);
+        PresensiSiswa::create([
+            'id_siswa' => $request->input('id_siswa'),
+            'foto_bukti' => $fileName,
+            'jam_masuk' => now('Asia/Jakarta')->format('H:i:s'),
+            'tanggal' => now('Asia/Jakarta')->toDateString(),
+            'status_kehadiran' => 'hadir',
+            'keterangan' => 'Some description',
+        
+        ]);
 
         session(['snapshot_taken' => true]);
 
