@@ -125,6 +125,5 @@ return new class extends Migration
         DB::unprepared('DROP Procedure IF EXISTS CreateGuruBK');
         DB::unprepared('DROP Procedure IF EXISTS CreateGuruPiket');
         DB::unprepared('DROP Procedure IF EXISTS CreateWaliKelas');
-        DB::unprepared('DROP Procedure IF EXISTS CreateSiswa');
     }
 };

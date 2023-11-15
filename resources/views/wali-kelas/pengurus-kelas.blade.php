@@ -110,12 +110,13 @@
             a.preventDefault();
             let idHapus = $(this).closest('.btnHapus').attr('idHapus');
             swal.fire({
-                title: "Apakah anda ingin menghapus data ini?",
+                title: "Apakah anda yakin?",
+                text: "Anda tidak dapat mengembalikkan nya lagi!",
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: 'Setuju',
-                cancelButtonText: `Batal`,
-                confirmButtonColor: 'red'
-
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonColor: "#d33",
             }).then((result) => {
                 if (result.isConfirmed) {
                     console.log(idHapus)

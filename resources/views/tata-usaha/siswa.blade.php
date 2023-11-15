@@ -4,29 +4,37 @@
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
+                <a href="/tata-usaha/dashboard"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
                 </a>
-                <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
+                <a href="/tata-usaha/jurusan"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Jurusan</span>
                 </a>
-                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
+                <a href="/tata-usaha/kelas"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Kelas</span>
                 </a>
-                <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Guru</span>
+                <a href="/tata-usaha/akun-guru"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Guru</span>
                 </a>
-                <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Pengurus Kelas</span>
+                <a href="/tata-usaha/akun-pengurus-kelas"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Pengurus Kelas</span>
                 </a>
-                <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                    <img src="{{ asset('img/icon_Profile_White.svg')}}" alt=""><span>Akun Siswa</span>
+                <a href="/tata-usaha/akun-siswa"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
+                    <img src="{{ asset('img/icon_Profile_White.svg') }}" alt=""><span>Akun Siswa</span>
                 </a>
-                <a href="/tata-usaha/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Location.svg')}}" alt=""><span>Presensi</span>
+                <a href="/tata-usaha/presensi"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
                 </a>
-                <a href="/tata-usaha/logs" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Book.svg')}}" alt=""><span>Logs</span>
+                <a href="/tata-usaha/logs"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Book.svg') }}" alt=""><span>Logs</span>
                 </a>
             </div>
         </div>
@@ -37,31 +45,48 @@
         <form action="" method="get" class="flex gap-3 flex-col w-auto mb-3" id="form">
             <div class=" flex w-full justify-content-between">
                 <div class="flex">
-                    <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Siswa....">
-                    <div class="input-group-append">
-                        <button class="input-group-text bg-primary" > 
+                    <input type="text" class="form-control" style="width:200px !important" name="keyword"
+                        value="{{ old('keyword', request('keyword')) }}" placeholder="Search Siswa....">
+                    <div class="input-group-append mx-2">
+                        <button class="input-group-text bg-primary">
                             <img src="/img/icon_Search.svg" alt="">
                         </button>
                     </div>
                 </div>
-                <a href="tambah-siswa" class="btn btn-warning text-dark">Tambah Akun Siswa</a>
-            </div> 
+                <a href="tambah-siswa" class="btn btn-primary">Tambah Akun Siswa</a>
+            </div>
             <div class="flex gap-3">
                 <select class="form-select filter" name="filter_jenkel" value="">
-                    <option value="" {{ old('filter_jenkel', request('filter_jenkel'))==""?"selected" : "" }}>Pilih Jankel</option>
-                    <option value="laki-laki" {{ old('filter_jenkel', request('filter_jenkel'))=="laki-laki"?"selected" : "" }}>Laki-laki</option>
-                    <option value="perempuan" {{ old('filter_jenkel', request('filter_jenkel'))=="perempuan"?"selected" : "" }}>Perempuan</option>
+                    <option value="" {{ old('filter_jenkel', request('filter_jenkel')) == '' ? 'selected' : '' }}>
+                        Pilih
+                        Jankel</option>
+                    <option value="laki-laki"
+                        {{ old('filter_jenkel', request('filter_jenkel')) == 'laki-laki' ? 'selected' : '' }}>Laki-laki
+                    </option>
+                    <option value="perempuan"
+                        {{ old('filter_jenkel', request('filter_jenkel')) == 'perempuan' ? 'selected' : '' }}>Perempuan
+                    </option>
                 </select>
                 <select class="form-select filter" name="filter_tingkatan" value="">
-                    <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
-                    <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
-                    <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
-                    <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
+                    <option value=""
+                        {{ old('filter_tingkatan', request('filter_tingkatan')) == '' ? 'selected' : '' }}>
+                        Pilih Tingkatan</option>
+                    <option value="X"
+                        {{ old('filter_tingkatan', request('filter_tingkatan')) == 'X' ? 'selected' : '' }}>
+                        X</option>
+                    <option value="XI"
+                        {{ old('filter_tingkatan', request('filter_tingkatan')) == 'XI' ? 'selected' : '' }}>XI</option>
+                    <option value="XII"
+                        {{ old('filter_tingkatan', request('filter_tingkatan')) == 'XII' ? 'selected' : '' }}>XII</option>
                 </select>
                 <select class="form-select filter" name="filter_jurusan" value="">
-                    <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
+                    <option value="" {{ old('filter_jurusan', request('filter_jurusan')) == '' ? 'selected' : '' }}>
+                        Pilih
+                        Jurusan</option>
                     @foreach ($jurusan as $j)
-                        <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
+                        <option value="{{ $j->id_jurusan }}"
+                            {{ old('filter_jurusan', request('filter_jurusan')) == "$j->id_jurusan" ? 'selected' : '' }}>
+                            {{ $j->nama_jurusan }}</option>
                     @endforeach
                 </select>
             </div>
@@ -92,16 +117,16 @@
                         <td>{{ $i->nama_siswa }}</td>
                         <td>{{ $i->jenis_kelamin }}</td>
                         <th>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</th>
-                        <td class="flex gap-1">
-                            <a href="/tata-usaha/detail-siswa/{{ $i->id_siswa }}" class="btn btn-primary">
-                                <img src="{{ asset('img/icon_Search.svg')}}" alt="">
+                        <td class="d-flex justify-content-around align-items-center">
+                            <a href="/tata-usaha/detail-siswa/{{ $i->id_siswa }}">
+                                <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                             </a>
-                            <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}" class="btn btn-warning">
-                                <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
+                            <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}">
+                                <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
                             </a>
-                            <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_siswa }}">
-                                <img src="{{ asset('img/icon_Trash.svg')}}" alt="">
-                            </btn>
+                            <button class="btnHapus" idHapus="{{ $i->id_siswa }}">
+                                <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -116,12 +141,13 @@
             a.preventDefault();
             let idHapus = $(this).closest('.btnHapus').attr('idHapus');
             swal.fire({
-                title: "Apakah anda ingin menghapus data ini?",
+                title: "Apakah anda yakin?",
+                text: "Anda tidak dapat mengembalikkan nya lagi!",
+                icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: 'Setuju',
-                cancelButtonText: `Batal`,
-                confirmButtonColor: 'red'
-
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonColor: "#d33",
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

@@ -89,9 +89,6 @@
                             <a href="/wali-kelas/edit-siswa/{{ $i->id_siswa }}">
                                 <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
                             </a>
-                            <button class="btnHapus" idHapus="{{ $i->id_siswa }}">
-                                <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
-                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -102,37 +99,6 @@
 
 @section('footer')
     <script type="module">
-        $('.DataTable tbody').on('click', '.btnHapus', function(a) {
-            a.preventDefault();
-            let idHapus = $(this).closest('.btnHapus').attr('idHapus');
-            swal.fire({
-                title: "Apakah anda ingin menghapus data ini?",
-                showCancelButton: true,
-                confirmButtonText: 'Setuju',
-                cancelButtonText: `Batal`,
-                confirmButtonColor: 'red'
-
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: 'hapus-siswa',
-                        data: {
-                            id_siswa: idHapus,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(data) {
-                            if (data.success) {
-                                swal.fire('Berhasil di hapus!', '', 'success').then(function() {
-                                    //Refresh Halaman
-                                    location.reload();
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        });
         $(".filter").on('change', function() {
             $("#form").submit();
         })

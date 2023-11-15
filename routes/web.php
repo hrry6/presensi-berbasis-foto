@@ -108,11 +108,8 @@ Route::middleware(['auth'])->group(function () {
         // AKUN SISWA
         Route::get('akun-siswa', [WaliKelasController::class, 'showSiswa']);
         Route::get('detail-siswa/{id}', [WaliKelasController::class, 'detailSiswa']);
-        Route::get('tambah-siswa', [WaliKelasController::class, 'createSiswa']);
-        Route::post('simpan-siswa', [WaliKelasController::class, 'storeSiswa']);
         Route::get('edit-siswa/{id}', [WaliKelasController::class, 'editSiswa']);
         Route::post('edit-siswa/simpan', [WaliKelasController::class, 'updateSiswa']);
-        Route::delete('hapus-siswa', [WaliKelasController::class, 'destroySiswa']);
 
         // PENGURUS KELAS
         Route::get('akun-pengurus-kelas', [WaliKelasController::class, 'showPengurus']);
@@ -127,7 +124,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-presensi-siswa/{id}', [WaliKelasController::class, 'editPresensi']);
         Route::post('edit-presensi-siswa/update', [WaliKelasController::class, 'updatePresensi']);
         Route::get('presensi-pdf', [WaliKelasController::class, 'exportPresensi']);
-        Route::delete('hapus-presensi-siswa', [WaliKelasController::class, 'destroyPresensi']);
 
         // LOGS
         Route::get('logs', [WaliKelasController::class, 'logs']);
