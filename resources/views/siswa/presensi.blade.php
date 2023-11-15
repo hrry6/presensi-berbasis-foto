@@ -54,10 +54,10 @@
         Webcam.attach('#my_camera');
 
         function takeSnapshotWithCheck() {
-            // Check if a submission has already occurred in this session
+
             var hasSubmitted = '{{ session('snapshot_taken') }}';
             if (hasSubmitted) {
-                // Show an error message using SweetAlert
+
                 swal.fire({
                     icon: "error",
                     title: "Terjadi Kesalahan",
@@ -71,7 +71,7 @@
         }
 
         function checkIfSnapshotAlreadyTaken() {
-            // Check if a snapshot has been taken for the current user on the current date
+
             $.ajax({
                 url: '{{ route('webcam.check_snapshot') }}',
                 type: 'POST',
@@ -90,8 +90,8 @@
                         });
                     } else {
                         take_snapshot();
-                        enableSubmitButton(); // Enable the submit button after taking the first snapshot
-                        // Set session data to indicate that a snapshot has been taken
+                        enableSubmitButton();
+
                         @php session(['snapshot_taken' => true]) @endphp
                     }
                 }
@@ -112,7 +112,7 @@
 
     <script type="module">
         $('.submit-btn').click(function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
             swal.fire({
                 title: "Berhasil!",
@@ -122,9 +122,9 @@
                 showConfirmButton: false
             });
 
-            // Delay the redirect for 2 seconds
+
             setTimeout(function() {
-                // Manually submit the form after the delay
+
                 document.getElementById('presensiForm').submit();
             }, 2000);
         });
