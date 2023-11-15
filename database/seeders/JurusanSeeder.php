@@ -20,18 +20,12 @@ class JurusanSeeder extends Seeder
         ];
 
         foreach ($datas as $data) {
-<<<<<<< HEAD
-            DB::table('jurusan')->insert([
-                'nama_jurusan' => $data,
-            ]);
-=======
             // for ($i = 1; $i <= 6; $i++) {
                 DB::table('jurusan')->insert([
                     'nama_jurusan' => $data,
                     'pembuat' => 'Tata Usaha',
                 ]);
             // }
->>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
         }
     }
 }
