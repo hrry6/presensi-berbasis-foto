@@ -113,9 +113,12 @@ class WaliKelasController extends Controller
         $data = [
             'presensi' => $filter
         ];
+<<<<<<< HEAD
 
         // dd($data);
 
+=======
+>>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
         return view('wali-kelas.presensi', $data);
     }
 
@@ -351,7 +354,6 @@ class WaliKelasController extends Controller
                 return redirect('wali-kelas/presensi-siswa');
             }
         }
-
         return back()->with('error', 'Data gagal diperbarui');
     }
 

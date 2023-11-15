@@ -18,6 +18,7 @@
                         <div class="form-group">
                             <label>Status</label>
                             <select name="status" class="form-control">
+                                <option value="" selected disabled>Pilih Status</option>
                                 <option value="Guru BK">Guru BK</option>
                                 <option value="Guru Piket">Guru Piket</option>
                                 @foreach ($kelas as $i)
@@ -27,6 +28,14 @@
                                     @endif
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password">
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Guru</label>

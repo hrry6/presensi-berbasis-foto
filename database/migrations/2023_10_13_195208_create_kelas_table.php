@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_kelas', 60);
             $table->char('tingkatan', 3);
             $table->enum('status_kelas', ['aktif', 'tidak_aktif', 'lulus']);
+            $table->string('pembuat', 60);
 
             // Foreign Key
             $table->foreign('id_wali_kelas')->on('guru')

@@ -31,21 +31,20 @@ Route::middleware(['auth'])->group(function () {
         // DASHBOARD
         Route::get('dashboard', [TataUsahaController::class, 'index']);
 
-        // AKUN SISWA
-        Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
-        Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
-        Route::post('simpan-siswa', [TataUsahaController::class, 'storeSiswa']);
-        Route::get('edit-siswa/{id}', [TataUsahaController::class, 'editSiswa']);
-        Route::post('edit-siswa/update', [TataUsahaController::class, 'updateSiswa']);
-        Route::delete('hapus-siswa', [TataUsahaController::class, 'destroySiswa']);
+        // Akun Guru
+        Route::get('jurusan', [TataUsahaController::class, 'showJurusan']);
+        Route::get('tambah-jurusan', [TataUsahaController::class, 'createJurusan']);
+        Route::post('simpan-jurusan', [TataUsahaController::class, 'storeJurusan']);
+        Route::get('edit-jurusan/{id}', [TataUsahaController::class, 'editJurusan']);
+        Route::post('edit-jurusan/update', [TataUsahaController::class, 'updateJurusan']);
+        Route::delete('hapus-jurusan', [TataUsahaController::class, 'destroyJurusan']);
 
-        // PENGURUS KELAS
-        Route::get('akun-pengurus-kelas', [TataUsahaController::class, 'showPengurus']);
-        Route::get('tambah-pengurus-kelas', [TataUsahaController::class, 'createPengurus']);
-        Route::post('simpan-pengurus-kelas', [TataUsahaController::class, 'storePengurus']);
-        Route::get('edit-pengurus-kelas/{id}', [TataUsahaController::class, 'editPengurus']);
-        Route::post('edit-pengurus-kelas/update', [TataUsahaController::class, 'updatePengurus']);
-        Route::delete('hapus-pengurus-kelas', [TataUsahaController::class, 'destroyPengurus']);
+        Route::get('kelas', [TataUsahaController::class, 'showKelas']);
+        Route::get('tambah-kelas', [TataUsahaController::class, 'createKelas']);
+        Route::post('simpan-kelas', [TataUsahaController::class, 'storeKelas']);
+        Route::get('edit-kelas/{id}', [TataUsahaController::class, 'editKelas']);
+        Route::post('edit-kelas/update', [TataUsahaController::class, 'updateKelas']);
+        Route::delete('hapus-kelas', [TataUsahaController::class, 'destroyKelas']);
 
         // Akun Guru
         Route::get('akun-guru', [TataUsahaController::class, 'showGuru']);
@@ -54,10 +53,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('edit-guru/{id}', [TataUsahaController::class, 'editGuru']);
         Route::post('edit-guru/update', [TataUsahaController::class, 'updateGuru']);
         Route::delete('hapus-guru', [TataUsahaController::class, 'destroyGuru']);
+       
+        // PENGURUS KELAS
+        Route::get('akun-pengurus-kelas', [TataUsahaController::class, 'showPengurus']);
+        Route::get('tambah-pengurus-kelas', [TataUsahaController::class, 'createPengurus']);
+        Route::post('simpan-pengurus-kelas', [TataUsahaController::class, 'storePengurus']);
+        Route::get('edit-pengurus-kelas/{id}', [TataUsahaController::class, 'editPengurus']);
+        Route::post('edit-pengurus-kelas/update', [TataUsahaController::class, 'updatePengurus']);
+        Route::delete('hapus-pengurus-kelas', [TataUsahaController::class, 'destroyPengurus']);
 
+        // AKUN SISWA
+        Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
+        Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
+        Route::post('simpan-siswa', [TataUsahaController::class, 'storeSiswa']);
+        Route::get('edit-siswa/{id}', [TataUsahaController::class, 'editSiswa']);
+        Route::post('edit-siswa/update', [TataUsahaController::class, 'updateSiswa']);
+        Route::delete('hapus-siswa', [TataUsahaController::class, 'destroySiswa']);
 
         // PRESENSI
         Route::get('presensi', [TataUsahaController::class, 'showPresensi']);
+        Route::get('presensi-pdf', [TataUsahaController::class, 'exportPresensi']);
         // LOGS
         Route::get('logs', [TataUsahaController::class, 'logs']);
         Route::post('hapus-logs', [TataUsahaController::class, 'deleteLogs']);
@@ -67,11 +82,17 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
         Route::get('dashboard', [GuruBkController::class, 'index']);
         Route::get('presensi', [GuruBkController::class, 'showPresensi']);
+        Route::get('presensi-pdf', [GuruBkController::class, 'exportPresensi']);
     });
 
     // GURU PIKET
     Route::prefix('guru-piket')->middleware('akses:4')->group(function () {
+        Route::get('dashboard', [GuruPiketController::class, 'index']);
+        Route::get('akun-pengurus-kelas', [GuruPiketController::class, 'showPengurus']);
         Route::get('presensi', [GuruPiketController::class, 'showPresensi']);
+        Route::get('edit-presensi/{id}', [GuruPiketController::class, 'editPresensi']);
+        Route::post('edit-presensi/update', [GuruPiketController::class, 'updatePresensi']);
+        Route::get('presensi-pdf', [GuruPiketController::class, 'exportPresensi']);
     });
 
     // PENGURUS KELAS

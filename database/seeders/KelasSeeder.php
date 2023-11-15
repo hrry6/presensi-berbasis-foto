@@ -18,13 +18,14 @@ class KelasSeeder extends Seeder
         
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 1; $i++) {
+            for ($i = 1; $i <= 8; $i++) {
                 DB::table('kelas')->insert([
                     'id_jurusan' => $data,
                     'id_wali_kelas' => $data,
                     'nama_kelas' => 'Kelas ' . Arr::random(['A', 'B', 'C']),
                     'tingkatan' => Arr::random(['X', 'XI', 'XII']),
                     'status_kelas' => Arr::random(['aktif', 'tidak_aktif']),
+                    'pembuat' => 'Tata Usaha',
                 ]);
             }
         }

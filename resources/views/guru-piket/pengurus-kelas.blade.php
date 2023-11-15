@@ -1,32 +1,17 @@
 @extends('layout.layout')
-@section('judul', 'Akun Pengurus Kelas')
+@section('judul', 'Akun     Pengurus Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                <a href="/guru-piket/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
                 </a>
-                <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
-                </a>
-                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
-                </a>
-                <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Guru</span>
-                </a>
-                <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
+                <a href="/guru-piket/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
                     <img src="{{ asset('img/icon_Profile_White.svg')}}" alt=""><span>Pengurus Kelas</span>
                 </a>
-                <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Siswa</span>
-                </a>
-                <a href="/tata-usaha/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                <a href="/guru-piket/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Location.svg')}}" alt=""><span>Presensi</span>
-                </a>
-                <a href="/tata-usaha/logs" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Book.svg')}}" alt=""><span>Logs</span>
                 </a>
             </div>
         </div>
@@ -44,7 +29,6 @@
                         </button>
                     </div>
                 </div>
-                <a href="tambah-pengurus-kelas" class="btn btn-warning text-dark">Tambah Akun Pengurus Kelas</a>
             </div> 
             <div class="flex gap-3">
                 <select class="form-select filter" name="filter_jabatan" value="">
@@ -93,16 +77,10 @@
                         <td>{{ $i->nama_siswa }}</td>
                         <th>{{ $i->jabatan." ".$i->status_jabatan }}</th>
                         <td>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</td>
-                        <td class="flex gap-1">
+                        <td>
                             <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-primary">
                                 <img src="{{ asset('img/icon_Search.svg')}}" alt="">
                             </a>
-                            <a href="/tata-usaha/edit-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-warning">
-                                <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
-                            </a>
-                            <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_pengurus }}">
-                                <img src="{{ asset('img/icon_Trash.svg')}}" alt="">
-                            </btn>
                         </td>
                     </tr>
                 @endforeach

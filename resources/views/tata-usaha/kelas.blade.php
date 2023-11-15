@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Akun Pengurus Kelas')
+@section('judul', 'Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -10,14 +10,14 @@
                 <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
                 </a>
-                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
+                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active" aria-current="true">
+                    <img src="{{ asset('img/icon_Home_White.svg')}}" alt=""><span>Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Guru</span>
                 </a>
-                <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                    <img src="{{ asset('img/icon_Profile_White.svg')}}" alt=""><span>Pengurus Kelas</span>
+                <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Pengurus Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Siswa</span>
@@ -37,22 +37,16 @@
         <form action="" method="get" class="flex gap-3 flex-col w-auto mb-3" id="form">
             <div class=" flex w-full justify-content-between">
                 <div class="flex">
-                    <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Pengurus Kelas....">
+                    <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Kelas....">
                     <div class="input-group-append">
                         <button class="input-group-text bg-primary" > 
                             <img src="/img/icon_Search.svg" alt="">
                         </button>
                     </div>
                 </div>
-                <a href="tambah-pengurus-kelas" class="btn btn-warning text-dark">Tambah Akun Pengurus Kelas</a>
+                <a href="tambah-kelas" class="btn btn-warning text-dark">Tambah Kelas</a>
             </div> 
             <div class="flex gap-3">
-                <select class="form-select filter" name="filter_jabatan" value="">
-                    <option value="" {{ old('filter_jabatan', request('filter_jabatan'))==""?"selected" : "" }}>Pilih Jabatan</option>
-                    <option value="ketua_kelas" {{ old('filter_jabatan', request('filter_jabatan'))=="ketua_kelas"?"selected" : "" }}>Ketua Kelas</option>
-                    <option value="wakil_kelas" {{ old('filter_jabatan', request('filter_jabatan'))=="wakil_kelas"?"selected" : "" }}>Wakil Kelas</option>
-                    <option value="sekertaris" {{ old('filter_jabatan', request('filter_jabatan'))=="sekertaris"?"selected" : "" }}>Sekertaris</option>
-                </select>
                 <select class="form-select filter" name="filter_tingkatan" value="">
                     <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
                     <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
@@ -65,42 +59,40 @@
                     <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
                     @endforeach
                 </select>
+                <select class="form-select filter" name="filter_status" value="">
+                    <option value="" {{ old('filter_status', request('filter_status'))==""?"selected" : "" }}>Pilih Status</option>
+                    <option value="aktif" {{ old('filter_status', request('filter_status'))=="aktif"?"selected" : "" }}>Aktif</option>
+                    <option value="tidak_aktif" {{ old('filter_status', request('filter_status'))=="tidak_aktif"?"selected" : "" }}>Tidak Aktif</option>
+                </select>
             </div>
         </form>
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
                 <tr class="">
                     <th scope="col">No</th>
-                    <th scope="col">Foto</th>
-                    <th scope="col">NIS</th>
-                    <th scope="col">Nama Lengkap</th>
-                    <th scope="col">Jabatan</th>
-                    <th scope="col">Kelas</th>
+                    <th scope="col">Tingkatan</th>
+                    <th scope="col">Jurusan</th>
+                    <th scope="col">Nama Kelas</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pengurus as $i)
+                @foreach ($kelas as $k)
                     <tr>
                         <th>{{ $loop->iteration }}</th>
+                        <td>{{ $k->tingkatan }}</td>
+                        <td>{{ $k->nama_jurusan }}</td>
+                        <td>{{ $k->nama_kelas }}</td>
+                        <td>{{ $k->status_kelas  }}</td>
                         <td>
-                            @if ($i->foto_siswa)
-                                <img src="{{ url('foto') . '/' . $i->foto_siswa }} "
-                                    style="max-width: 100px; height: auto;" alt="Siswa"/>
-                            @endif
-                        </td>
-                        <td>{{ $i->nis }}</td>
-                        <td>{{ $i->nama_siswa }}</td>
-                        <th>{{ $i->jabatan." ".$i->status_jabatan }}</th>
-                        <td>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</td>
-                        <td class="flex gap-1">
-                            <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-primary">
+                            <a href="/tata-usaha/detail-kelas/{{ $k->id_kelas }}" class="btn btn-primary">
                                 <img src="{{ asset('img/icon_Search.svg')}}" alt="">
                             </a>
-                            <a href="/tata-usaha/edit-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-warning">
+                            <a href="/tata-usaha/edit-kelas/{{ $k->id_kelas }}" class="btn btn-warning">
                                 <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
                             </a>
-                            <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_pengurus }}">
+                            <btn class="btn btn-danger btnHapus" idHapus="{{ $k->id_kelas }}">
                                 <img src="{{ asset('img/icon_Trash.svg')}}" alt="">
                             </btn>
                         </td>
@@ -130,9 +122,9 @@
                     console.log(idHapus)
                     $.ajax({
                         type: 'DELETE',
-                        url: '/tata-usaha/hapus-pengurus-kelas',
+                        url: 'hapus-kelas',
                         data: {
-                            id_pengurus: idHapus,
+                            id_kelas: idHapus,
                             _token: "{{ csrf_token() }}"
                         },
                         success: function(data) {

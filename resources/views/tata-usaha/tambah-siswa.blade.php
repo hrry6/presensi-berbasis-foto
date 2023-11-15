@@ -22,6 +22,7 @@
                         <div class="form-group">
                             <label>Kelas</label>
                             <select name="id_kelas" class="form-control">
+                                <option value="" selected disabled>Pilih Kelas</option>
                                 @foreach ($kelas as $i)
                                     <option value="{{ $i->id_kelas }}">
                                         {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
@@ -49,11 +50,23 @@
                             <input type="number" class="form-control" name="nomer_hp">
                         </div>
                         <div class="form-group">
+                            <label for="angkatan">Angkatan</label>
+                            <input type="number" class="form-control" name="angkatan">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <div class="form-group">
                             <label>Foto Profil Siswa</label>
                             <input type="file" class="form-control" name="foto_siswa" />
                         </div>
                         <div class="mt-3">
-                            <a href="{{ url('wali-kelas/akun-siswa') }}"
+                            <a href="{{ url('tata-usaha/akun-siswa') }}"
                                 class="btn text-decoration-underline text-light fw-bold rounded-3"
                                 style="background-color: #14C345">KEMBALI</a>
                             <button type="submit" class="btn text-decoration-underline text-light fw-bold"

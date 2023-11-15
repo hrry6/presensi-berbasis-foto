@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GuruBk;
+use App\Models\Jurusan;
+use App\Models\PresensiSiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class GuruBkController extends Controller
 {
@@ -20,59 +22,52 @@ class GuruBkController extends Controller
         return view('guru-bk.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
-    public function showPresensi()
+    public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)
     {
+        $filter = $this->filterPresensi($request, $presensi);
         $data = [
-            'presensi' => DB::table('view_presensi')->get()
+            'presensi' => $filter,
+            'jurusan' =>  $jurusan->get()
         ];
         return view('guru-bk.presensi', $data);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    private function filterPresensi(Request $request, PresensiSiswa $presensi)
     {
-        //
+        $filter = $presensi
+                ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where(function ($query) use ($request) {
+                    $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
+                    ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
+                    ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
+                    ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
+                    ->orwhere('nama_jurusan', 'LIKE', "%$request->keyword%")
+                    ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
+                });
+        if($request->filter_tanggal != null)
+        {
+            $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%");
+        }
+        if($request->filter_kehadiran != null)
+        {
+            $filter = $filter->where('status_kehadiran',$request->filter_kehadiran);
+        }
+        if($request->filter_tingkatan != null)
+        {
+            $filter = $filter->where('tingkatan',$request->filter_tingkatan);
+        }
+        if($request->filter_jurusan != null)
+        {
+            $filter = $filter->where('nama_jurusan',$request->filter_jurusan);
+        }
+        return $filter->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function exportPresensi(Request $request, PresensiSiswa $presensi)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(GuruBk $GuruBk)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(GuruBk $GuruBk)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, GuruBk $GuruBk)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(GuruBk $GuruBk)
-    {
-        //
+        $filter = $this->filterPresensi($request, $presensi); 
+        $pdf = PDF::loadView('presensi-pdf', ['presensi' => $filter]);
+        return $pdf->download('presensi.pdf');
     }
 }

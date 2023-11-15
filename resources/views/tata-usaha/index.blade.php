@@ -18,14 +18,20 @@
                 <a href="/tata-usaha/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
                     <img src="{{ asset('img/icon_Home_White.svg')}}" alt=""><span>Dashboard</span>
                 </a>
+                <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
+                </a>
+                <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
+                </a>
                 <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Guru</span>
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Guru</span>
                 </a>
                 <a href="/tata-usaha/akun-pengurus-kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Pengurus Kelas</span>
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Pengurus Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-siswa" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Akun Siswa</span>
+                    <img src="{{ asset('img/icon_Profile.svg')}}" alt=""><span>Siswa</span>
                 </a>
                 <a href="/tata-usaha/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Location.svg')}}" alt=""><span>Presensi</span>

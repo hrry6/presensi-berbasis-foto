@@ -19,8 +19,14 @@
                                 value="{{ $pengurus->id_pengurus }}">
                         </div>
                         <div class="form-group">
-                            <label for="nama_siswa">Jabatan</label>
-                            <input type="text" class="form-control" value="{{ $pengurus->jabatan }}" name="jabatan">
+                            <label for="status_jabatan">Jabatan</label>
+                            <select name="status_jabatan" class="form-control">
+                                <option value="" disabled>Pilih Jabatan</option>
+                                <option value="ketua_kelas" {{ $pengurus->status_jabatan == 'ketua_kelas'? 'selected' : '' }}>Ketua Kelas</option>
+                                <option value="wakil_kelas" {{ $pengurus->status_jabatan == 'wakil_kelas'? 'selected' : '' }}>Wakil Kelas</option>
+                                <option value="sekretaris" {{ $pengurus->status_jabatan == 'sekretaris'? 'selected' : '' }}>Sekretaris</option>
+                                <option value="bendahara" {{ $pengurus->status_jabatan == 'bendahara'? 'selected' : '' }}>Bendahara</option>
+                            </select>
                         </div> <br><br>
                         <a href="{{ url('tata-usaha/akun-pengurus-kelas') }}"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"

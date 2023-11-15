@@ -9,7 +9,7 @@
                     <img src="{{ asset('img/guru-form.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
-                    <form action="/tata-usaha/edit-guru/update" method="POST" enctype="multipart/form-data">
+                    <form action="update" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nama_guru">Nama Guru</label>
@@ -18,6 +18,7 @@
                         <div class="form-group">
                             <label>Status</label>
                             <select name="status" class="form-control">
+                                <option value="" disabled>Pilih Status</option>
                                 <option value="Guru BK" {{ $guruBk === null ? '' : 'selected' }}>Guru BK</option>
                                 <option value="Guru Piket" {{ $guruPiket === null ? '' : 'selected' }}>Guru Piket</option>
                                 @foreach ($kelas as $i)
