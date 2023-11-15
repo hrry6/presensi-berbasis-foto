@@ -54,24 +54,15 @@
         Webcam.attach('#my_camera');
 
         function takeSnapshotWithCheck() {
-
             var hasSubmitted = '{{ session('snapshot_taken') }}';
             if (hasSubmitted) {
-
-                swal.fire({
-                    icon: "error",
-                    title: "Terjadi Kesalahan",
-                    text: "Anda sudah melakukan Presensi.",
-                    showCancelButton: false,
-                    showConfirmButton: false
-                });
+                showErrorMessage("Anda sudah melakukan Presensi.");
             } else {
                 checkIfSnapshotAlreadyTaken();
             }
         }
 
         function checkIfSnapshotAlreadyTaken() {
-
             $.ajax({
                 url: '{{ route('webcam.check_snapshot') }}',
                 type: 'POST',
@@ -81,18 +72,16 @@
                 },
                 success: function(result) {
                     if (result.exists) {
-                        swal.fire({
-                            icon: "error",
-                            title: "Terjadi Kesalahan",
-                            text: "Anda sudah melakukan Presensi.",
-                            showCancelButton: false,
-                            showConfirmButton: false
-                        });
+                        showErrorMessage("Anda sudah melakukan Presensi.");
                     } else {
                         take_snapshot();
                         enableSubmitButton();
-
                         @php session(['snapshot_taken' => true]) @endphp
+                        setTimeout(function() {
+                            // Destroy after 13 hours
+                            @php session()->forget('snapshot_taken') @endphp
+                        }, 13 * 60 * 60 * 1000);
+
                     }
                 }
             });
@@ -108,6 +97,16 @@
         function enableSubmitButton() {
             document.querySelector('.submit-btn').removeAttribute('disabled');
         }
+
+        function showErrorMessage(message) {
+            swal.fire({
+                icon: "error",
+                title: "Terjadi Kesalahan",
+                text: message,
+                showCancelButton: false,
+                showConfirmButton: false
+            });
+        }
     </script>
 
     <script type="module">
@@ -122,9 +121,7 @@
                 showConfirmButton: false
             });
 
-
             setTimeout(function() {
-
                 document.getElementById('presensiForm').submit();
             }, 2000);
         });
