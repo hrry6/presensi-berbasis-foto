@@ -11,5 +11,5 @@ class PresensiSiswa extends Model
     protected $table = 'presensi_siswa';
     protected $fillable = ['id_siswa', 'foto_bukti', 'jam_masuk', 'tanggal', 'status_kehadiran', 'keterangan'];
     protected $primaryKey = 'id_presensi';
-    public $timestamps = false;
+    // public $timestamps = false;
 }

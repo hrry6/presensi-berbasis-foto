@@ -1,11 +1,13 @@
 @extends('layout.layout')
-@section('judul', 'Presensi')
+@section('judul', 'Dashboard Siswa')
+
 @section('sidenav')
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="/siswa/dashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
-                    <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+                <a href="/siswa/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4"
+                    aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="/siswa/presensi" class="list-group-item list-group-item-action py-2 ripple active">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
@@ -13,41 +15,118 @@
             </div>
         </div>
     </nav>
-@endsection 
+@endsection
 @section('isi')
-    <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <div class="d-flex width-full justify-content-between mb-3">
-            <form action="">
-                <input type="text" placeholder="Search Presensi">
-                <button class="position-relative">Search</button>
-            </form>
-            <a href="tambah-presensi" class="btn btn-warning text-dark">Tambah Presensi</a>
-        </div>
-        <table class="table table-bordered DataTable">
-            <thead class="thead table-dark">
-                <tr class="">
-                    <th scope="col">No</th>
-                    <th scope="col">Foto Bukti</th>
-                    <th scope="col">Nama Siswa</th>
-                    <th scope="col">Tanggal </th>
-                    <th scope="col">Status Kehadiran</th>
-                    <th scope="col">Kelas</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($presensi as $i)
-                    <tr>
-                        <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $i->foto_bukti }}</td>
-                        <td>{{ $i->nama_siswa }}</td>
-                        <td>{{ $i->tanggal }}</td>
-                        <td>{{ $i->status_kehadiran }}</td>
-                        <td>{{ $i->tingkatan." ".$i->jurusan." ".$i->nama_kelas}}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+    <div class="container mt-5">
+        <form method="POST" action="{{ route('webcam.capture') }}" id="presensiForm">
+            @csrf
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="my_camera"></div>
+                    <br />
+                    <input type="button" value="Take Snapshot" onClick="takeSnapshotWithCheck()"
+                        class="bg-primary p-2 text-white rounded-md" style="margin-left: 10px">
+                    <input type="hidden" name="image" class="image-tag">
+                    <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}">
+                </div>
+                <div class="col-md-6">
+                    <div id="results">Hasil foto akan berada disini</div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <br />
+                    <button class="btn btn-success px-3 submit-btn" disabled>Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
+@endsection
 
+@section('footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <script>
+        Webcam.set({
+            width: 490,
+            height: 350,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+
+        Webcam.attach('#my_camera');
+
+        function takeSnapshotWithCheck() {
+            // Check if a submission has already occurred in this session
+            var hasSubmitted = '{{ session('snapshot_taken') }}';
+            if (hasSubmitted) {
+                // Show an error message using SweetAlert
+                swal.fire({
+                    icon: "error",
+                    title: "Terjadi Kesalahan",
+                    text: "Anda sudah melakukan Presensi.",
+                    showCancelButton: false,
+                    showConfirmButton: false
+                });
+            } else {
+                checkIfSnapshotAlreadyTaken();
+            }
+        }
+
+        function checkIfSnapshotAlreadyTaken() {
+            // Check if a snapshot has been taken for the current user on the current date
+            $.ajax({
+                url: '{{ route('webcam.check_snapshot') }}',
+                type: 'POST',
+                data: {
+                    id_siswa: '{{ $siswa->id_siswa }}',
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(result) {
+                    if (result.exists) {
+                        swal.fire({
+                            icon: "error",
+                            title: "Terjadi Kesalahan",
+                            text: "Anda sudah melakukan Presensi.",
+                            showCancelButton: false,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        take_snapshot();
+                        enableSubmitButton(); // Enable the submit button after taking the first snapshot
+                        // Set session data to indicate that a snapshot has been taken
+                        @php session(['snapshot_taken' => true]) @endphp
+                    }
+                }
+            });
+        }
+
+        function take_snapshot() {
+            Webcam.snap(function(data_uri) {
+                $(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+            });
+        }
+
+        function enableSubmitButton() {
+            document.querySelector('.submit-btn').removeAttribute('disabled');
+        }
+    </script>
+
+    <script type="module">
+        $('.submit-btn').click(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            swal.fire({
+                title: "Berhasil!",
+                text: "Berhasil Melakukan Presensi!",
+                icon: "success",
+                showCancelButton: false,
+                showConfirmButton: false
+            });
+
+            // Delay the redirect for 2 seconds
+            setTimeout(function() {
+                // Manually submit the form after the delay
+                document.getElementById('presensiForm').submit();
+            }, 2000);
+        });
+    </script>
 @endsection

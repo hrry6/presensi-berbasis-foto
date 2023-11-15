@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,7 +13,6 @@ class JurusanSeeder extends Seeder
      */
     public function run(): void
     {        
-
         $datas = [
             'Rekayasa Perangkat Lunak', 'Teknik Komputer dan Jaringan',
             'Teknik Pengelasan', 'Teknik Permesinan', 'Teknik Kendaraan Ringan dan Otomotif',
@@ -22,11 +20,9 @@ class JurusanSeeder extends Seeder
         ];
 
         foreach ($datas as $data) {
-            for ($i = 1; $i <= 6; $i++) {
-                DB::table('jurusan')->insert([
-                    'nama_jurusan' => $data,
-                ]);
-            }
+            DB::table('jurusan')->insert([
+                'nama_jurusan' => $data,
+            ]);
         }
     }
 }

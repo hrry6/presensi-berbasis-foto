@@ -1,8 +1,8 @@
 @extends('group.layout')
-@section('judul', 'Edit Wali Kelas')
+@section('judul', 'Edit Data Diri Siswa')
 @section('isi')
     <div class="pt-2">
-        <h1 class="fw-bold mt-3 text-center">Edit Akun Siswa</h1>
+        <h1 class="fw-bold mt-3 text-center">Edit Data Diri Siswa</h1>
         <div class="container mt-3">
             <div class="row">
                 <div class="col-lg-4 bg-white mb-3 mx-5" style="border-radius: 10%">
@@ -44,6 +44,17 @@
                                     </div>
                                 @endforeach
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Status Jabatan</label>
+                            <select name="status_jabatan" class="form-control">
+                                @foreach ($statusJabatan as $i)
+                                    <option value="{{ $i }}"
+                                        {{ $siswa->status_jabatan === $i ? 'selected' : '' }}>
+                                        {{ $i }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="nomer_hp">Nomer Hp</label>

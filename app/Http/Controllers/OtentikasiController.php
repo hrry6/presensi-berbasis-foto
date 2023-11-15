@@ -14,7 +14,7 @@ class OtentikasiController extends Controller
             return view('auth.login');
         }
 
-        $user = Auth::user();
+        $user = Auth::user(['id_role']);
         $redirectMap = [
             6 => 'tata-usaha/dashboard',
             5 => 'guru-bk/dashboard',
@@ -45,7 +45,7 @@ class OtentikasiController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+            $user = Auth::user(['id_role']);
             Session::regenerateToken();
             $redirectMap = [
                 6 => 'tata-usaha/dashboard',

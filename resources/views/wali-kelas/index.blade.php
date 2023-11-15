@@ -12,24 +12,29 @@
     }
 </style>
 @section('sidenav')
-    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="#" class="list-group-item list-group-item-action py-2 ripple active" aria-current="true">
-                    <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+                <a href="{{ url('wali-kelas/dashboard') }}"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
+                    aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="{{ url('wali-kelas/akun-pengurus-kelas') }}"
-                    class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Akun Pengurus Kelas</span>
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Pengurus Kelas</span>
                 </a>
-                <a href="{{ url('wali-kelas/akun-siswa') }}" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Akun Siswa</span>
+                <a href="{{ url('wali-kelas/akun-siswa') }}"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Siswa</span>
                 </a>
-                <a href="{{ url('wali-kelas/presensi-siswa') }}" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
+                <a href="{{ url('wali-kelas/presensi-siswa') }}"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
                 </a>
-                <a href="{{ url('wali-kelas/logs') }}"class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Logs</span>
+                <a href="{{ url('wali-kelas/logs') }}"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Book.svg') }}" alt=""><span>Logs</span>
                 </a>
             </div>
         </div>

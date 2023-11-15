@@ -115,41 +115,6 @@ return new class extends Migration
             END IF;
         END
         ");
-
-
-        DB::unprepared('DROP Procedure IF EXISTS CreateSiswa');
-        DB::unprepared("
-        CREATE PROCEDURE CreateSiswa(
-            IN p_id_akun INT,
-            IN p_nis INT,
-            IN p_nama_siswa VARCHAR(60),
-            IN p_id_kelas INT,
-            IN p_jenis_kelamin ENUM('laki-laki', 'perempuan'),
-            IN p_nomer_hp VARCHAR(20),
-            IN p_foto_siswa VARCHAR(255),
-            IN p_pembuat VARCHAR(60)
-        )
-        BEGIN
-            DECLARE pesan_error CHAR(5) DEFAULT '000';
-
-            DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-            BEGIN
-                SET pesan_error = '001';
-            END;
-
-            START TRANSACTION; -- Memulai transaction
-
-            INSERT INTO siswa (id_akun, id_kelas, nis, nama_siswa, nomer_hp, jenis_kelamin, foto_siswa, pembuat)
-            VALUES (p_id_akun, p_id_kelas, p_nis, p_nama_siswa, p_nomer_hp, p_jenis_kelamin, p_foto_siswa, p_pembuat);
-
-            IF pesan_error = '000' THEN
-                COMMIT; -- Commit jika tidak ada error
-            ELSE
-                ROLLBACK; -- Rollback jika terdapat error
-            END IF;
-        END 
-    ");
-
     }
 
     /**

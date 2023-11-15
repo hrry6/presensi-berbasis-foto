@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
 
         // AKUN SISWA
         Route::get('akun-siswa', [WaliKelasController::class, 'showSiswa']);
+        Route::get('detail-siswa/{id}', [WaliKelasController::class, 'detailSiswa']);
         Route::get('tambah-siswa', [WaliKelasController::class, 'createSiswa']);
         Route::post('simpan-siswa', [WaliKelasController::class, 'storeSiswa']);
         Route::get('edit-siswa/{id}', [WaliKelasController::class, 'editSiswa']);
@@ -94,8 +95,8 @@ Route::middleware(['auth'])->group(function () {
 
         // PENGURUS KELAS
         Route::get('akun-pengurus-kelas', [WaliKelasController::class, 'showPengurus']);
-        Route::get('tambah-pengurus-kelas', [WaliKelasController::class, 'createPengurus']);
-        Route::post('simpan-pengurus-kelas', [WaliKelasController::class, 'storePengurus']);
+        Route::get('detail-kelas/{id}', [WaliKelasController::class, 'detailKelasPengurus']);
+        Route::get('detail-siswa-pengurus/{id}', [WaliKelasController::class, 'detailSiswa']);
         Route::get('edit-pengurus-kelas/{id}', [WaliKelasController::class, 'editPengurus']);
         Route::post('edit-pengurus-kelas/update', [WaliKelasController::class, 'updatePengurus']);
         Route::delete('hapus-pengurus-kelas', [WaliKelasController::class, 'destroyPengurus']);
@@ -104,6 +105,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('presensi-siswa', [WaliKelasController::class, 'showPresensi']);
         Route::get('edit-presensi-siswa/{id}', [WaliKelasController::class, 'editPresensi']);
         Route::post('edit-presensi-siswa/update', [WaliKelasController::class, 'updatePresensi']);
+        Route::get('presensi-pdf', [WaliKelasController::class, 'exportPresensi']);
         Route::delete('hapus-presensi-siswa', [WaliKelasController::class, 'destroyPresensi']);
 
         // LOGS
@@ -113,7 +115,12 @@ Route::middleware(['auth'])->group(function () {
     // SISWA
     Route::prefix('siswa')->middleware('akses:1')->group(function () {
         Route::get('dashboard', [SiswaController::class, 'index']);
-        Route::get('presensi', [SiswaController::class, 'showPresensi']);
-    });
 
+
+        // PRESENSI
+        Route::get('/presensi', [SiswaController::class, 'openCam']);
+        Route::post('webcam', [SiswaController::class, 'store'])->name('webcam.capture');
+        Route::post('/webcam/check_snapshot', [SiswaController::class, 'checkSnapshot'])->name('webcam.check_snapshot');
+
+    });
 });

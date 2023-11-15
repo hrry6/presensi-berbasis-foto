@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace Database\Seeders;
 
@@ -21,6 +21,9 @@ class PresensiSeeder extends Seeder
 
         foreach ($datas as $data) {
             for ($i = 1; $i <= 1; $i++) {
+                $createdAt = $faker->dateTimeBetween('-1 year', 'now');
+                $updatedAt = $faker->dateTimeBetween($createdAt, 'now');
+
                 DB::table('presensi_siswa')->insert([
                     'id_presensi' => $data,
                     'id_siswa' => $data,
@@ -29,7 +32,9 @@ class PresensiSeeder extends Seeder
                     'tanggal' => $faker->date(),
                     'status_kehadiran' => Arr::random(['hadir', 'izin', 'alpha']),
                     'keterangan' => implode(' ', $faker->words()),
-                    'pembuat' => 'Wali Kelas'
+                    'created_at' => $createdAt,
+                    'updated_at' => $updatedAt,
+                    'pembuat' => 'Wali Kelas',
                 ]);
             }
         }

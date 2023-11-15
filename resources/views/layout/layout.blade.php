@@ -3,6 +3,7 @@
 
 <head>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
     <title>@yield('judul')</title>
     <!-- Laravel Notify -->
     @notifyCss
@@ -26,7 +27,7 @@
             padding: 58px 0 0;
             /* Height of navbar */
             box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-            width: 240px;
+            width: 280px;
         }
 
         @media (max-width: 991.98px) {
@@ -49,6 +50,7 @@
             overflow-y: auto;
             /* Scrollable contents if viewport is shorter than content. */
         }
+
         /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -56,16 +58,16 @@
             margin: 0;
         }
 
-        .icon{
+        .icon {
             width: 27px;
             height: 27px;
         }
 
-        .block{
+        .block {
             padding: 50px
         }
 
-        .navbar{
+        .navbar {
             z-index: 100 !important;
         }
 
@@ -109,7 +111,7 @@
                 <ul class="navbar-nav ms-auto d-flex flex-row gap-3">
                     <a href="/logout" class="btn btn-danger flex gap-2 justify-center items-center">
                         <p class="p-0 m-0">LOG OUT</p>
-                        <img class="icon" src="{{ asset('img/icon_Logout.svg')}}" alt="">
+                        <img class="icon" src="{{ asset('img/icon_Logout.svg') }}" alt="">
                     </a>
                     <li class="nav-item dropdown p-10">
                         <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle"

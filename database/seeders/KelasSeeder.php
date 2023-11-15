@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,15 +14,15 @@ class KelasSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
-
         $datas = [1, 2, 3, 4, 5];
+        
 
         foreach ($datas as $data) {
             for ($i = 1; $i <= 1; $i++) {
                 DB::table('kelas')->insert([
-                    'id_jurusan' => $i,
-                    'nama_kelas' => 'Kelas '. Arr::random(['A', 'B', 'C']),
+                    'id_jurusan' => $data,
+                    'id_wali_kelas' => $data,
+                    'nama_kelas' => 'Kelas ' . Arr::random(['A', 'B', 'C']),
                     'tingkatan' => Arr::random(['X', 'XI', 'XII']),
                     'status_kelas' => Arr::random(['aktif', 'tidak_aktif']),
                 ]);

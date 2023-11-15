@@ -27,6 +27,9 @@ return new class extends Migration
 
             // Index
             $table->index('id_akun');
+            $table->index('id_siswa');
+            $table->index('nama_siswa');
+
 
             // Foreign Key
             $table->foreign('id_akun')->on('akun')

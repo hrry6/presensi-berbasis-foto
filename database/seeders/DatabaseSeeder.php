@@ -2,19 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 use Illuminate\Database\Seeder;
-use Database\Seeders\AkunSeeder;
-use Database\Seeders\GuruSeeder;
-use Database\Seeders\RoleSeeder;
-use Database\Seeders\SiswaSeeder;
-use Database\Seeders\GuruBkSeeder;
-use Database\Seeders\JurusanSeeder;
-use Database\Seeders\PresensiSeeder;
-use Database\Seeders\GuruPiketSeeder;
-use Database\Seeders\PengurusKelasSeeder;
-use Database\Seeders\TataUsahaSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,22 +11,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $seeders = [
-            RoleSeeder::class,
-            AkunSeeder::class,
-            GuruSeeder::class,
-            GuruPiketSeeder::class,
-            GuruBkSeeder::class,
-            JurusanSeeder::class,
-            KelasSeeder::class,
-            SiswaSeeder::class,
-            PresensiSeeder::class,
-            PengurusKelasSeeder::class,
-            TataUsahaSeeder::class,
-        ];
-    
-        foreach ($seeders as $seeder) {
-            $this->call($seeder);
-        }
+        $this->call(RoleSeeder::class);
+        $this->call(AkunSeeder::class);
+        $this->call(GuruSeeder::class);
+        $this->call(GuruPiketSeeder::class);
+        $this->call(GuruBkSeeder::class);
+        $this->call(JurusanSeeder::class);
+        $this->call(KelasSeeder::class);
+        $this->call(SiswaSeeder::class);
+        $this->call(PresensiSeeder::class);
+        $this->call(PengurusKelasSeeder::class);
+        $this->call(TataUsahaSeeder::class);
     }
 }
