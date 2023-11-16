@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('id_validasi', true);
             $table->integer('id_pengurus');
             $table->integer('id_presensi');
+            $table->enum('status_kehadiran', ['hadir', 'izin', 'alpha']);
             $table->text('keterangan')->nullable(true);
             $table->enum('waktu_validasi', ['Istirahat Pertama', 'Istirahat Kedua', 'Istirahat Ketiga']);
 

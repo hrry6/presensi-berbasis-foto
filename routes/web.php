@@ -8,6 +8,7 @@ use App\Http\Controllers\OtentikasiController;
 use App\Http\Controllers\TataUsahaController;
 use App\Http\Controllers\WaliKelasController;
 use App\Http\Controllers\PengurusKelasController;
+use App\Models\PengurusKelas;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +98,19 @@ Route::middleware(['auth'])->group(function () {
 
     // PENGURUS KELAS
     Route::prefix('pengurus-kelas')->middleware('akses:3')->group(function () {
-        Route::get('presensi', [PengurusKelasController::class, 'index']);
+        // DASHBOARD
+        Route::get('dashboard', [PengurusKelasController::class, 'index']);
+
+        Route::get('histori', [PengurusKelasController::class, 'showHistori']);
+
+        // PRESENSI
+        Route::get('/presensi', [PengurusKelasController::class, 'openCam']);
+        Route::post('webcam', [PengurusKelasController::class, 'store'])->name('webcam.capture');
+        Route::post('/webcam/check_snapshot', [PengurusKelasController::class, 'checkSnapshot'])->name('webcam.check_snapshot');
+
+        // VALIDASI
+        Route::get('kelas', [PengurusKelasController::class, 'showKelas']);
+        Route::post('validasi', [PengurusKelasController::class, 'storeValidasi']);
     });
 
     // WALI KELAS

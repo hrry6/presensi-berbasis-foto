@@ -24,7 +24,7 @@ class GuruSeeder extends Seeder
                 DB::table('guru')->insert([
                     'id_akun' => Arr::random(['7', '8', '9', '10', '11', '12']),
                     'nama_guru' => $faker->name(). Arr::random(['S.Pd', 'S.Kom']),
-                    'foto_guru' => $faker->image(),
+                    'foto_guru' => asset('img/icon_Profile.svg'),
                     'pembuat' => 'Tata Usaha'
                 ]);
             }
