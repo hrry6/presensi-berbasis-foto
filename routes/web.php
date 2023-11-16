@@ -113,6 +113,8 @@ Route::middleware(['auth'])->group(function () {
 
         // PENGURUS KELAS
         Route::get('akun-pengurus-kelas', [WaliKelasController::class, 'showPengurus']);
+        Route::get('tambah-pengurus-kelas', [WaliKelasController::class, 'createPengurus']);
+        Route::post('simpan-pengurus-kelas', [WaliKelasController::class, 'storePengurus']);
         Route::get('detail-kelas/{id}', [WaliKelasController::class, 'detailKelasPengurus']);
         Route::get('detail-siswa-pengurus/{id}', [WaliKelasController::class, 'detailSiswa']);
         Route::get('edit-pengurus-kelas/{id}', [WaliKelasController::class, 'editPengurus']);

@@ -75,7 +75,8 @@ class SiswaController extends Controller
     public function openCam(Siswa $siswa)
     {
         $user = Auth::user()->id_akun;
-        $siswaData = $siswa->join("akun", "siswa.id_akun", "=", "akun.id_akun")
+        $siswaData = $siswa
+            ->join("akun", "siswa.id_akun", "=", "akun.id_akun")
             ->where('siswa.id_akun', $user)
             ->first();
 

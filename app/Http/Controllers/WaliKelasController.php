@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akun;
 use App\Models\Logs;
 use App\Models\Role;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Support\Str;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
 use App\Models\PresensiSiswa;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -107,7 +108,7 @@ class WaliKelasController extends Controller
 
     public function showPresensi(PresensiSiswa $presensi, Request $request)
     {
-        
+
         $filter = $this->filterPresensi($request, $presensi);
 
         $data = [
@@ -133,7 +134,6 @@ class WaliKelasController extends Controller
 
         ];
 
-        // dd($data);
 
         return view('wali-kelas.detail-siswa',  $data);
     }
@@ -147,17 +147,17 @@ class WaliKelasController extends Controller
                 ->get(),
         ];
 
-        // dd($data);
         return view('wali-kelas.detail-pengurus-kelas', $data);
     }
 
-    public function createPengurus(Siswa $siswa, Kelas $kelas)
+    public function createPengurus(Siswa $siswa)
     {
         $user = Auth::user()->id_akun;
 
         $data = [
             'siswa' => $siswa
-                ->select('siswa.id_siswa', 'siswa.nama_siswa')
+                ->join("akun", "siswa.id_akun", "=", "akun.id_akun")
+                ->select('siswa.id_siswa', 'siswa.nama_siswa', 'akun.id_role')
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
                 ->join('guru', 'guru.id_guru', '=', 'kelas.id_wali_kelas')
                 ->leftJoin('pengurus_kelas', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
@@ -173,7 +173,7 @@ class WaliKelasController extends Controller
         return view('wali-kelas.tambah-pengurus', $data);
     }
 
-    public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role)
+    public function storePengurus(Request $request, PengurusKelas $pengurus, Role $role, Akun $akun)
     {
         $data = $request->validate([
             'id_siswa' => 'required',
@@ -184,13 +184,21 @@ class WaliKelasController extends Controller
         $data['pembuat'] = $role_akun->nama_role;
         $data['jabatan'] = 'Pengurus Kelas';
 
-        if ($pengurus->create($data)) {
+        $createdPengurus = $pengurus->create($data);
+
+        if ($createdPengurus) {
+            $siswaId = $request->input('id_siswa');
+            $akun->join('siswa', 'akun.id_akun', '=', 'siswa.id_akun')
+                ->where('siswa.id_siswa', $siswaId)
+                ->update(['akun.id_role' => 3]);
+
             notify()->success('Data pengurus kelas telah ditambah', 'Success');
             return redirect('wali-kelas/akun-pengurus-kelas')->with('success', 'Data pengurus kelas berhasil ditambah');
         }
 
         return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
     }
+
 
     public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
     {
@@ -351,23 +359,33 @@ class WaliKelasController extends Controller
         return back()->with('error', 'Data gagal diperbarui');
     }
 
-    public function destroyPengurus(Request $request)
+    public function destroyPengurus(Request $request, Akun $akun)
     {
         $id_pengurus = $request->input('id_pengurus');
+
+        $siswaId = PengurusKelas::where('id_pengurus', $id_pengurus)->value('id_siswa');
+
         $aksi = PengurusKelas::where('id_pengurus', $id_pengurus)->delete();
+
         if ($aksi) {
+            $akun->join('siswa', 'akun.id_akun', '=', 'siswa.id_akun')
+                ->where('siswa.id_siswa', $siswaId)
+                ->update(['akun.id_role' => 1]);
+
             $pesan = [
                 'success' => true,
-                'pesan' => 'Data berhasil di hapus'
+                'pesan' => 'Data berhasil dihapus'
             ];
         } else {
             $pesan = [
                 'success' => false,
-                'pesan' => 'Data gagal di hapus'
+                'pesan' => 'Data gagal dihapus'
             ];
         }
+
         return response()->json($pesan);
     }
+
 
     public function logs(Logs $logs)
     {
@@ -404,7 +422,7 @@ class WaliKelasController extends Controller
 
     public function exportPresensi(Request $request, PresensiSiswa $presensi)
     {
-        $filter = $this->filterPresensi($request, $presensi); 
+        $filter = $this->filterPresensi($request, $presensi);
         $pdf = PDF::loadView('wali-kelas.presensi-pdf', ['presensi' => $filter]);
         return $pdf->download('presensi.pdf');
     }
