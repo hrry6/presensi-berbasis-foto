@@ -66,9 +66,9 @@
                             <input type="file" class="form-control" name="foto_siswa" />
                         </div>
                         <div class="mt-3">
-                            <a href="{{ url('tata-usaha/akun-siswa') }}"
+                            <button id="kembali"
                                 class="btn text-decoration-underline text-light fw-bold rounded-3"
-                                style="background-color: #14C345">KEMBALI</a>
+                                style="background-color: #14C345">KEMBALI</button>
                             <button type="submit" class="btn text-decoration-underline text-light fw-bold"
                                 style="background-color: #F9812A ">SUBMIT</button>
                         </div>
@@ -77,4 +77,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        $(document).ready(function(){
+            $('#kembali').on('click', function(){
+                window.history.back();
+            });
+        });
+    </script>
 @endsection

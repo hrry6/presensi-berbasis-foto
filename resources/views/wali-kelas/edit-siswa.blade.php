@@ -68,7 +68,7 @@
                             <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}" />
                         </div>
                         <div class="mt-3">
-                            <a href="{{ url('wali-kelas/akun-siswa') }}"
+                            <a href="{{ url()->previous() }}"
                                 class="btn text-decoration-underline text-light fw-bold rounded-3"
                                 style="background-color: #14C345">KEMBALI</a>
                             <button type="submit" class="btn text-decoration-underline text-light fw-bold"

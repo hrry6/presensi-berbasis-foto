@@ -10,11 +10,11 @@
                 </a>
                 <a href="/tata-usaha/jurusan"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Jurusan</span>
+                    <img src="{{ asset('img/icon_Jurusan.svg') }}" alt=""><span>Jurusan</span>
                 </a>
                 <a href="/tata-usaha/kelas"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Kelas</span>
+                    <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""><span>Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-guru"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
@@ -122,7 +122,7 @@
                         <td>{{ $i->nama_siswa }}</td>
                         <th>{{ $i->jabatan . ' ' . $i->status_jabatan }}</th>
                         <td>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</td>
-                        <td class="d-flex justify-content-around align-items-center">
+                        <td class="d-flex gap-2">
                             <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}">
                                 <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                             </a>

@@ -1,5 +1,5 @@
 @extends('group.layout')
-@section('judul', 'Detail Siswa')
+@section('judul', 'Detail Pengurus')
 <style>
     .block {
         padding: 100px;
@@ -19,7 +19,7 @@
     <img src="{{ asset('img/group_siswa.png') }}" width="100%" height="200px" alt="" style="object-fit: fill;">
     <div class="container">
         <div class="d-flex justify-content-center">
-            <img src="{{ asset('siswa/' . $siswa->foto_siswa) }}" width="200px" height="200px" alt="Profile" class="mt-4 mb-2"
+            <img src="{{ asset('siswa/' . $pengurus->foto_siswa) }}" width="200px" height="200px" alt="Profile" class="mt-4 mb-2"
                 style="border-radius: 100px;" alt="Siswa" />
         </div>
         <div class="card mt-3  bg-white">
@@ -31,7 +31,7 @@
                             NIS
                         </div>
                         <div class="col-sm">
-                            Nama Siswa
+                            Nama Pengurus
                         </div>
                         <div class="col-sm">
                             Nomer Hp
@@ -43,20 +43,22 @@
 
                     <div class="row">
                         <div class="col-sm">
-                            {{ $siswa->nis }}
+                            {{ $pengurus->nis }}
                         </div>
                         <div class="col-sm">
-                            {{ $siswa->nama_siswa }}
+                            {{ $pengurus->nama_siswa }}
                         </div>
                         <div class="col-sm">
-                            {{ $siswa->nomer_hp }}
+                            {{ $pengurus->nomer_hp }}
                         </div>
                         <div class="col-sm">
-                            {{ $siswa->jenis_kelamin }}
+                            {{ $pengurus->jenis_kelamin }}
                         </div>
                     </div>
+                    
+                    <br>
 
-                    <div class="row mt-3">
+                    <div class="row">
                         <div class="col-sm">
                             Tingkat
                         </div>
@@ -66,40 +68,35 @@
                         <div class="col-sm">
                             Jurusan
                         </div>
-                        <div class="col-sm-3">
-                            Status Siswa
+                        <div class="col-sm">
+                            Status Pengurus
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm">
-                            {{ $siswa->tingkatan }}
+                            {{ $pengurus->tingkatan }}
                         </div>
                         <div class="col-sm">
-                            {{ $siswa->nama_kelas }}
+                            {{ $pengurus->nama_kelas }}
                         </div>
                         <div class="col-sm">
-                            {{ $siswa->nama_jurusan }}
+                            {{ $pengurus->nama_jurusan }}
                         </div>
-                        <div class="col-sm-3">
-                            {{ $siswa->status_siswa }}
+                        <div class="col-sm">
+                            {{ $pengurus->status_siswa }}
                         </div>
                     </div>
 
                     <br>
-
                     <div class="row d-flex justify-content-center w-full text-center">
-                        <div class="col-sm-6">
+                        <div class="col-sm">
                             Status Jabatan
                         </div>
                     </div>
+
                     <div class="row d-flex justify-content-center w-full text-center">
-                        <div class="col-sm-6">
-                            @if ($pengurus)
-                                {{ $pengurus->jabatan }} - {{ $siswa->status_jabatan }}
-                            @else
-                                {{ $siswa->status_jabatan }}
-                            @endif
+                        <div class="col-sm">
+                            {{ $pengurus->jabatan }} - {{ $pengurus->status_jabatan }}
                         </div>
                     </div>
                 </div>
@@ -109,48 +106,12 @@
         <div class="mt-3 mb-5">
             <button id="kembali" class="btn text-decoration-underline text-light fw-bold rounded-3"
                 style="background-color: #14C345; width: 150px;">KEMBALI</button>
-                <a href="{{ url('tata-usaha/edit-siswa/'.$siswa->id_siswa) }}" class="btn text-decoration-underline text-light fw-bold rounded-3"
-                style="background-color: #F9812A; width: 150px;">EDIT SISWA</a>
-                <button class="btnHapus btn btn-danger text-decoration-underline text-light fw-bold rounded-3"
-                    style="width: 150px;"  idHapus="{{ $siswa->id_siswa }}">HAPUS SISWA</button>
         </div>
     </div>
 @endsection
 @section('footer')
     <script type="module">
         $(document).ready(function(){
-            $('.container').on('click', '.btnHapus', function(a) {
-            a.preventDefault();
-            let idHapus = $(this).closest('.btnHapus').attr('idHapus');
-            swal.fire({
-                title: "Apakah anda yakin?",
-                text: "Anda tidak dapat mengembalikkan nya lagi!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "Ya, Hapus!",
-                cancelButtonColor: "#d33",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/tata-usaha/hapus-siswa',
-                        data: {
-                            id_siswa: idHapus,
-                            _token: "{{ csrf_token() }}"
-                        },
-                        success: function(data) {
-                            if (data.success) {
-                                swal.fire('Berhasil di hapus!', '', 'success').then(function() {
-                                    //Refresh Halaman
-                                    window.location.href = "http://localhost:8000/tata-usaha/akun-siswa";
-                                });
-                            }
-                        }
-                    });
-                }
-                });
-            });
             $('#kembali').on('click', function(){
                 window.history.back();
             });

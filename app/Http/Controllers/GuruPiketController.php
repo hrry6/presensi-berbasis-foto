@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
-use App\Models\Kelas;
 use App\Models\PengurusKelas;
 use App\Models\PresensiSiswa;
 use App\Models\Role;
+use App\Models\Guru;
+use App\Models\GuruBK;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +26,17 @@ class GuruPiketController extends Controller
         $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
 
         return view('guru-piket.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
+    }
+
+    public function detailProfil(Request $request, Guru $guru)
+    {
+        $id_guru = $guru->where('id_akun', $request->id)->first()->id_guru;
+        $data = [
+            "guru" => $guru
+            ->join('akun', 'guru.id_akun', '=','akun.id_akun')
+            ->where('id_guru', $id_guru)->first()
+        ];
+        return view('guru-piket.detail-profil', $data);
     }
 
     public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)
@@ -105,7 +118,21 @@ class GuruPiketController extends Controller
         return view('guru-piket.pengurus-kelas', $data);
     }
 
-    public function editPresensi(Request $request, PresensiSiswa $presensi, Kelas $kelas)
+    public function detailPengurus(Request $request, Siswa $siswa, PengurusKelas $pengurus)
+    {
+        $data = [
+            'pengurus' => $pengurus
+                            ->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
+                            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                            ->where('id_pengurus', $request->id)->first()
+        ];
+        // dd($data);
+
+        return view('guru-piket.detail-pengurus', $data);
+    }
+
+    public function editPresensi(Request $request, PresensiSiswa $presensi)
     {
         $statusKehadiran = ['hadir', 'izin', 'alpha'];
 

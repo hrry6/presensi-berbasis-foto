@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
 use App\Models\PresensiSiswa;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -20,6 +21,17 @@ class GuruBkController extends Controller
         $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
 
         return view('guru-bk.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
+    }
+
+    public function detailProfil(Request $request, Guru $guru)
+    {
+        $id_guru = $guru->where('id_akun', $request->id)->first()->id_guru;
+        $data = [
+            "guru" => $guru
+            ->join('akun', 'guru.id_akun', '=','akun.id_akun')
+            ->where('id_guru', $id_guru)->first()
+        ];
+        return view('guru-bk.detail-profil', $data);
     }
 
     public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)

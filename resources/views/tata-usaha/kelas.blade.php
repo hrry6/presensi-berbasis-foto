@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Kelas')
+@section('judul', 'Kelola Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -10,12 +10,12 @@
                 </a>
                 <a href="/tata-usaha/jurusan"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Jurusan</span>
+                    <img src="{{ asset('img/icon_Jurusan.svg') }}" alt=""><span>Jurusan</span>
                 </a>
                 <a href="/tata-usaha/kelas"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
                     aria-current="true">
-                    <img src="{{ asset('img/icon_Home_White.svg') }}" alt=""><span>Kelas</span>
+                    <img src="{{ asset('img/icon_Kelas_White.svg') }}" alt=""><span>Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-guru"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
@@ -100,7 +100,7 @@
                     <th scope="col">Jurusan</th>
                     <th scope="col">Nama Kelas</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" style="width:115px;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,7 +111,7 @@
                         <td>{{ $k->nama_jurusan }}</td>
                         <td>{{ $k->nama_kelas }}</td>
                         <td>{{ $k->status_kelas }}</td>
-                        <td class="d-flex justify-content-around align-items-center">
+                        <td class="d-flex justify-content-center gap-2">
                             <a href="/tata-usaha/detail-kelas/{{ $k->id_kelas }}">
                                 <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                             </a>

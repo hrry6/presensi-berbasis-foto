@@ -19,7 +19,7 @@
                     <img src="{{ asset('img/icon_Home_White.svg')}}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="/guru-bk/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Location.svg')}}" alt=""><span>Jurusan</span>
+                    <img src="{{ asset('img/icon_Location.svg')}}" alt=""><span>Presensi</span>
                 </a>
             </div>
         </div>

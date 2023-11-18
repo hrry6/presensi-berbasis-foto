@@ -6,7 +6,7 @@
         <div class="container mt-3">
             <div class="row">
                 <div class="col-lg-4 bg-white mb-3 mx-5" style="border-radius: 10%">
-                    <img src="{{ asset('img/pengurus-form.png') }}" alt="logo" class="img-fluid">
+                    <img src="{{ asset('img/jurusan.png') }}" alt="logo" class="img-fluid">
                 </div>
                 <div class="col-md-4 bg-white mb-3 mx-2 p-5" style="border-radius: 10px">
                     <form action="simpan-jurusan" method="POST">
@@ -15,9 +15,9 @@
                             <label for="nama_jurusan">Jurusan</label>
                             <input type="text" class="form-control" name="nama_jurusan">
                         </div> <br><br>
-                        <a href="{{ url('tata-usaha/jurusan') }}"
+                        <button id="kembali"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"
-                            style="background-color: #14C345">KEMBALI</a>
+                            style="background-color: #14C345">KEMBALI</button>
                         <button type="submit" class="btn text-decoration-underline text-light fw-bold"
                             style="background-color: #F9812A ">SUBMIT</button>
                     </form>
@@ -25,4 +25,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        $(document).ready(function(){
+            $('#kembali').on('click', function(){
+                window.history.back();
+            });
+        });
+    </script>
 @endsection

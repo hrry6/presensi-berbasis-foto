@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Pengurus Kelas')
+@section('judul', 'Kelola Pengurus Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -77,8 +77,8 @@
                         <td>{{ $i->nama_siswa }}</td>
                         <th>{{ $i->jabatan." ".$i->status_jabatan }}</th>
                         <td>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</td>
-                        <td>
-                            <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}">
+                        <td class="flex justify-content-center">
+                            <a href="/guru-piket/detail-pengurus-kelas/{{ $i->id_pengurus }}">
                                 <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                             </a>
                         </td>

@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Jurusan')
+@section('judul', 'Kelola Jurusan')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -11,11 +11,11 @@
                 <a href="/tata-usaha/jurusan"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
                     aria-current="true">
-                    <img src="{{ asset('img/icon_Home_White.svg') }}" alt=""><span>Jurusan</span>
+                    <img src="{{ asset('img/icon_Jurusan_White.svg') }}" alt=""><span>Jurusan</span>
                 </a>
                 <a href="/tata-usaha/kelas"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Kelas</span>
+                    <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""><span>Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-guru"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
@@ -62,7 +62,7 @@
                 <tr class="">
                     <th scope="col">No</th>
                     <th scope="col">Jurusan</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" style="width:115px;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,10 +70,7 @@
                     <tr>
                         <th>{{ $loop->iteration }}</th>
                         <th>{{ $j->nama_jurusan }}</th>
-                        <td class="d-flex justify-content-around align-items-center">
-                            <a href="/tata-usaha/detail-jurusan/{{ $j->id_jurusan }}">
-                                <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
-                            </a>
+                        <td class="d-flex justify-content-center gap-2">
                             <a href="/tata-usaha/edit-jurusan/{{ $j->id_jurusan }}">
                                 <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
                             </a>

@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('hapus-jurusan', [TataUsahaController::class, 'destroyJurusan']);
 
         Route::get('kelas', [TataUsahaController::class, 'showKelas']);
+        Route::get('detail-kelas/{id}', [TataUsahaController::class, 'detailKelas']);
         Route::get('tambah-kelas', [TataUsahaController::class, 'createKelas']);
         Route::post('simpan-kelas', [TataUsahaController::class, 'storeKelas']);
         Route::get('edit-kelas/{id}', [TataUsahaController::class, 'editKelas']);
@@ -49,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Akun Guru
         Route::get('akun-guru', [TataUsahaController::class, 'showGuru']);
+        Route::get('detail-guru/{id}', [TataUsahaController::class, 'detailGuru']);
         Route::get('tambah-guru', [TataUsahaController::class, 'createGuru']);
         Route::post('simpan-guru', [TataUsahaController::class, 'storeGuru']);
         Route::get('edit-guru/{id}', [TataUsahaController::class, 'editGuru']);
@@ -84,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
     // GURU BK
     Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
         Route::get('dashboard', [GuruBkController::class, 'index']);
+        Route::get('detail-profil/{id}', [GuruBKController::class, 'detailProfil']);
         Route::get('presensi', [GuruBkController::class, 'showPresensi']);
         Route::get('presensi-pdf', [GuruBkController::class, 'exportPresensi']);
     });
@@ -91,7 +94,9 @@ Route::middleware(['auth'])->group(function () {
     // GURU PIKET
     Route::prefix('guru-piket')->middleware('akses:4')->group(function () {
         Route::get('dashboard', [GuruPiketController::class, 'index']);
+        Route::get('detail-profil/{id}', [GuruPiketController::class, 'detailProfil']);
         Route::get('akun-pengurus-kelas', [GuruPiketController::class, 'showPengurus']);
+        Route::get('detail-pengurus-kelas/{id}', [GuruPiketController::class, 'detailPengurus']);
         Route::get('presensi', [GuruPiketController::class, 'showPresensi']);
         Route::get('edit-presensi/{id}', [GuruPiketController::class, 'editPresensi']);
         Route::post('edit-presensi/update', [GuruPiketController::class, 'updatePresensi']);

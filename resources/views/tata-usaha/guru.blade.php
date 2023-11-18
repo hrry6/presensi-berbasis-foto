@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Guru')
+@section('judul', 'Kelola Guru')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -8,10 +8,10 @@
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="/tata-usaha/jurusan" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Jurusan</span>
+                    <img src="{{ asset('img/icon_Jurusan.svg')}}" alt=""><span>Jurusan</span>
                 </a>
                 <a href="/tata-usaha/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Kelas</span>
+                    <img src="{{ asset('img/icon_Kelas.svg')}}" alt=""><span>Kelas</span>
                 </a>
                 <a href="/tata-usaha/akun-guru" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
                     <img src="{{ asset('img/icon_Profile_White.svg')}}" alt=""><span>Guru</span>
@@ -51,7 +51,7 @@
                     <option value="3" {{ old('filter_status', request('filter_status'))=="3"?"selected" : "" }}>Wali Kelas</option>
                 </select>
             </form>
-            <a href="tambah-guru" class="btn btn-warning text-dark">Tambah Akun Guru</a>
+            <a href="tambah-guru" class="btn btn-primary text-white">Tambah Akun Guru</a>
         </div>
         <table class="table table-bordered DataTable">
             <thead class="thead table-dark">
@@ -79,7 +79,7 @@
                             </td>
                             <th>{{ $i->nama_guru }}</th>
                             <th>Guru BK</th>
-                            <td class="d-flex justify-content-around align-items-center">
+                            <td class="d-flex gap-2">
                                 <a href="/tata-usaha/detail-guru/{{ $i->id_guru }}">
                                     <img src="{{ asset('img/icon_Vector.svg')}}" alt="">
                                 </a>
@@ -105,7 +105,7 @@
                             </td>
                             <th>{{ $p->nama_guru }}</th>
                             <th>Guru Piket</th>
-                            <td class="d-flex justify-content-around align-items-center">
+                            <td class="d-flex gap-2">
                                 <a href="/tata-usaha/detail-guru/{{ $p->id_guru }}">
                                     <img src="{{ asset('img/icon_Vector.svg')}}" alt="">
                                 </a>
@@ -131,7 +131,7 @@
                             </td>
                             <th>{{ $k->nama_guru }}</th>
                             <th>Wali Kelas {{ $k->tingkatan . ' ' . $k->nama_jurusan . ' ' . $k->nama_kelas }}</th>
-                            <td class="d-flex justify-content-around align-items-center">
+                            <td class="d-flex gap-2">
                                 <a href="/tata-usaha/detail-guru/{{ $k->id_guru }}">
                                     <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                                 </a>

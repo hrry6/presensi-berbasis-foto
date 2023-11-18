@@ -47,6 +47,13 @@
             overflow-y: auto;
             /* Scrollable contents if viewport is shorter than content. */
         }
+        .title{
+            padding: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            color: 292D32;
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -73,15 +80,28 @@
                     <img src="/img/logo.png" width="150" alt="" loading="lazy" />
                 </a>
 
+                <h1 class="title">@yield('judul')</h1>
                 <!-- Right links -->
                 <ul class="navbar-nav ms-auto d-flex flex-row">
                     <a href="/logout" class="btn btn-danger">
                         Logout
+                        <img class="icon" src="{{ asset('img/icon_Logout.svg') }}" alt="">
                     </a>
-                    <li class="nav-item dropdown">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle"
-                            height="22" alt="" loading="lazy" />
-                    </li>
+                    @if (Auth::user()->id_role == '4')
+                        <a href="/guru-piket/detail-profil/{{ Auth::user()->id_akun }}">
+                            <li class="nav-item dropdown p-10">
+                                <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
+                                height="42" alt="" width="42" loading="lazy" />
+                            </li>
+                        </a>
+                    @elseif(Auth::user()->id_role == '5')
+                    <a href="/guru-bk/detail-profil/{{ Auth::user()->id_akun }}">
+                        <li class="nav-item dropdown p-10">
+                            <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
+                            height="42" alt="" width="42" loading="lazy" />
+                        </li>
+                    </a>
+                    @endif
                 </ul>
             </div>
             <!-- Container wrapper -->
@@ -95,6 +115,7 @@
         @yield('isi')
     </div>
 
+    @yield('footer')
     <!--Main layout-->
 </body>
 

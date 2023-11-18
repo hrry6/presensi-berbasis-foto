@@ -28,9 +28,9 @@
                                 <option value="bendahara" {{ $pengurus->status_jabatan == 'bendahara'? 'selected' : '' }}>Bendahara</option>
                             </select>
                         </div> <br><br>
-                        <a href="{{ url('tata-usaha/akun-pengurus-kelas') }}"
+                        <button id="kembali"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"
-                            style="background-color: #14C345">KEMBALI</a>
+                            style="background-color: #14C345">KEMBALI</button>
                         <button type="submit" class="btn text-decoration-underline text-light fw-bold"
                             style="background-color: #F9812A ">SUBMIT</button>
                     </form>
@@ -38,4 +38,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        $(document).ready(function(){
+            $('#kembali').on('click', function(){
+                window.history.back();
+            });
+        });
+    </script>
 @endsection

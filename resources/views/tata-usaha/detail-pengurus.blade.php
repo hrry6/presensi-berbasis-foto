@@ -104,12 +104,89 @@
             </div>
         </div>
         <div class="mt-3 mb-5">
-            <a href="{{ url('tata-usaha/akun-pengurus-kelas') }}" class="btn text-decoration-underline text-light fw-bold rounded-3"
-                style="background-color: #14C345; width: 150px;">KEMBALI</a>
+            <button id="kembali" class="btn text-decoration-underline text-light fw-bold rounded-3"
+                style="background-color: #14C345; width: 150px;">KEMBALI</button>
             <a href="{{ url('tata-usaha/edit-pengurus-kelas/'.$pengurus->id_pengurus) }}" class="btn text-decoration-underline text-light fw-bold rounded-3"
                 style="background-color: #F9812A; width: 200px;">EDIT DATA PENGURUS</a>
             <a href="{{ url('tata-usaha/edit-siswa/'.$pengurus->id_siswa) }}" class="btn text-decoration-underline text-light fw-bold rounded-3"
                 style="background-color: #F9812A; width: 200px;">EDIT DATA SISWA</a>
+            <button class="hapusPengurus btn btn-danger text-decoration-underline text-light fw-bold rounded-3"
+                style="width: 250px;"  idPengurus="{{ $pengurus->id_pengurus }}">HAPUS STATUS PENGURUS</button>
+            <button class="hapusSiswa btn btn-danger text-decoration-underline text-light fw-bold rounded-3"
+                style="width: 150px;"  idSiswa="{{ $pengurus->id_siswa }}">HAPUS SISWA</button>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        $(document).ready(function(){
+            $('.container').on('click', '.hapusSiswa', function(a) {
+            a.preventDefault();
+            let idSiswa = $(this).closest('.hapusSiswa').attr('idSiswa');
+            swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Anda tidak dapat mengembalikkan nya lagi!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/tata-usaha/hapus-siswa',
+                        data: {
+                            id_siswa: idSiswa,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            if (data.success) {
+                                swal.fire('Berhasil di hapus!', '', 'success').then(function() {
+                                    //Refresh Halaman
+                                    window.location.href = "http://localhost:8000/tata-usaha/akun-siswa";
+                                });
+                            }
+                        }
+                    });
+                }
+                });
+            });
+            $('.container').on('click', '.hapusPengurus', function(a) {
+            a.preventDefault();
+            let idPengurus = $(this).closest('.hapusPengurus').attr('idPengurus');
+            swal.fire({
+                title: "Apakah anda yakin?",
+                text: "Anda tidak dapat mengembalikkan nya lagi!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/tata-usaha/hapus-pengurus-kelas',
+                        data: {
+                            id_pengurus: idPengurus,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            if (data.success) {
+                                swal.fire('Berhasil di hapus!', '', 'success').then(function() {
+                                    //Refresh Halaman
+                                    window.location.href = "http://localhost:8000/tata-usaha/akun-pengurus-kelas";
+                                });
+                            }
+                        }
+                    });
+                }
+                });
+            });
+            $('#kembali').on('click', function(){
+                window.history.back();
+            });
+        });
+    </script>
 @endsection

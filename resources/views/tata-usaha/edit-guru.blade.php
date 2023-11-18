@@ -22,14 +22,20 @@
                                 <option value="Guru BK" {{ $guruBk === null ? '' : 'selected' }}>Guru BK</option>
                                 <option value="Guru Piket" {{ $guruPiket === null ? '' : 'selected' }}>Guru Piket</option>
                                 @foreach ($kelas as $i)
-                                    @if ($i->id_wali_kelas == null || $i->id_wali_kelas == $guru->id_guru)
-                                        <option value="{{ $i->id_kelas }}"
-                                            {{ $i->id_wali_kelas == $guru->id_guru ? 'selected' : '' }}>
-                                            {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
-                                        </option>
-                                    @endif
+                                    <option value="{{ $i->id_kelas }}"
+                                        {{ $i->id_wali_kelas == $guru->id_guru ? 'selected' : '' }}>
+                                        {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
+                                    </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username" value="{{ $guru->username }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="text" class="form-control" name="password">
                         </div>
                         <div class="form-group">
                             <label>Foto Guru</label>
@@ -39,9 +45,9 @@
                             <input type="hidden" name="id_guru" value="{{ $guru->id_guru }}" />
                         </div>
                         <div class="mt-3">
-                            <a href="{{ url('tata-usaha/akun-guru') }}"
+                            <button id="kembali"
                                 class="btn text-decoration-underline text-light fw-bold rounded-3"
-                                style="background-color: #14C345">KEMBALI</a>
+                                style="background-color: #14C345">KEMBALI</button>
                             <button type="submit" class="btn text-decoration-underline text-light fw-bold"
                                 style="background-color: #F9812A ">SUBMIT</button>
                         </div>
@@ -50,4 +56,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        $(document).ready(function(){
+            $('#kembali').on('click', function(){
+                window.history.back();
+            });
+        });
+    </script>
 @endsection

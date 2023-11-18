@@ -8,7 +8,7 @@
                     <img src="{{ asset('img/icon_Home.svg')}}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="/guru-bk/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active" aria-current="true">
-                    <img src="{{ asset('img/icon_Location_White.svg')}}" alt=""><span>Jurusan</span>
+                    <img src="{{ asset('img/icon_Location_White.svg')}}" alt=""><span>Presensi</span>
                 </a>
             </div>
         </div>
