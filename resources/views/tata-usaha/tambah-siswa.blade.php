@@ -1,8 +1,8 @@
 @extends('group.layout')
-@section('judul', 'Tambah Akun Siswa')
+@section('judul', 'Tambah Siswa')
 @section('isi')
     <div class="pt-2">
-        <h1 class="fw-bold mt-3 text-center">Tambah Akun Siswa</h1>
+        <h1 class="fw-bold mt-3 text-center">Tambah Siswa</h1>
         <div class="container mt-3">
             <div class="row">
                 <div class="col-lg-4 bg-white mb-3 mx-5" style="border-radius: 10%">

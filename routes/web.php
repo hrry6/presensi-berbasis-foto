@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
        
         // PENGURUS KELAS
         Route::get('akun-pengurus-kelas', [TataUsahaController::class, 'showPengurus']);
+        Route::get('detail-pengurus-kelas/{id}', [TataUsahaController::class, 'detailPengurus']);
         Route::get('tambah-pengurus-kelas', [TataUsahaController::class, 'createPengurus']);
         Route::post('simpan-pengurus-kelas', [TataUsahaController::class, 'storePengurus']);
         Route::get('edit-pengurus-kelas/{id}', [TataUsahaController::class, 'editPengurus']);
@@ -64,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
         // AKUN SISWA
         Route::get('akun-siswa', [TataUsahaController::class, 'showSiswa']);
+        Route::get('detail-siswa/{id}', [TataUsahaController::class, 'detailSiswa']);
         Route::get('tambah-siswa', [TataUsahaController::class, 'createSiswa']);
         Route::post('simpan-siswa', [TataUsahaController::class, 'storeSiswa']);
         Route::get('edit-siswa/{id}', [TataUsahaController::class, 'editSiswa']);

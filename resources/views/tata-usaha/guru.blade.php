@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Akun Guru')
+@section('judul', 'Guru')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -36,12 +36,12 @@
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <div class="d-flex width-full justify-content-between mb-3">
             <form action="" method="get" class="flex gap-3" id="form">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="keyword" placeholder="Search Guru...."  value="{{ old('keyword', request('keyword')) }}">
+                <div class="input-group flex gap-3">
+                    <input type="text" class="form-control" name="keyword" placeholder="Search Guru...." value="{{ old('keyword', request('keyword')) }}">
                     <div class="input-group-append">
-                    <button class="input-group-text bg-primary" >
-                        <img src="/img/icon_Search.svg" alt="">
-                    </button>
+                        <button class="input-group-text bg-primary" >
+                            <img src="/img/icon_Search.svg" alt="">
+                        </button>
                     </div>
                 </div>
                 <select class="form-select filter" name="filter_status" value="">
@@ -49,7 +49,7 @@
                     <option value="1" {{ old('filter_status', request('filter_status'))=="1"?"selected" : "" }}>Guru BK</option>
                     <option value="2" {{ old('filter_status', request('filter_status'))=="2"?"selected" : "" }}>Guru Piket</option>
                     <option value="3" {{ old('filter_status', request('filter_status'))=="3"?"selected" : "" }}>Wali Kelas</option>
-                    </select>
+                </select>
             </form>
             <a href="tambah-guru" class="btn btn-warning text-dark">Tambah Akun Guru</a>
         </div>
@@ -79,14 +79,14 @@
                             </td>
                             <th>{{ $i->nama_guru }}</th>
                             <th>Guru BK</th>
-                            <td>
-                                <a href="/tata-usaha/detail-guru/{{ $i->id_guru }}" class="btn btn-primary">
-                                    <img src="{{ asset('img/icon_Search.svg')}}" alt="">
+                            <td class="d-flex justify-content-around align-items-center">
+                                <a href="/tata-usaha/detail-guru/{{ $i->id_guru }}">
+                                    <img src="{{ asset('img/icon_Vector.svg')}}" alt="">
                                 </a>
-                                <a href="/tata-usaha/edit-guru/{{ $i->id_guru }}" class="btn btn-warning">
+                                <a href="/tata-usaha/edit-guru/{{ $i->id_guru }}">
                                     <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
                                 </a>
-                                <btn class="btn btn-danger btnHapus" idHapus="{{ $i->id_guru }}">
+                                <btn idHapus="{{ $i->id_guru }}">
                                     <img src="{{ asset('img/icon_Trash.svg')}}" alt="">
                                 </btn>
                             </td>
@@ -105,14 +105,14 @@
                             </td>
                             <th>{{ $p->nama_guru }}</th>
                             <th>Guru Piket</th>
-                            <td>
-                                <a href="/tata-usaha/detail-guru/{{ $p->id_guru }}" class="btn btn-primary">
-                                    <img src="{{ asset('img/icon_Search.svg')}}" alt="">
+                            <td class="d-flex justify-content-around align-items-center">
+                                <a href="/tata-usaha/detail-guru/{{ $p->id_guru }}">
+                                    <img src="{{ asset('img/icon_Vector.svg')}}" alt="">
                                 </a>
-                                <a href="/tata-usaha/edit-guru/{{ $p->id_guru }}" class="btn btn-warning">
+                                <a href="/tata-usaha/edit-guru/{{ $p->id_guru }}">
                                     <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
                                 </a>
-                                <btn class="btn btn-danger btnHapus" idHapus="{{ $p->id_guru }}">
+                                <btn idHapus="{{ $p->id_guru }}">
                                     <img src="{{ asset('img/icon_Trash.svg')}}" alt="">
                                 </btn>
                             </td>
@@ -131,15 +131,15 @@
                             </td>
                             <th>{{ $k->nama_guru }}</th>
                             <th>Wali Kelas {{ $k->tingkatan . ' ' . $k->nama_jurusan . ' ' . $k->nama_kelas }}</th>
-                            <td>
-                                <a href="/tata-usaha/detail-guru/{{ $k->id_guru }}" class="btn btn-primary">
-                                    <img src="{{ asset('img/icon_Search.svg')}}" alt="">
+                            <td class="d-flex justify-content-around align-items-center">
+                                <a href="/tata-usaha/detail-guru/{{ $k->id_guru }}">
+                                    <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                                 </a>
-                                <a href="/tata-usaha/edit-guru/{{ $k->id_guru }}" class="btn btn-warning">
-                                    <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
+                                <a href="/tata-usaha/edit-guru/{{ $k->id_guru }}">
+                                    <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
                                 </a>
-                                <btn class="btn btn-danger btnHapus" idHapus="{{ $k->id_guru }}">
-                                    <img src="{{ asset('img/icon_Trash.svg')}}" alt="">
+                                <btn idHapus="{{ $k->id_guru }}">
+                                    <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
                                 </btn>
                             </td>
                         </tr>

@@ -2512,26 +2512,6 @@
         },
         {
             "name": "phenx/php-svg-lib",
-<<<<<<< HEAD
-            "version": "0.3.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PhenX/php-svg-lib.git",
-                "reference": "f627771eb854aa7f45f80add0f23c6c4d67ea0f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PhenX/php-svg-lib/zipball/f627771eb854aa7f45f80add0f23c6c4d67ea0f2",
-                "reference": "f627771eb854aa7f45f80add0f23c6c4d67ea0f2",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ^8.0",
-                "sabberworm/php-css-parser": "^8.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5"
-=======
             "version": "0.5.0",
             "source": {
                 "type": "git",
@@ -2551,7 +2531,6 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5"
->>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
             },
             "type": "library",
             "autoload": {
@@ -2572,17 +2551,10 @@
             "description": "A library to read, parse and export to PDF SVG files.",
             "homepage": "https://github.com/PhenX/php-svg-lib",
             "support": {
-<<<<<<< HEAD
-                "issues": "https://github.com/PhenX/php-svg-lib/issues",
-                "source": "https://github.com/PhenX/php-svg-lib/tree/0.3.4"
-            },
-            "time": "2021-10-18T02:13:32+00:00"
-=======
                 "issues": "https://github.com/dompdf/php-svg-lib/issues",
                 "source": "https://github.com/dompdf/php-svg-lib/tree/0.5.0"
             },
             "time": "2022-09-06T12:16:56+00:00"
->>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
         },
         {
             "name": "phpoption/phpoption",
@@ -3298,31 +3270,6 @@
         },
         {
             "name": "sabberworm/php-css-parser",
-<<<<<<< HEAD
-            "version": "8.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-                "reference": "d217848e1396ef962fb1997cf3e2421acba7f796"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/d217848e1396ef962fb1997cf3e2421acba7f796",
-                "reference": "d217848e1396ef962fb1997cf3e2421acba7f796",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "codacy/coverage": "^1.4",
-                "phpunit/phpunit": "~4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Sabberworm\\CSS": "lib/"
-=======
             "version": "8.4.0",
             "source": {
                 "type": "git",
@@ -3350,7 +3297,6 @@
             "autoload": {
                 "psr-4": {
                     "Sabberworm\\CSS\\": "src/"
->>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3363,11 +3309,7 @@
                 }
             ],
             "description": "Parser for CSS Files written in PHP",
-<<<<<<< HEAD
-            "homepage": "http://www.sabberworm.com/blog/2010/6/10/php-css-parser",
-=======
             "homepage": "https://www.sabberworm.com/blog/2010/6/10/php-css-parser",
->>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
             "keywords": [
                 "css",
                 "parser",
@@ -3375,15 +3317,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
-<<<<<<< HEAD
-                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.3.1"
-            },
-            "time": "2020-06-01T09:10:00+00:00"
-=======
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
             },
             "time": "2021-12-11T13:40:54+00:00"
->>>>>>> a669d3b1b8f979ff21b8900a9c847c4c1dd84946
         },
         {
             "name": "symfony/console",

@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Akun     Pengurus Kelas')
+@section('judul', 'Pengurus Kelas')
 @section('sidenav')
     <nav id="sidebarMenu" class="d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -21,7 +21,7 @@
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
         <form action="" method="get" class="flex gap-3 flex-col w-auto mb-3" id="form">
             <div class=" flex w-full justify-content-between">
-                <div class="flex">
+                <div class="flex gap-3">
                     <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Pengurus Kelas....">
                     <div class="input-group-append">
                         <button class="input-group-text bg-primary" > 
@@ -78,8 +78,8 @@
                         <th>{{ $i->jabatan." ".$i->status_jabatan }}</th>
                         <td>{{ $i->tingkatan." ".$i->nama_jurusan." ".$i->nama_kelas}}</td>
                         <td>
-                            <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}" class="btn btn-primary">
-                                <img src="{{ asset('img/icon_Search.svg')}}" alt="">
+                            <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}">
+                                <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                             </a>
                         </td>
                     </tr>

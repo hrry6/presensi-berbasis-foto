@@ -21,7 +21,7 @@
 <div class="mt-4 ml-4 pt-3 container-md bg-white">
     <form class="flex gap-3 flex-col w-auto mb-3" action="" method="get" id="form" >
         <div class="flex justify-content-between">
-            <div class="flex">
+            <div class="flex gap-3">
                 <input type="text" class="form-control" style="width:200px !important" name="keyword" value="{{ old('keyword', request('keyword')) }}" placeholder="Search Presensi....">
                 <div class="input-group-append">
                     <button class="input-group-text bg-primary" > 
@@ -81,11 +81,11 @@
                             style="max-width: 100px; height: auto;" alt="Bukti" alt="Bukti" />
                     </td>
                     <td>{{ $p->keterangan }}</td>
-                    <td class="flex">
-                        <a href="/guru-piket/detail-presensi/{{ $p->id_presensi }}" class="btn btn-primary">
-                            <img src="{{ asset('img/icon_Search.svg')}}" alt="">
+                    <td class="flex gap-2">
+                        <a href="/guru-piket/detail-presensi/{{ $p->id_presensi }}">
+                            <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                         </a>
-                        <a href="/guru-piket/edit-presensi/{{ $p->id_presensi }}" class="btn btn-warning">
+                        <a href="/guru-piket/edit-presensi/{{ $p->id_presensi }}">
                             <img src="{{ asset('img/icon_Edit.svg')}}" alt="">
                         </a>
                     </td>

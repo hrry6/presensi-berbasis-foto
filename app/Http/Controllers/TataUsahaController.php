@@ -542,6 +542,20 @@ class TataUsahaController extends Controller
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
+    public function detailPengurus(Request $request, Siswa $siswa, PengurusKelas $pengurus)
+    {
+        $data = [
+            'pengurus' => $pengurus
+                            ->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
+                            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                            ->where('id_pengurus', $request->id)->first()
+        ];
+        // dd($data);
+
+        return view('tata-usaha.detail-pengurus', $data);
+    }
+
     public function createPengurus(Siswa $siswa)
     {
         $siswa = $siswa->where('status_jabatan', 'siswa')->get();
@@ -673,6 +687,20 @@ class TataUsahaController extends Controller
         ];
         // dd($data);
         return view('tata-usaha.siswa', $data);
+    }
+
+    public function detailSiswa(Request $request, Siswa $siswa, PengurusKelas $pengurus)
+    {
+        $data = [
+            'siswa' => $siswa
+                        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                        ->where('id_siswa', $request->id)->first(),
+            'pengurus' => $pengurus->where('id_siswa', $request->id)->first()
+        ];
+        // dd($data);
+
+        return view('tata-usaha.detail-siswa', $data);
     }
 
     public function createSiswa(Kelas $kelas, Siswa $siswa)
