@@ -87,6 +87,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('guru-bk')->middleware('akses:5')->group(function () {
         Route::get('dashboard', [GuruBkController::class, 'index']);
         Route::get('detail-profil/{id}', [GuruBKController::class, 'detailProfil']);
+        Route::get('detail-presensi/{id}', [GuruBkController::class, 'detailPresensi']);
         Route::get('presensi', [GuruBkController::class, 'showPresensi']);
         Route::get('presensi-pdf', [GuruBkController::class, 'exportPresensi']);
     });

@@ -76,6 +76,19 @@ class GuruBkController extends Controller
         return $filter->get();
     }
 
+    public function detailPresensi(Request $request, PresensiSiswa $presensi)
+    {
+        $data = [
+            'presensi' => $presensi
+            ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->where('id_presensi', $request->id)->first()
+        ];
+        // dd($data);
+        return view('guru-bk.detail-presensi', $data);
+    }
+
     public function exportPresensi(Request $request, PresensiSiswa $presensi)
     {
         $filter = $this->filterPresensi($request, $presensi); 

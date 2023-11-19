@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Presensi')
+@section('judul', 'Kelola Presensi')
 @section('sidenav')
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
         <div class="position-sticky">
@@ -61,6 +61,7 @@
                 <th scope="col">Kehadiran</th>
                 <th scope="col">Foto Bukti</th>
                 <th scope="col">Keterangan</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -75,14 +76,17 @@
                     <td>
                         <img src="{{ url('presensi_bukti') . '/' . $p->foto_bukti }} "
                             style="max-width: 100px; height: auto;" alt="Bukti" alt="Bukti" />
-                        
                     </td>
                     <td>{{ $p->keterangan }}</td>
+                    <td class="flex gap-2">
+                        <a href="/guru-bk/detail-presensi/{{ $p->id_presensi }}">
+                            <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
+                        </a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
 </div>
 @endsection
 @section('footer')
