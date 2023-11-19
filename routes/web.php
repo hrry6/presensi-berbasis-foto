@@ -98,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('akun-pengurus-kelas', [GuruPiketController::class, 'showPengurus']);
         Route::get('detail-pengurus-kelas/{id}', [GuruPiketController::class, 'detailPengurus']);
         Route::get('presensi', [GuruPiketController::class, 'showPresensi']);
+        Route::get('detail-presensi/{id}', [GuruPiketController::class, 'detailPresensi']);
         Route::get('edit-presensi/{id}', [GuruPiketController::class, 'editPresensi']);
         Route::post('edit-presensi/update', [GuruPiketController::class, 'updatePresensi']);
         Route::get('presensi-pdf', [GuruPiketController::class, 'exportPresensi']);

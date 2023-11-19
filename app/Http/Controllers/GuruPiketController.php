@@ -127,9 +127,21 @@ class GuruPiketController extends Controller
                             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
                             ->where('id_pengurus', $request->id)->first()
         ];
-        // dd($data);
-
+        
         return view('guru-piket.detail-pengurus', $data);
+    }
+    
+    public function detailPresensi(Request $request, PresensiSiswa $presensi)
+    {
+        $data = [
+            'presensi' => $presensi
+            ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->where('id_presensi', $request->id)->first()
+        ];
+        // dd($data);
+        return view('guru-piket.detail-presensi', $data);
     }
 
     public function editPresensi(Request $request, PresensiSiswa $presensi)
