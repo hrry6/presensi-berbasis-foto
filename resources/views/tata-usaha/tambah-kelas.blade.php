@@ -13,51 +13,71 @@
                         @csrf
                         <div class="form-group">
                             <label>Tingkatan</label>
-                            <select name="tingkatan" class="form-control">
+                            <select name="tingkatan" class="form-control @error('tingkatan') is-invalid @enderror">
                                 <option value="" selected disabled>
                                     Pilih Tingkatan
                                 </option>
-                                <option value="X">
+                                <option value="X" {{ old('tingkatan', request('tingkatan')) == 'X' ? 'selected' : '' }}>
                                     X
                                 </option>
-                                <option value="XI">
+                                <option value="XI" {{ old('tingkatan', request('tingkatan')) == 'XI' ? 'selected' : '' }}>
                                     XI
                                 </option>
-                                <option value="XII">
+                                <option value="XII" {{ old('tingkatan', request('tingkatan')) == 'XII' ? 'selected' : '' }}>
                                     XII
                                 </option>
                             </select>
+                            @error('tingkatan') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Jurusan</label>
-                            <select name="id_jurusan" class="form-control">
+                            <select name="id_jurusan" class="form-control @error('id_jurusan') is-invalid @enderror">
                                 <option value="" selected disabled>
                                     Pilih Jurusan
                                 </option>
                                 @foreach ($jurusan as $j)
-                                <option value="{{ $j->id_jurusan }}">
+                                <option value="{{ $j->id_jurusan }}" {{ old('id_jurusan', request('id_jurusan')) == $j->id_jurusan ? 'selected' : '' }}>
                                     {{ $j->nama_jurusan}}
                                 </option>
                                 @endforeach
                             </select>
+                            @error('id_jurusan') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama_kelas">Nama Kelas</label>
-                            <input type="text" class="form-control" name="nama_kelas">
+                            <input type="text" class="form-control @error('nama_kelas') is-invalid @enderror" value="{{ old('nama_kelas')}}" name="nama_kelas">
                         </div>
+                        @error('nama_kelas') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror               
                         <div class="form-group">
                             <label>Status Kelas</label>
-                            <select name="status_kelas" class="form-control">
-                            <option value="" selected disabled>
-                                Pilih Status
-                            </option>
-                            <option value="aktif" selected>
-                                Aktif
-                            </option>
-                            <option value="tidak_aktif">
-                                Tidak Aktif
-                            </option>
-                        </select>
+                            <select name="status_kelas" class="form-control @error('status_kelas') is-invalid @enderror">
+                                <option value="" selected disabled>
+                                    Pilih Status
+                                </option>
+                                <option value="aktif" {{ old('status_kelas', request('status_kelas')) == 'aktif' ? 'selected' : '' }}>
+                                    Aktif
+                                </option>
+                                <option value="tidak_aktif" {{ old('status_kelas', request('status_kelas')) == 'tidak_aktif' ? 'selected' : '' }}>
+                                    Tidak Aktif
+                                </option>
+                            </select>
+                            @error('status_kelas') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         <div>
                         <div class="mt-3">
                             <button id="kembali"

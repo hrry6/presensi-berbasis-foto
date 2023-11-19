@@ -13,23 +13,33 @@
                         @csrf
                         <div class="form-group">
                             <label>Nama Siswa</label>
-                            <select name="id_siswa" class="form-control">
+                            <select name="id_siswa" class="form-control @error('id_siswa') is-invalid @enderror">
                                 <option value="" selected disabled>Pilih Siswa</option>
                                 @foreach ($siswa as $s)
-                                    <option value="{{ $s->id_siswa }}">{{ $s->nama_siswa }}
+                                    <option value="{{ $s->id_siswa }}" {{ old('id_siswa', request('id_siswa')) == $s->id_siswa ? 'selected' : '' }}>{{ $s->nama_siswa }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('id_siswa') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="status_jabatan">Jabatan</label>
-                            <select name="status_jabatan" class="form-control">
+                            <select name="status_jabatan" class="form-control @error('status_jabatan') is-invalid @enderror">
                                 <option value="" selected disabled>Pilih Jabatan</option>
-                                <option value="ketua_kelas">Ketua Kelas</option>
-                                <option value="wakil_kelas">Wakil Kelas</option>
-                                <option value="sekretaris">Sekretaris</option>
-                                <option value="bendahara">Bendahara</option>
+                                <option value="ketua_kelas" {{ old('status_jabatan', request('status_jabatan')) == 'ketua_kelas' ? 'selected' : '' }}>Ketua Kelas</option>
+                                <option value="wakil_kelas" {{ old('status_jabatan', request('status_jabatan')) == 'wakil_kelas' ? 'selected' : '' }}>Wakil Kelas</option>
+                                <option value="sekretaris" {{ old('status_jabatan', request('status_jabatan')) == 'sekretaris' ? 'selected' : '' }}>Sekretaris</option>
+                                <option value="bendahara" {{ old('status_jabatan', request('status_jabatan')) == 'bendahara' ? 'selected' : '' }}>Bendahara</option>
                             </select>
+                            @error('status_jabatan') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div> <br><br>
                         <button id="kembali"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"

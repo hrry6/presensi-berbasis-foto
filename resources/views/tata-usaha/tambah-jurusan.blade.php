@@ -13,7 +13,12 @@
                         @csrf
                         <div class="form-group">
                             <label for="nama_jurusan">Jurusan</label>
-                            <input type="text" class="form-control" name="nama_jurusan">
+                            <input type="text" class="form-control @error('nama_jurusan') is-invalid @enderror"  value="{{ old('nama_jurusan')}}" name="nama_jurusan">
+                            @error('nama_jurusan') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div> <br><br>
                         <button id="kembali"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"

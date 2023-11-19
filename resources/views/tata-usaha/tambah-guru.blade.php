@@ -13,33 +13,58 @@
                         @csrf
                         <div class="form-group">
                             <label for="nama_guru">Nama Guru</label>
-                            <input type="text" class="form-control" name="nama_guru">
+                            <input type="text" class="form-control @error('nama_guru') is-invalid @enderror" value="{{ old('nama_guru')}}" name="nama_guru">
+                            @error('nama_guru') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select name="status" class="form-control">
+                            <select name="status" class="form-control @error('status') is-invalid @enderror">
                                 <option value="" selected disabled>Pilih Status</option>
-                                <option value="Guru BK">Guru BK</option>
-                                <option value="Guru Piket">Guru Piket</option>
+                                <option value="Guru BK" {{ old('status', request('status')) == 'Guru BK' ? 'selected' : '' }}>Guru BK</option>
+                                <option value="Guru Piket" {{ old('status', request('status')) == 'Guru Piket' ? 'selected' : '' }}>Guru Piket</option>
                                 @foreach ($kelas as $i)
                                     @if ($i->id_wali_kelas == null)
-                                        <option value="{{ $i->id_kelas }}">Wali Kelas
+                                        <option value="{{ $i->id_kelas }}" {{ old('status', request('status')) == $i->id_kelas ? 'selected' : '' }}>Wali Kelas
                                             {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</option>
                                     @endif
                                 @endforeach
                             </select>
+                            @error('status') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username">
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username')}}" name="username">
+                            @error('username') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
+                            @error('password') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Foto Profil Guru</label>
-                            <input type="file" class="form-control" name="foto_guru" />
+                            <input type="file" class="form-control @error('foto_guru') is-invalid @enderror" name="foto_guru" />
+                            @error('foto_guru') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="mt-3">
                             <button id="kembali"

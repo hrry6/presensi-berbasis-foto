@@ -12,7 +12,7 @@
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Jurusan.svg') }}" alt=""><span>Jurusan</span>
                 </a>
-                <a href="/tata-usaha/kelas"
+                <a href="/tata-usaha/kelas?filter_status=aktif"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""><span>Kelas</span>
                 </a>
@@ -24,7 +24,7 @@
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Pengurus Kelas</span>
                 </a>
-                <a href="/tata-usaha/akun-siswa"
+                <a href="/tata-usaha/akun-siswa?filter_status=aktif"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
                     <img src="{{ asset('img/icon_Profile_White.svg') }}" alt=""><span>Akun Siswa</span>
                 </a>
@@ -88,6 +88,18 @@
                             {{ old('filter_jurusan', request('filter_jurusan')) == "$j->id_jurusan" ? 'selected' : '' }}>
                             {{ $j->nama_jurusan }}</option>
                     @endforeach
+                </select>
+                <select class="form-select filter {{ old('filter_status', request('filter_status')) == 'aktif' ? 'bg-success text-white' : '' }}
+                {{ old('filter_status', request('filter_status')) == 'tidak_aktif' ? 'bg-danger text-white' : '' }}" name="filter_status" value="">
+                    <option value="" {{ old('filter_status', request('filter_status')) == '' ? 'selected' : '' }}>
+                        Pilih
+                        Status</option>
+                    <option value="aktif"
+                        {{ old('filter_status', request('filter_status')) == 'aktif' ? 'selected' : '' }}>
+                        Aktif</option>
+                    <option value="tidak_aktif"
+                        {{ old('filter_status', request('filter_status')) == 'tidak_aktif' ? 'selected' : '' }}>Tidak Aktif
+                    </option>
                 </select>
             </div>
         </form>

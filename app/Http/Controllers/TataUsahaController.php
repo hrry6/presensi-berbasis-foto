@@ -204,7 +204,7 @@ class TataUsahaController extends Controller
         if($kelas->create($data))
         {
             notify()->success('Data kelas telah berhasil ditambahkan', 'Success');
-            return redirect('tata-usaha/kelas');
+            return redirect('tata-usaha/kelas?filter_status=aktif');
         }else
         {
             return back()->with('error', 'Data kelas gagal ditambahkan');
@@ -360,7 +360,8 @@ class TataUsahaController extends Controller
             'nama_guru' => 'required',
             'foto_guru' => 'required',
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'status' => 'required'
         ]);
 
         $user = Auth::user();
@@ -734,8 +735,13 @@ class TataUsahaController extends Controller
                 ->orWhere('jenis_kelamin', 'LIKE', "%$request->keyword%")
                 ->orWhere('tingkatan', 'LIKE', "%$request->keyword%")
                 ->orWhere('nama_jurusan', 'LIKE', "%$request->keyword%")
+                ->orWhere('status_kelas', 'LIKE', "%$request->keyword%")
                 ->orWhere('nama_kelas', 'LIKE', "%$request->keyword%");
         });
+
+        if($request->filter_jenkel != null) {
+            $filter->where("jenis_kelamin", $request->filter_jenkel);
+        }
 
         if($request->filter_jenkel != null) {
             $filter->where("jenis_kelamin", $request->filter_jenkel);
@@ -747,6 +753,11 @@ class TataUsahaController extends Controller
 
         if($request->filter_jurusan != null) {
             $filter->where("jurusan.id_jurusan", $request->filter_jurusan);
+        }
+
+        if($request->filter_status != null) 
+        {
+            $filter = $filter->where('status_siswa', $request->filter_status);
         }
 
         $data = [
@@ -785,51 +796,58 @@ class TataUsahaController extends Controller
     }
     public function storeSiswa(Request $request, Siswa $siswa, Role $role, Akun $akun)
     {
-        $data_akun = $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        $data_siswa = $request->validate([
+        $data = $request->validate([
             'nis' => 'required',
             'nama_siswa' => 'required',
             'id_kelas' => 'required',
             'jenis_kelamin' => 'required',
             'nomer_hp' => 'required',
             'angkatan' => 'required',
+            'username' => 'required',
+            'password' => 'required',
             'foto_siswa' => 'required',
         ]);
+        $data_siswa = [
+            'nis' => $data['nis'],
+            'nama_siswa' => $data['nama_siswa'],
+            'id_kelas' => $data['id_kelas'],
+            'jenis_kelamin' => $data['jenis_kelamin'],
+            'nomer_hp' => $data['nomer_hp'],
+            'angkatan' => $data['angkatan'],
+            'foto_siswa' => $data['foto_siswa'],
+        ];
 
-        $data_siswa['status_jabatan'] = 'siswa';
-
-
-        $id_akun = $akun->create([
-            'id_role' => 3,
-            'username' => $data_akun['username'],
-            'password' => Hash::make($data_akun['password'])
-        ]);
-
-        $data_siswa['id_akun'] = $id_akun->id_akun;
-
-        $user = Auth::user();
-        $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
-        $data_siswa['pembuat'] = $role_akun->nama_role;
-
-        if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
-            $foto_file = $request->file('foto_siswa');
-            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
-            $foto_file->move(public_path('siswa'), $foto_nama);
-            $data_siswa['foto_siswa'] = $foto_nama;
-        } else {
-            return back()->with('error', 'File upload failed. Please select a valid file.');
+        if($data)
+        {
+            $data_siswa['status_jabatan'] = 'siswa';
+            $id_akun = $akun->create([
+                'id_role' => 3,
+                'username' => $data['username'],
+                'password' => Hash::make($data['password'])
+            ]);
+    
+            $data_siswa['id_akun'] = $id_akun->id_akun;
+    
+            $user = Auth::user();
+            $role_akun = $role->where('id_role', $user->id_role)->first('nama_role');
+            $data_siswa['pembuat'] = $role_akun->nama_role;
+            
+            if ($request->hasFile('foto_siswa') && $request->file('foto_siswa')->isValid()) {
+                $foto_file = $request->file('foto_siswa');
+                $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+                $foto_file->move(public_path('siswa'), $foto_nama);
+                $data_siswa['foto_siswa'] = $foto_nama;
+            } else {
+                return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
+            }
+            
+            if ($siswa->create($data_siswa)) {
+                notify()->success('Data siswa telah berhasil ditambahkan', 'Success');
+                return redirect('tata-usaha/akun-siswa?filter_status=aktif');
+            }
+        }else{
+            return back()->with('error', 'Data pengurus kelas gagal ditambahkan');
         }
-
-        if ($siswa->create($data_siswa)) {
-            notify()->success('Data siswa telah berhasil ditambahkan', 'Success');
-            return redirect('tata-usaha/akun-siswa');
-        }
-
-        return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
     public function editSiswa(Request $request, Kelas $kelas, Siswa $siswa)
@@ -857,7 +875,7 @@ class TataUsahaController extends Controller
         $data_akun = $request->validate([
             'username' => 'sometimes'
         ]);
-
+        
         $data_siswa = $request->validate([
             'nis' => 'sometimes',
             'nama_siswa' => 'sometimes',

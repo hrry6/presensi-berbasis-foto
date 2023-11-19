@@ -13,7 +13,7 @@
                     aria-current="true">
                     <img src="{{ asset('img/icon_Jurusan_White.svg') }}" alt=""><span>Jurusan</span>
                 </a>
-                <a href="/tata-usaha/kelas"
+                <a href="/tata-usaha/kelas?filter_status=aktif"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""><span>Kelas</span>
                 </a>
@@ -25,7 +25,7 @@
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Pengurus Kelas</span>
                 </a>
-                <a href="/tata-usaha/akun-siswa"
+                <a href="/tata-usaha/akun-siswa?filter_status=aktif"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
                     <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Siswa</span>
                 </a>
