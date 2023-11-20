@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Validasi;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
 use App\Models\PresensiSiswa;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 

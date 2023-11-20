@@ -34,7 +34,7 @@
 @endsection
 @section('isi')
     <div class="container mt-3">
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-sm-4 mb-5">
                 <div class="block bg-white">
                     <div class="fs-1 color-text fw-bold">{{ $totalHadir }}</div>
@@ -53,6 +53,6 @@
                     <span class="fs-3 text-nowrap">Sakit / Izin</span>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 @endsection
