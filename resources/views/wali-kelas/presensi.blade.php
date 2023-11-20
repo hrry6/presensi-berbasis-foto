@@ -18,7 +18,7 @@
                 </a>
                 <a href="{{ url('wali-kelas/presensi-siswa') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
+                    <img src="{{ asset('img/icon_Location_White.svg') }}" alt=""><span>Presensi</span>
                 </a>
                 <a href="{{ url('wali-kelas/logs') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">

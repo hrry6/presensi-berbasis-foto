@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akun;
+use App\Models\Guru;
 use App\Models\Logs;
 use App\Models\Role;
 use App\Models\Kelas;
@@ -35,6 +36,21 @@ class WaliKelasController extends Controller
         return view('wali-kelas.index', compact('totalSiswa', 'totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
+    public function detailProfil(Request $request, Guru $guru, Kelas $kelas)
+    {
+        $id_guru = $guru->where('id_akun', $request->id)->first()->id_guru;
+        $data = [
+            "guru" => $guru
+                        ->join('akun', 'guru.id_akun', '=','akun.id_akun')
+                        ->where('id_guru', $id_guru)->first(),
+            'kelas' => $kelas
+                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')                
+                        ->where('id_wali_kelas', $id_guru)
+                        ->orderBy('tingkatan')->get()
+        ];
+        // dd($data);
+        return view('wali-kelas.detail-profil', $data);
+    }
     public function showSiswa(Request $request)
     {
         $user = Auth::user()->id_akun;

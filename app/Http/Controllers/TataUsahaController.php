@@ -602,7 +602,7 @@ class TataUsahaController extends Controller
         return view('tata-usaha.pengurus-kelas', $data);
     }
 
-    public function detailPengurus(Request $request, Siswa $siswa, PengurusKelas $pengurus)
+    public function detailPengurus(Request $request, PengurusKelas $pengurus)
     {
         $data = [
             'pengurus' => $pengurus
@@ -808,7 +808,7 @@ class TataUsahaController extends Controller
         {
             $data_siswa['status_jabatan'] = 'siswa';
             $id_akun = $akun->create([
-                'id_role' => 3,
+                'id_role' => 1,
                 'username' => $data['username'],
                 'password' => Hash::make($data['password'])
             ]);

@@ -14,7 +14,7 @@
                 </a>
                 <a href="{{ url('wali-kelas/akun-siswa') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Siswa</span>
+                    <img src="{{ asset('img/icon_Profile_White.svg') }}" alt=""><span>Siswa</span>
                 </a>
                 <a href="{{ url('wali-kelas/presensi-siswa') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">

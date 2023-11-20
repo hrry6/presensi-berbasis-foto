@@ -22,7 +22,7 @@
                 </a>
                 <a href="{{ url('wali-kelas/logs') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                    <img src="{{ asset('img/icon_Book.svg') }}" alt=""><span>Logs</span>
+                    <img src="{{ asset('img/icon_Book_White.svg') }}" alt=""><span>Logs</span>
                 </a>
             </div>
         </div>

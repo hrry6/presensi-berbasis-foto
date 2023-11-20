@@ -18,7 +18,7 @@
                 <a href="{{ url('wali-kelas/dashboard') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
                     aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
+                    <img src="{{ asset('img/icon_Home_White.svg') }}" alt=""><span>Dashboard</span>
                 </a>
                 <a href="{{ url('wali-kelas/akun-pengurus-kelas') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-sm-4 mb-5 mx-5">
                 <div class="block bg-white">
-                    <span class="fs-1 color-text fw-bold">{{ $totalIzin }}</span>
+                    <div class="fs-1 color-text fw-bold">{{ $totalIzin }}</div>
                     <span class="fs-3 text-nowrap">Jumlah Sakit/Izin</span>
                 </div>
             </div>

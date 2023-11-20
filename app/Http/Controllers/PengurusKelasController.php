@@ -26,6 +26,20 @@ class PengurusKelasController extends Controller
         return view('pengurus-kelas.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
     }
 
+    public function detailProfil(Request $request, PengurusKelas $pengurus)
+    {
+        $id_pengurus = $pengurus->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')->where('id_akun', $request->id)->first()->id_pengurus;
+        $data = [
+            'pengurus' => $pengurus
+                            ->join('siswa', 'pengurus_kelas.id_siswa', '=', 'siswa.id_siswa')
+                            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                            ->where('id_pengurus', $id_pengurus)->first()
+        ];
+        // dd($data);
+        return view('pengurus-kelas.detail-profil', $data);
+    }
+
     public function showHistori(Request $request)
     {
         $bulanList = [
@@ -77,10 +91,6 @@ class PengurusKelasController extends Controller
         return view('pengurus-kelas.presensi', ['siswa' => $siswaData]);
     }
 
-    public function getDataSiswa()
-    {
-    }
-
     public function showKelas(Request $request, Siswa $siswa, Validasi $validasi)
     {
         $siswa = $siswa
@@ -112,7 +122,6 @@ class PengurusKelasController extends Controller
 
         return view('pengurus-kelas.kelas', ['data' => collect([])]); 
     }
-
 
     public function updateValidasi(Request $request)
     {

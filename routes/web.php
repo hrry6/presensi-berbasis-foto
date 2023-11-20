@@ -110,6 +110,8 @@ Route::middleware(['auth'])->group(function () {
         // DASHBOARD
         Route::get('dashboard', [PengurusKelasController::class, 'index']);
 
+        Route::get('detail-profil/{id}', [PengurusKelasController::class, 'detailProfil']);
+
         Route::get('histori', [PengurusKelasController::class, 'showHistori']);
 
         // PRESENSI
@@ -126,7 +128,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('wali-kelas')->middleware('akses:2')->group(function () {
         // DASHBOARD
         Route::get('dashboard', [WaliKelasController::class, 'index']);
-
+        Route::get('detail-profil/{id}', [WaliKelasController::class, 'detailProfil']);
         // AKUN SISWA
         Route::get('akun-siswa', [WaliKelasController::class, 'showSiswa']);
         Route::get('detail-siswa/{id}', [WaliKelasController::class, 'detailSiswa']);
@@ -156,7 +158,7 @@ Route::middleware(['auth'])->group(function () {
     // SISWA
     Route::prefix('siswa')->middleware('akses:1')->group(function () {
         Route::get('dashboard', [SiswaController::class, 'index']);
-
+        Route::get('detail-profil/{id}', [SiswaController::class, 'detailProfil']);
         Route::get('histori', [SiswaController::class, 'showHistori']);
 
 

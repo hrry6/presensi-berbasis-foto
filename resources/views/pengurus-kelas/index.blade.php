@@ -15,19 +15,18 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-                <a href="/pengurus-kelas/dashboard"
-                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
+                <a href="/pengurus-kelas/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
                     aria-current="true">
-                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
+                    <img src="{{ asset('img/icon_Home_White.svg') }}" alt=""><span>Dashboard</span>
                 </a>
-                <a href="/pengurus-kelas/presensi" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
+                <a href="/pengurus-kelas/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
                 </a>
-                <a href="/pengurus-kelas/kelas" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Kelas</span>
+                <a href="/pengurus-kelas/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""><span>Kelas</span>
                 </a>
-                <a href="/pengurus-kelas/histori" class="list-group-item list-group-item-action py-2 ripple">
-                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Histori</span>
+                <a href="/pengurus-kelas/histori" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Histori</span>
                 </a>
             </div>
         </div>

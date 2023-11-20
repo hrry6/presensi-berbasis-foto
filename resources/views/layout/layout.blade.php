@@ -75,6 +75,12 @@
             font-size: 18px;
         }
 
+        .img-profile
+        {
+            width: 42px !important;
+            height: 42px !important;
+            border-radius: 100px
+        }
         /* Firefox */
         input[type=number] {
             -moz-appearance: textfield;
@@ -119,17 +125,38 @@
                         <p class="p-0 m-0">LOG OUT</p>
                         <img class="icon" src="{{ asset('img/icon_Logout.svg') }}" alt="">
                     </a>
-                    @if (Auth::user()->id_role == '4')
+                    @if(Auth::user()->id_role == '1')
+                    <a href="/siswa/detail-profil/{{ Auth::user()->id_akun }}">
+                        <li class="nav-item dropdown p-10">
+                            <img class="img-profile" src="{{ url('siswa') . '/' . App\Models\Siswa::where('id_akun', Auth::user()->id_akun)->first()->foto_siswa }}" class="rounded-circle"
+                            height="42" alt="" width="42" loading="lazy" />
+                        </li>
+                    </a>
+                    @elseif(Auth::user()->id_role == '2')
+                    <a href="/wali-kelas/detail-profil/{{ Auth::user()->id_akun }}">
+                        <li class="nav-item dropdown w-full">
+                            <img class="img-profile" src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
+                            height="42" alt="" width="42" loading="lazy" />
+                        </li>
+                    </a>
+                    @elseif(Auth::user()->id_role == '3')
+                    <a href="/pengurus-kelas/detail-profil/{{ Auth::user()->id_akun }}">
+                        <li class="nav-item dropdown p-10">
+                            <img class="img-profile" src="{{ url('siswa') . '/' . App\Models\Siswa::where('id_akun', Auth::user()->id_akun)->first()->foto_siswa }}" class="rounded-circle"
+                            height="42" alt="" width="42" loading="lazy" />
+                        </li>
+                    </a>
+                    @elseif(Auth::user()->id_role == '4')
                         <a href="/guru-piket/detail-profil/{{ Auth::user()->id_akun }}">
                             <li class="nav-item dropdown p-10">
-                                <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
+                                <img class="img-profile" src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
                                 height="42" alt="" width="42" loading="lazy" />
                             </li>
                         </a>
                     @elseif(Auth::user()->id_role == '5')
                     <a href="/guru-bk/detail-profil/{{ Auth::user()->id_akun }}">
                         <li class="nav-item dropdown p-10">
-                            <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
+                            <img class="img-profile" src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
                             height="42" alt="" width="42" loading="lazy" />
                         </li>
                     </a>

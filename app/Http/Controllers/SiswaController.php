@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PengurusKelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Models\PresensiSiswa;
@@ -21,6 +22,20 @@ class SiswaController extends Controller
         $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
 
         return view('siswa.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
+    }
+
+    public function detailProfil(Request $request, Siswa $siswa, PengurusKelas $pengurus)
+    {
+        $id_siswa = $siswa->where('id_akun', $request->id)->first()->id_siswa;
+        $data = [
+            'siswa' => $siswa
+                        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                        ->where('id_siswa', $id_siswa)->first(),
+            'pengurus' => $pengurus->where('id_siswa', $id_siswa)->first()
+        ];
+        // dd($data);
+        return view('siswa.detail-profil', $data);
     }
 
     public function showHistori(Request $request)
