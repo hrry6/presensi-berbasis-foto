@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Validasi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PengurusKelas;
@@ -65,47 +66,78 @@ class PengurusKelasController extends Controller
         return view('pengurus-kelas.histori', compact('data', 'bulanList', 'mingguList', 'selectedMonth', 'selectedWeek'));
     }
 
-    public function showKelas(Request $request, Kelas $kelas, Siswa $siswa)
-    {
-        $siswa = $siswa
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
-                ->where('siswa.id_akun', Auth::user()->id_akun)
-                ->first();
-
-        $kelasData = $kelas
-            ->join('siswa', 'kelas.id_kelas', '=', 'siswa.id_kelas')
-            ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
-            ->where('siswa.id_kelas', $siswa->id_kelas)
-            ->get();
-        
-        return view('pengurus-kelas.kelas', ['data' => $kelasData]);
-    }
-
-
-
-    public function checkSnapshot(Request $request)
-    {
-        $exists = PresensiSiswa::where('id_siswa', $request->input('id_siswa'))
-            ->whereDate('created_at', today())
-            ->exists();
-
-        return response()->json(['exists' => $exists]);
-    }
-
     public function openCam(Siswa $siswa)
     {
         $user = Auth::user()->id_akun;
-
         $siswaData = $siswa
             ->join("akun", "siswa.id_akun", "=", "akun.id_akun")
-            ->join('pengurus_kelas', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
             ->where('siswa.id_akun', $user)
-            ->get();
+            ->first();
 
-        dd($siswaData);
         return view('pengurus-kelas.presensi', ['siswa' => $siswaData]);
     }
+
+    public function getDataSiswa()
+    {
+    }
+
+    public function showKelas(Request $request, Siswa $siswa, Validasi $validasi)
+    {
+        $siswa = $siswa
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
+            ->where('akun.id_akun', Auth::user()->id_akun)
+            ->first();
+
+        $waktuValidasi = $request->input('waktu_validasi');
+
+        if ($waktuValidasi !== "") {
+            $validasiData = $validasi
+                ->join('presensi_siswa', 'validasi.id_presensi', '=', 'presensi_siswa.id_presensi')
+                ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+                ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
+                ->where('siswa.id_kelas', $siswa->id_kelas)
+                ->where(function ($query) use ($waktuValidasi) {
+                    $query->where('validasi.waktu_validasi', $waktuValidasi)
+                        ->orWhere('validasi.waktu_validasi', 'istirahat_pertama')
+                        ->orWhere('validasi.waktu_validasi', 'istirahat_kedua')
+                        ->orWhere('validasi.waktu_validasi', 'istirahat_ketiga');
+                })
+                ->get();
+
+            if ($validasiData->isNotEmpty()) {
+                return view('pengurus-kelas.kelas', ['data' => $validasiData]);
+            }
+        }
+
+        return view('pengurus-kelas.kelas', ['data' => collect([])]); 
+    }
+
+
+    public function updateValidasi(Request $request)
+    {
+        $request->validate([
+            'waktu_validasi' => 'required',
+        ]);
+
+        foreach ($request->input('status_validasi') as $index => $statuses) {
+            foreach ($statuses as $status) {
+                $existingValidasi = Validasi::where('id_pengurus', $request->input("id_pengurus.$index"))
+                    ->where('id_presensi', $request->input("id_presensi.$index"))
+                    ->where('waktu_validasi', $request->input('waktu_validasi'))
+                    ->first();
+
+                if ($existingValidasi) {
+                    $existingValidasi->update([
+                        'status_validasi' => $status,
+                    ]);
+                }
+            }
+        }
+
+        return back()->with('success', 'Data validasi sudah diupdate');
+    }
+
 
     public function store(Request $request)
     {
@@ -126,56 +158,12 @@ class PengurusKelasController extends Controller
             'tanggal' => now('Asia/Jakarta')->toDateString(),
             'status_kehadiran' => 'hadir',
             'keterangan' => 'Some description',
+            'pembuat' => 'Siswa'
 
         ]);
 
         session(['snapshot_taken' => true]);
 
         return back()->with('success', 'Image uploaded successfully');
-    }
-
-    public function storeValidasi(Request $request)
-    {
-        
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(PengurusKelas $pengurusKelas)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PengurusKelas $pengurusKelas)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, PengurusKelas $pengurusKelas)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PengurusKelas $pengurusKelas)
-    {
-        //
     }
 }

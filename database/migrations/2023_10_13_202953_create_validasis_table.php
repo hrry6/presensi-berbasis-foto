@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('validasi', function (Blueprint $table) {
             $table->integer('id_validasi', true);
-            $table->integer('id_pengurus');
+            $table->integer('id_pengurus')->nullable(true);
             $table->integer('id_presensi');
-            $table->enum('status_kehadiran', ['hadir', 'izin', 'alpha']);
+            $table->enum('status_validasi', ['hadir', 'izin', 'alpha', 'pulang','tidak_ada'])->default('tidak_ada');
             $table->text('keterangan')->nullable(true);
-            $table->enum('waktu_validasi', ['Istirahat Pertama', 'Istirahat Kedua', 'Istirahat Ketiga']);
+            $table->enum('waktu_validasi', ['istirahat_pertama', 'istirahat_kedua', 'istirahat_ketiga']);
 
             // Foreign Key
 

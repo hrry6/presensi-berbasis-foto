@@ -119,7 +119,7 @@ Route::middleware(['auth'])->group(function () {
 
         // VALIDASI
         Route::get('kelas', [PengurusKelasController::class, 'showKelas']);
-        Route::post('validasi', [PengurusKelasController::class, 'storeValidasi']);
+        Route::post('update-validasi', [PengurusKelasController::class, 'updateValidasi']);
     });
 
     // WALI KELAS

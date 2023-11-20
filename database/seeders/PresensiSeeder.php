@@ -30,7 +30,7 @@ class PresensiSeeder extends Seeder
                     'foto_bukti' => asset('img/presensi.png'),
                     'jam_masuk' =>  $faker->time(),
                     'tanggal' => $faker->date(),
-                    'status_kehadiran' => Arr::random(['hadir', 'izin', 'alpha']),
+                    'status_kehadiran' => 'hadir',
                     'keterangan' => implode(' ', $faker->words()),
                     'created_at' => $createdAt,
                     'updated_at' => $updatedAt,

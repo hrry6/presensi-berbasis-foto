@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('judul', 'Dashboard Siswa')
+@section('judul', 'Dashboard Kelas')
 <style>
     .block {
         padding: 100px;
@@ -9,6 +9,10 @@
 
     .color-text {
         color: #F9812A;
+    }
+
+    .table-container {
+        width: 100%;
     }
 </style>
 @section('sidenav')
@@ -34,57 +38,127 @@
 @endsection
 @section('isi')
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <form action="" method="get">
-            <div class="flex gap-3 w-50 mt-3">
-                {{-- <select class="form-select" name="bulan" id="bulan" onchange="this.form.submit()">
-                    <option value="" {{ $selectedMonth === null ? 'selected' : '' }}>Semua Bulan</option>
-                    @foreach ($bulanList as $index => $bulan)
-                        <option value="{{ $index }}" {{ $selectedMonth == $index ? 'selected' : '' }}>
-                            {{ $bulan }}
-                        </option>
-                    @endforeach
-                </select>
+        <form id="validasiForm" action="{{ url('kelas') }}" method="GET">
+            @csrf
+            <div class="d-flex">
+                <div class="w-25">
+                    <label for="waktu_validasi">Pilih Waktu Validasi:</label>
+                    <select id="waktu_validasi" name="waktu_validasi" class="form-control">
+                        <option value="istirahat_pertama">Istirahat Pertama</option>
+                        <option value="istirahat_kedua">Istirahat Kedua</option>
+                        <option value="istirahat_ketiga">Istirahat Ketiga</option>
+                    </select>
+                </div>
+                <div class="ml-auto mt-4 mx-5">
+                    <button type="submit" class="bg-primary p-2 text-white rounded-md"
+                        style="width: 100px;">Submit</button>
+                </div>
+            </div>
+            <div class="table-container mt-4">
+                <table class="table table-bordered DataTable">
+                    <thead class="thead table-dark">
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">NIS</th>
+                            <th scope="col">Nama Siswa</th>
+                            <th scope="col" colspan="3" class="text-center">Kehadiran</th>
+                        </tr>
+                        <tr class="text-center">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Hadir</th>
+                            <th>Izin</th>
+                            <th>Alpha</th>
+                        </tr>
+                    </thead>
 
-                <select class="form-select" name="minggu" id="minggu" onchange="this.form.submit()">
-                    <option value="" {{ $selectedWeek === null ? 'selected' : '' }}>Semua Minggu</option>
-                    @for ($i = 1; $i <= 4; $i++)
-                        <option value="{{ $i }}" {{ $selectedWeek == $i ? 'selected' : '' }}>
-                            Minggu ke-{{ $i }}
-                        </option>
-                    @endfor
-                </select> --}}
+                    <tbody>
+                        @foreach ($data as $i)
+                            <tr class="data-row" data-waktu-validasi="{{ $i->waktu_validasi }}">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $i->nis }}</td>
+                                <td>{{ $i->nama_siswa }}</td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="single-checkbox"
+                                        name="status_validasi[{{ $loop->iteration }}][]" value="hadir"
+                                        id="checkbox_hadir_{{ $loop->iteration }}"
+                                        {{ $i->status_validasi === 'hadir' ? 'checked' : '' }}>
+                                    <input type="hidden" name="id_pengurus[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_pengurus }}">
+                                    <input type="hidden" name="id_presensi[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_presensi }}">
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="single-checkbox"
+                                        name="status_validasi[{{ $loop->iteration }}][]" value="izin"
+                                        id="checkbox_izin_{{ $loop->iteration }}"
+                                        {{ $i->status_validasi === 'izin' ? 'checked' : '' }}>
+                                    <input type="hidden" name="id_pengurus[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_pengurus }}">
+                                    <input type="hidden" name="id_presensi[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_presensi }}">
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="single-checkbox"
+                                        name="status_validasi[{{ $loop->iteration }}][]" value="alpha"
+                                        id="checkbox_alpha_{{ $loop->iteration }}"
+                                        {{ $i->status_validasi === 'alpha' ? 'checked' : '' }}>
+                                    <input type="hidden" name="id_pengurus[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_pengurus }}">
+                                    <input type="hidden" name="id_presensi[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_presensi }}">
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </form>
-        <table class="table table-bordered DataTable">
-            <thead class="thead table-dark">
-                <tr class="">
-                    <th scope="col">No</th>
-                    <th scope="col">NIS</th>
-                    <th scope="col">Nama Siswa</th>
-                    <th scope="col" colspan="3" class="text-center">Kehadiran</th>
-                </tr>
-                <tr class="text-center">
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>Hadir</th>
-                    <th>Izin</th>
-                    <th>Alpha</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach ($data as $i)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $i->nis }}</td>
-                        <td>{{ $i->nama_siswa }}</td>
-                        <td class="text-center"><input type="checkbox" name="hadir"></td>
-                        <td class="text-center"><input type="checkbox" name="izin"></td>
-                        <td class="text-center"><input type="checkbox" name="alpha"></td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
     </div>
+
+@endsection
+
+@section('footer')
+    <script type="module">
+        $(document).ready(function() {
+            function filterTable() {
+                var selectedValue = $('#waktu_validasi').val();
+
+                if (selectedValue === "") {
+                    $('table.DataTable tbody tr').show();
+                    return;
+                }
+
+                var rowsToShow = $('table.DataTable tbody tr[data-waktu-validasi="' + selectedValue + '"]');
+
+                if (rowsToShow.length > 0) {
+                    $('table.DataTable tbody tr').hide();
+                    rowsToShow.show();
+                }
+            }
+
+            filterTable();
+
+            $('#waktu_validasi').change(function() {
+                filterTable();
+            });
+
+            $('#validasiForm').submit(function(event) {
+                if (event.originalEvent) {
+                    $(this).attr('action', 'update-validasi');
+                    $(this).attr('method', 'POST');
+                }
+            });
+
+            $('.single-checkbox').on('change', function() {
+                var checkboxes = $(this).closest('tr').find('.single-checkbox');
+
+                checkboxes.prop('checked', false);
+
+                $(this).prop('checked', true);
+            });
+        });
+    </script>
 @endsection

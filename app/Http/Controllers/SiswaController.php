@@ -82,31 +82,4 @@ class SiswaController extends Controller
 
         return view('siswa.presensi', ['siswa' => $siswaData]);
     }
-
-    public function store(Request $request)
-    {
-        $image = $request->image;
-        $folderPath = "presensi_bukti";
-
-        list(, $imageData) = explode(";base64,", $image);
-        $imageBase64 = base64_decode($imageData);
-
-        $fileName = Str::uuid() . '.png';
-        $filePath = public_path("$folderPath/$fileName");
-
-        file_put_contents($filePath, $imageBase64);
-        PresensiSiswa::create([
-            'id_siswa' => $request->input('id_siswa'),
-            'foto_bukti' => $fileName,
-            'jam_masuk' => now('Asia/Jakarta')->format('H:i:s'),
-            'tanggal' => now('Asia/Jakarta')->toDateString(),
-            'status_kehadiran' => 'hadir',
-            'keterangan' => 'Some description',
-        
-        ]);
-
-        session(['snapshot_taken' => true]);
-
-        return back()->with('success', 'Image uploaded successfully');
-    }
 }

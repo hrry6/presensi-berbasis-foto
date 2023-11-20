@@ -61,7 +61,7 @@ return new class extends Migration
             VALUES ("pengurus_kelas", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER update_pengurus
         AFTER UPDATE ON pengurus_kelas
@@ -71,7 +71,7 @@ return new class extends Migration
             VALUES ("pengurus_kelas", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER delete_pengurus
         AFTER DELETE ON pengurus_kelas
@@ -91,7 +91,7 @@ return new class extends Migration
             VALUES ("guru", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER update_guru
         AFTER UPDATE ON guru
@@ -101,7 +101,7 @@ return new class extends Migration
             VALUES ("pengurus", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER delete_guru
         BEFORE DELETE ON guru
@@ -121,7 +121,7 @@ return new class extends Migration
             VALUES ("jurusan", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER update_jurusan
         AFTER UPDATE ON jurusan
@@ -131,7 +131,7 @@ return new class extends Migration
             VALUES ("jurusan", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER delete_jurusan
         AFTER DELETE ON jurusan
@@ -151,7 +151,7 @@ return new class extends Migration
             VALUES ("kelas", NEW.pembuat, CURDATE(), CURTIME(), "Tambah", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER update_kelas
         AFTER UPDATE ON kelas
@@ -161,7 +161,7 @@ return new class extends Migration
             VALUES ("kelas", NEW.pembuat, CURDATE(), CURTIME(), "Update", "Sukses");
         END
         ');
-    
+
         DB::unprepared('
         CREATE TRIGGER delete_kelas
         AFTER DELETE ON kelas
@@ -170,6 +170,21 @@ return new class extends Migration
             INSERT logs(tabel, aktor, tanggal, jam, aksi, record)
             VALUES ("kelas", OLD.pembuat, CURDATE(), CURTIME(), "Hapus", "Sukses");
         END
+        ');
+
+        DB::unprepared('
+        CREATE TRIGGER insert_validasi 
+        AFTER INSERT ON presensi_siswa
+        FOR EACH ROW
+        BEGIN
+            IF NEW.status_kehadiran = "hadir" THEN
+                INSERT INTO validasi (id_pengurus, id_presensi, status_validasi, waktu_validasi)
+                    VALUES 
+                        (DEFAULT, NEW.id_presensi, "tidak_ada", "istirahat_pertama"),
+                        (DEFAULT, NEW.id_presensi, "tidak_ada", "istirahat_kedua"),
+                        (DEFAULT, NEW.id_presensi, "tidak_ada", "istirahat_ketiga");
+                END IF;
+            END
         ');
     }
 
@@ -194,5 +209,6 @@ return new class extends Migration
         DB::unprepared('DROP TRIGGER add_kelas');
         DB::unprepared('DROP TRIGGER update_kelas');
         DB::unprepared('DROP TRIGGER delete_kelas');
+        DB::unprepared('DROP TRIGGER insert_validasi');
     }
 };

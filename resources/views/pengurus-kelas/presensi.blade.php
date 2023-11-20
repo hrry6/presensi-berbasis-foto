@@ -6,11 +6,10 @@
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
                 <a href="/pengurus-kelas/dashboard"
-                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active"
-                    aria-current="true">
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
                     <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
                 </a>
-                <a href="/pengurus-kelas/presensi" class="list-group-item list-group-item-action py-2 ripple">
+                <a href="/pengurus-kelas/presensi" class="list-group-item list-group-item-action py-2 ripple active">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Presensi</span>
                 </a>
                 <a href="/pengurus-kelas/kelas" class="list-group-item list-group-item-action py-2 ripple">
