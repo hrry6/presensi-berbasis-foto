@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akun;
+use App\Models\Role;
+use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Guru;
 use App\Models\GuruBk;
 use App\Models\GuruPiket;
-use App\Models\Jurusan;
-use App\Models\Kelas;
-use App\Models\Logs;
 use App\Models\PengurusKelas;
-use App\Models\PresensiSiswa;
-use App\Models\Role;
 use App\Models\Siswa;
+use App\Models\PresensiSiswa;
+use App\Models\Logs;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -571,7 +571,7 @@ class TataUsahaController extends Controller
     }
     
     //PENGURUS KELAS 
-    public function showPengurus(PengurusKelas $pengurus, Jurusan $jurusan,Request $request)
+    public function showPengurus(PengurusKelas $pengurus, Kelas $kelas,Request $request)
     {
         $filter = $pengurus
                 ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
@@ -590,19 +590,14 @@ class TataUsahaController extends Controller
             $filter = $filter->where('status_jabatan',$request->filter_jabatan );
         }
 
-        if($request->filter_tingkatan != null)
+        if($request->filter_kelas != null)
         {
-            $filter = $filter->where('tingkatan', $request->filter_tingkatan);
-        }
-
-        if($request->filter_jurusan != null)
-        {
-            $filter = $filter->where('jurusan.id_jurusan', $request->filter_jurusan);
+            $filter = $filter->where('kelas.id_kelas', $request->filter_kelas);
         }
 
         $data = [
             'pengurus' => $filter->get(),
-            'jurusan' => $jurusan->get()
+            'kelas' => $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->orderBy('tingkatan')->orderBy('nama_kelas')->get()
         ];
         return view('tata-usaha.pengurus-kelas', $data);
     }
@@ -724,7 +719,7 @@ class TataUsahaController extends Controller
     }
     // SISWA
 
-    public function showSiswa(Siswa $siswa, Jurusan $jurusan,Request $request)
+    public function showSiswa(Siswa $siswa, Kelas $kelas ,Request $request)
     {
         $filter = $siswa
         ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
@@ -743,16 +738,8 @@ class TataUsahaController extends Controller
             $filter->where("jenis_kelamin", $request->filter_jenkel);
         }
 
-        if($request->filter_jenkel != null) {
-            $filter->where("jenis_kelamin", $request->filter_jenkel);
-        }
-
-        if($request->filter_tingkatan != null) {
-            $filter->where("tingkatan", $request->filter_tingkatan);
-        }
-
-        if($request->filter_jurusan != null) {
-            $filter->where("jurusan.id_jurusan", $request->filter_jurusan);
+        if($request->filter_kelas != null) {
+            $filter->where("kelas.id_kelas", $request->filter_kelas);
         }
 
         if($request->filter_status != null) 
@@ -762,7 +749,7 @@ class TataUsahaController extends Controller
 
         $data = [
             'siswa' => $filter->get(),
-            'jurusan' => $jurusan->get()
+            'kelas' => $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->orderBy('tingkatan')->orderBy('nama_kelas')->get()
         ];
         // dd($data);
         return view('tata-usaha.siswa', $data);
@@ -969,12 +956,12 @@ class TataUsahaController extends Controller
     }
 
     // PRESENSI
-    public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)
+    public function showPresensi(Request $request, Kelas $kelas, PresensiSiswa $presensi)
     {
         $filter = $this->filterPresensi($request, $presensi);
         $data = [
             'presensi' => $filter,
-            'jurusan' =>  $jurusan->get()
+            'kelas' => $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->orderBy('tingkatan')->orderBy('nama_kelas')->get()
         ];
         return view('tata-usaha.presensi', $data);
     }
@@ -993,6 +980,10 @@ class TataUsahaController extends Controller
                     ->orwhere('nama_jurusan', 'LIKE', "%$request->keyword%")
                     ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
                 });
+        if($request->filter_bulan != null)
+        {
+            $filter = $filter->whereMonth('tanggal',"$request->filter_bulan");
+        }
         if($request->filter_tanggal != null)
         {
             $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%" );
@@ -1001,13 +992,9 @@ class TataUsahaController extends Controller
         {
             $filter = $filter->where('status_kehadiran',$request->filter_kehadiran );
         }
-        if($request->filter_tingkatan != null)
+        if($request->filter_kelas != null)
         {
-            $filter = $filter->where('tingkatan',$request->filter_tingkatan );
-        }
-        if($request->filter_jurusan != null)
-        {
-            $filter = $filter->where('nama_jurusan',$request->filter_jurusan );
+            $filter = $filter->where('kelas.id_kelas',$request->filter_kelas );
         }
         return $filter->get();
     }

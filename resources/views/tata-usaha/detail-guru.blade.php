@@ -14,6 +14,7 @@
 @section('isi')
     <img class="" src="{{ asset('img/group_guru.png') }}" width="100%" height="250px" alt="" style="">
     <div class="container">
+        <h1 class="mt-4 text-center">Detail Guru</h1>
         <div class="d-flex justify-content-center">
             <img src="{{ asset('guru/' . $guru->foto_guru) }}" width="200px" height="200px" alt="Profile" class="mt-4 mb-2"
                 style="border-radius: 100px;" alt="Guru" />

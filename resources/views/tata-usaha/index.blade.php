@@ -48,42 +48,54 @@
         <div class="row">
             <div class="col-sm-4 mb-5">
                 <div class="block bg-white">
-                    <div class="fs-1 color-text fw-bold">{{ $totalWaliKelas }}</div>
-                    <span class="fs-3 text-nowrap">Wali Kelas</span>
+                    <a href="/tata-usaha/akun-guru">
+                        <div class="fs-1 color-text fw-bold">{{ $totalWaliKelas }}</div>
+                        <span class="fs-3 text-nowrap">Wali Kelas</span>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-4 mb-5">
-                <div class="block bg-white">
-                    <div class="fs-1 color-text fw-bold">{{ $totalGuruBk }}</div>
-                    <span class="fs-3 text-nowrap">Guru BK</span>
-                </div>
+                <a href="/tata-usaha/akun-guru?filter_status=1">
+                    <div class="block bg-white">
+                        <div class="fs-1 color-text fw-bold">{{ $totalGuruBk }}</div>
+                        <span class="fs-3 text-nowrap">Guru BK</span>
+                    </div>
+                </a>
             </div>
             <div class="col-sm-4 mb-5">
-                <div class="block bg-white">
-                    <div class="fs-1 color-text fw-bold">{{ $totalGuruPiket }}</div>
-                    <span class="fs-3 text-nowrap">Guru Piket</span>
-                </div>
+                <a href="/tata-usaha/akun-guru?filter_status=2">
+                    <div class="block bg-white">
+                        <div class="fs-1 color-text fw-bold">{{ $totalGuruPiket }}</div>
+                        <span class="fs-3 text-nowrap">Guru Piket</span>
+                    </div>
+                </a>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-4 mb-5">
-                <div class="block bg-white">
-                    <div class="fs-1 color-text fw-bold">{{ $totalKelas }}</div>
-                    <span class="fs-3 text-nowrap">Jumlah Kelas</span>
-                </div>
+                <a href="/tata-usaha/kelas?filter_status=aktif">
+                    <div class="block bg-white">
+                        <div class="fs-1 color-text fw-bold">{{ $totalKelas }}</div>
+                        <span class="fs-3 text-nowrap">Jumlah Kelas</span>
+                    </div>
+                </a>
             </div>
             <div class="col-sm-4 mb-5">
-                <div class="block bg-white">
-                    <div class="fs-1 color-text fw-bold">{{ $totalPengurusKelas }}</div>
-                    <span class="fs-5 text-nowrap">Jumlah Pengurus Kelas</span>
-                </div>
+                <a href="/tata-usaha/akun-pengurus-kelas">
+                    <div class="block bg-white">
+                        <div class="fs-1 color-text fw-bold">{{ $totalPengurusKelas }}</div>
+                        <span class="fs-5 text-nowrap">Jumlah Pengurus Kelas</span>
+                    </div>
+                </a>
             </div>
             <div class="col-sm-4 mb-5">
-                <div class="block bg-white">
-                    <div class="fs-1 color-text fw-bold">{{ $totalSiswa }}</div>
-                    <span class="fs-3 text-nowrap">Jumlah Siswa</span>
-                </div>
+                <a href="/tata-usaha/akun-siswa?filter_status=aktif">
+                    <div class="block bg-white">
+                        <div class="fs-1 color-text fw-bold">{{ $totalSiswa }}</div>
+                        <span class="fs-3 text-nowrap">Jumlah Siswa</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

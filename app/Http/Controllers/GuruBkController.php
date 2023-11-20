@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jurusan;
-use App\Models\PresensiSiswa;
 use App\Models\Guru;
+use App\Models\PresensiSiswa;
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -34,12 +34,12 @@ class GuruBkController extends Controller
         return view('guru-bk.detail-profil', $data);
     }
 
-    public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)
+    public function showPresensi(Request $request, Kelas $kelas, PresensiSiswa $presensi)
     {
         $filter = $this->filterPresensi($request, $presensi);
         $data = [
             'presensi' => $filter,
-            'jurusan' =>  $jurusan->get()
+            'kelas' => $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->orderBy('tingkatan')->orderBy('nama_kelas')->get()
         ];
         return view('guru-bk.presensi', $data);
     }
@@ -57,22 +57,22 @@ class GuruBkController extends Controller
                     ->orwhere('nama_jurusan', 'LIKE', "%$request->keyword%")
                     ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
                 });
-        if($request->filter_tanggal != null)
-        {
-            $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%");
-        }
-        if($request->filter_kehadiran != null)
-        {
-            $filter = $filter->where('status_kehadiran',$request->filter_kehadiran);
-        }
-        if($request->filter_tingkatan != null)
-        {
-            $filter = $filter->where('tingkatan',$request->filter_tingkatan);
-        }
-        if($request->filter_jurusan != null)
-        {
-            $filter = $filter->where('nama_jurusan',$request->filter_jurusan);
-        }
+            if($request->filter_bulan != null)
+            {
+                $filter = $filter->whereMonth('tanggal',"$request->filter_bulan");
+            }
+            if($request->filter_tanggal != null)
+            {
+                $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%" );
+            }
+            if($request->filter_kehadiran != null)
+            {
+                $filter = $filter->where('status_kehadiran',$request->filter_kehadiran );
+            }
+            if($request->filter_kelas != null)
+            {
+                $filter = $filter->where('kelas.id_kelas',$request->filter_kelas );
+            }
         return $filter->get();
     }
 

@@ -18,6 +18,7 @@
 @section('isi')
     <img src="{{ asset('img/group_siswa.png') }}" width="100%" height="200px" alt="" style="object-fit: fill;">
     <div class="container">
+        <h1 class="mt-4 text-center">Detail Pengurus Kelas</h1>
         <div class="d-flex justify-content-center">
             <img src="{{ asset('siswa/' . $pengurus->foto_siswa) }}" width="200px" height="200px" alt="Profile" class="mt-4 mb-2"
                 style="border-radius: 100px;" alt="Siswa" />

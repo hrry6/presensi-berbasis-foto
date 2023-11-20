@@ -19,6 +19,7 @@
     <img src="{{ asset('img/group_siswa.png') }}" width="100%" height="200px" alt="" style="object-fit: fill;">
     <br>
     <div class="container">
+        <h1 class="mt-4 text-center">Detail Kelas</h1>
         <div class="card mt-3  bg-white">
             <div class="card-body">
                 <div class="container">

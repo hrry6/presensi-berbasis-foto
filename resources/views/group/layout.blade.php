@@ -80,7 +80,7 @@
                     <img src="/img/logo.png" width="150" alt="" loading="lazy" />
                 </a>
 
-                <h1 class="title">@yield('judul')</h1>
+                {{-- <h1 class="title">@yield('judul')</h1> --}}
                 <!-- Right links -->
                 <ul class="navbar-nav ms-auto d-flex flex-row">
                     <a href="/logout" class="btn btn-danger">

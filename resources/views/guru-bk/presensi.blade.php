@@ -29,24 +29,55 @@
             <button class="btn btn-success" id="downloadPDF">Download PDF</button>
         </div>
         <div class="flex gap-3">
-            <input type="date" class="form-control filter" id="tanggal" value="{{ old('filter_tanggal', request('filter_tanggal'))}}" name="filter_tanggal" placeholder="Pilih Tanggal">
-            <select class="form-select filter" name="filter_tingkatan" value="">
-                <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
-                <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
-                <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
-                <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
-            </select>
-            <select class="form-select filter" name="filter_jurusan" value="">
-                <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
-                @foreach ($jurusan as $j)
-                <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
+            <select class="form-select filter" name="filter_kelas" value="">
+                <option value="" {{ old('filter_jurusan', request('filter_kelas')) == '' ? 'selected' : '' }}>
+                    Pilih Kelas</option>
+                @foreach ($kelas as $k)
+                    <option value="{{ $k->id_kelas }}"
+                        {{ old('filter_kelas', request('filter_kelas')) == "$k->id_kelas" ? 'selected' : '' }}>
+                        {{ $k->tingkatan." ".$k->nama_jurusan." ".$k->nama_kelas }}</option>
                 @endforeach
             </select>
+            <select class="form-select" id="filter_bulan" name="filter_bulan" value="">
+                <option value="" {{ old('filter_bulan', request('filter_bulan')) == '' ? 'selected' : '' }}>
+                    Pilih Bulan</option>
+                    <option value="01"
+                    {{ old('filter_bulan', request('filter_bulan')) == '01' ? 'selected' : '' }}>Januari</option>
+                    <option value="02"
+                    {{ old('filter_bulan', request('filter_bulan')) == '02' ? 'selected' : '' }}>Februari</option>                        
+                    <option value="03"
+                    {{ old('filter_bulan', request('filter_bulan')) == '03' ? 'selected' : '' }}>Maret</option>
+                    <option value="04"
+                    {{ old('filter_bulan', request('filter_bulan')) == '04' ? 'selected' : '' }}>April</option>
+                    <option value="05"
+                    {{ old('filter_bulan', request('filter_bulan')) == '05' ? 'selected' : '' }}>Mei</option>
+                    <option value="06"
+                    {{ old('filter_bulan', request('filter_bulan')) == '06' ? 'selected' : '' }}>Juni</option>                        
+                    <option value="07"
+                    {{ old('filter_bulan', request('filter_bulan')) == '07' ? 'selected' : '' }}>Juli</option>
+                    <option value="08"
+                    {{ old('filter_bulan', request('filter_bulan')) == '08' ? 'selected' : '' }}>Agustus</option>
+                    <option value="09"
+                    {{ old('filter_bulan', request('filter_bulan')) == '09' ? 'selected' : '' }}>September</option>
+                    <option value="10"
+                    {{ old('filter_bulan', request('filter_bulan')) == '10' ? 'selected' : '' }}>Oktober</option>                        
+                    <option value="11"
+                    {{ old('filter_bulan', request('filter_bulan')) == '11' ? 'selected' : '' }}>November</option>
+                    <option value="12"
+                    {{ old('filter_bulan', request('filter_bulan')) == '12' ? 'selected' : '' }}>Desember</option>                        
+                </select>
+            <input type="date" class="form-control" id="filter_tanggal" id="tanggal"
+                value="{{ old('filter_tanggal', request('filter_tanggal')) }}" name="filter_tanggal"
+                placeholder="Pilih Tanggal">
             <select class="form-select filter" name="filter_kehadiran" value="">
-                <option value="" {{ old('filter_kehadiran', request('filter_kehadiran'))==""?"selected" : "" }}>Pilih Status Kehadiran</option>
-                <option value="hadir" {{ old('filter_kehadiran', request('filter_kehadiran'))=="hadir"?"selected" : "" }}>Hadir</option>
-                <option value="alpha" {{ old('filter_kehadiran', request('filter_kehadiran'))=="alpha"?"selected" : "" }}>Alpha</option>
-                <option value="izin" {{ old('filter_kehadiran', request('filter_kehadiran'))=="izin"?"selected" : "" }}>Izin</option>
+                <option value="" {{ old('filter_kehadiran', request('filter_kehadiran')) == '' ? 'selected' : '' }}>
+                    Pilih Status Kehadiran</option>
+                <option value="hadir"
+                    {{ old('filter_kehadiran', request('filter_kehadiran')) == 'hadir' ? 'selected' : '' }}>Hadir</option>
+                <option value="alpha"
+                    {{ old('filter_kehadiran', request('filter_kehadiran')) == 'alpha' ? 'selected' : '' }}>Alpha</option>
+                <option value="izin"
+                    {{ old('filter_kehadiran', request('filter_kehadiran')) == 'izin' ? 'selected' : '' }}>Izin</option>
             </select>
         </div>
     </form>
@@ -61,7 +92,7 @@
                 <th scope="col">Kehadiran</th>
                 <th scope="col">Foto Bukti</th>
                 <th scope="col">Keterangan</th>
-                <th scope="col">Aksi</th>
+                {{-- <th scope="col">Aksi</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -78,11 +109,11 @@
                             style="max-width: 100px; height: auto;" alt="Bukti" alt="Bukti" />
                     </td>
                     <td>{{ $p->keterangan }}</td>
-                    <td class="flex gap-2">
+                    {{-- <td class="flex gap-2">
                         <a href="/guru-bk/detail-presensi/{{ $p->id_presensi }}">
                             <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
                         </a>
-                    </td>
+                    </td> --}}
                 </tr>
             @endforeach
         </tbody>
@@ -94,8 +125,28 @@
         $(".filter").on('change', function() {
             $("#form").submit();
         })
-        $('#downloadPDF').on('click', function(e){    
-            $("#form").attr('action', '/guru-bk/presensi-pdf').submit();
+
+        $('#filter_bulan').change(function() {
+            if ($(this).val() !== '') {
+                $('#filter_tanggal').prop('disabled', true);
+            } else {
+                $('#filter_tanggal').prop('disabled', false);
+            }
+            $("#form").submit();
+        });
+
+        $('#filter_tanggal').change(function() {
+            if ($(this).val() !== '') {
+                $('#filter_bulan').prop('disabled', true);
+            } else {
+                $('#filter_bulan').prop('disabled', false);
+            }
+            $("#form").submit();
+        });
+
+
+        $('#downloadPDF').on('click', function(e) {
+            $("#form").attr('action', '/tata-usaha/presensi-pdf').submit();
         })
     </script>
 @endsection

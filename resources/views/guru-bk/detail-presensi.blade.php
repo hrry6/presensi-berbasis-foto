@@ -17,7 +17,7 @@
 </style>
 @section('isi')
     <img src="{{ asset('img/group_siswa.png') }}" width="100%" height="200px" alt="" style="object-fit: fill;">
-    <div class="container">
+    <div class="container">  
         <div class="d-flex justify-content-center">
             <img src="{{ asset('siswa/' . $presensi->foto_siswa) }}" width="200px" height="200px" alt="Profile" class="mt-4 mb-2"
                 style="border-radius: 100px;" alt="Siswa" />

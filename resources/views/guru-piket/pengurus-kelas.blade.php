@@ -37,16 +37,13 @@
                     <option value="wakil_kelas" {{ old('filter_jabatan', request('filter_jabatan'))=="wakil_kelas"?"selected" : "" }}>Wakil Kelas</option>
                     <option value="sekertaris" {{ old('filter_jabatan', request('filter_jabatan'))=="sekertaris"?"selected" : "" }}>Sekertaris</option>
                 </select>
-                <select class="form-select filter" name="filter_tingkatan" value="">
-                    <option value="" {{ old('filter_tingkatan', request('filter_tingkatan'))==""?"selected" : "" }}>Pilih Tingkatan</option>
-                    <option value="X" {{ old('filter_tingkatan', request('filter_tingkatan'))=="X"?"selected" : "" }}>X</option>
-                    <option value="XI" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XI"?"selected" : "" }}>XI</option>
-                    <option value="XII" {{ old('filter_tingkatan', request('filter_tingkatan'))=="XII"?"selected" : "" }}>XII</option>
-                </select>
-                <select class="form-select filter" name="filter_jurusan" value="">
-                    <option value="" {{ old('filter_jurusan', request('filter_jurusan'))==""?"selected" : "" }}>Pilih Jurusan</option>
-                    @foreach ($jurusan as $j)
-                    <option value="{{ $j->id_jurusan}}" {{ old('filter_jurusan', request('filter_jurusan'))=="$j->id_jurusan"?"selected" : "" }}>{{ $j->nama_jurusan}}</option>
+                <select class="form-select filter" name="filter_kelas" value="">
+                    <option value="" {{ old('filter_jurusan', request('filter_kelas')) == '' ? 'selected' : '' }}>
+                        Pilih Kelas</option>
+                    @foreach ($kelas as $k)
+                        <option value="{{ $k->id_kelas }}"
+                            {{ old('filter_kelas', request('filter_kelas')) == "$k->id_kelas" ? 'selected' : '' }}>
+                            {{ $k->tingkatan." ".$k->nama_jurusan." ".$k->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>

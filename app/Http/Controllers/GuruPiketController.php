@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jurusan;
+use App\Models\Guru;
 use App\Models\PengurusKelas;
+use App\Models\Kelas;
 use App\Models\PresensiSiswa;
 use App\Models\Role;
-use App\Models\Guru;
-use App\Models\GuruBK;
-use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,51 +36,8 @@ class GuruPiketController extends Controller
         ];
         return view('guru-piket.detail-profil', $data);
     }
-
-    public function showPresensi(Request $request, Jurusan $jurusan, PresensiSiswa $presensi)
-    {
-        $filter = $this->filterPresensi($request, $presensi);
-        $data = [
-            'presensi' => $filter,
-            'jurusan' =>  $jurusan->get()
-        ];
-        return view('guru-piket.presensi', $data);
-    }
-    private function filterPresensi(Request $request, PresensiSiswa $presensi)
-    {
-        $filter = $presensi
-                ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
-                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-                ->where(function ($query) use ($request) {
-                    $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
-                    ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
-                    ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
-                    ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
-                    ->orwhere('nama_jurusan', 'LIKE', "%$request->keyword%")
-                    ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
-                });
-        if($request->filter_tanggal != null)
-        {
-            $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%");
-        }
-        if($request->filter_kehadiran != null)
-        {
-            $filter = $filter->where('status_kehadiran',$request->filter_kehadiran);
-        }
-        if($request->filter_tingkatan != null)
-        {
-            $filter = $filter->where('tingkatan',$request->filter_tingkatan);
-        }
-        if($request->filter_jurusan != null)
-        {
-            $filter = $filter->where('nama_jurusan',$request->filter_jurusan);
-        }
-        return $filter->get();
-    }
-
-
-    public function showPengurus(PengurusKelas $pengurus, Jurusan $jurusan,Request $request)
+    
+    public function showPengurus(PengurusKelas $pengurus, Kelas $kelas,Request $request)
     {
         $filter = $pengurus
                 ->join('siswa', 'siswa.id_siswa', '=', 'pengurus_kelas.id_siswa')
@@ -101,24 +56,19 @@ class GuruPiketController extends Controller
             $filter = $filter->where('status_jabatan',$request->filter_jabatan );
         }
 
-        if($request->filter_tingkatan != null)
+        if($request->filter_kelas != null)
         {
-            $filter = $filter->where('tingkatan', $request->filter_tingkatan);
-        }
-
-        if($request->filter_jurusan != null)
-        {
-            $filter = $filter->where('jurusan.id_jurusan', $request->filter_jurusan);
+            $filter = $filter->where('kelas.id_kelas', $request->filter_kelas);
         }
 
         $data = [
             'pengurus' => $filter->get(),
-            'jurusan' => $jurusan->get()
+            'kelas' => $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->orderBy('tingkatan')->orderBy('nama_kelas')->get()
         ];
         return view('guru-piket.pengurus-kelas', $data);
     }
 
-    public function detailPengurus(Request $request, Siswa $siswa, PengurusKelas $pengurus)
+    public function detailPengurus(Request $request, PengurusKelas $pengurus)
     {
         $data = [
             'pengurus' => $pengurus
@@ -129,6 +79,48 @@ class GuruPiketController extends Controller
         ];
         
         return view('guru-piket.detail-pengurus', $data);
+    }
+
+    public function showPresensi(Request $request, Kelas $kelas, PresensiSiswa $presensi)
+    {
+        $filter = $this->filterPresensi($request, $presensi);
+        $data = [
+            'presensi' => $filter,
+            'kelas' => $kelas->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')->orderBy('tingkatan')->orderBy('nama_kelas')->get()
+        ];
+        return view('guru-piket.presensi', $data);
+    }
+    private function filterPresensi(Request $request, PresensiSiswa $presensi)
+    {
+        $filter = $presensi
+                ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_presensi')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where(function ($query) use ($request) {
+                    $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
+                    ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
+                    ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
+                    ->orwhere('tingkatan', 'LIKE', "%$request->keyword%")
+                    ->orwhere('nama_jurusan', 'LIKE', "%$request->keyword%")
+                    ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
+                });
+            if($request->filter_bulan != null)
+            {
+                $filter = $filter->whereMonth('tanggal',"$request->filter_bulan");
+            }
+            if($request->filter_tanggal != null)
+            {
+                $filter = $filter->where('tanggal','LIKE',"%$request->filter_tanggal%" );
+            }
+            if($request->filter_kehadiran != null)
+            {
+                $filter = $filter->where('status_kehadiran',$request->filter_kehadiran );
+            }
+            if($request->filter_kelas != null)
+            {
+                $filter = $filter->where('kelas.id_kelas',$request->filter_kelas );
+            }
+        return $filter->get();
     }
     
     public function detailPresensi(Request $request, PresensiSiswa $presensi)

@@ -22,8 +22,8 @@ class TataUsahaSeeder extends Seeder
             for ($i = 1; $i <= 5; $i++) {
                 DB::table('tata_usaha')->insert([
                     'id_akun' => $data,
-                    'nama_tata_usaha' => $faker->name(),
-                    'foto_tata_usaha' => asset('img/icon_Profile.svg'),
+                    // 'nama_tata_usaha' => $faker->name(),
+                    // 'foto_tata_usaha' => asset('img/icon_Profile.svg'),
                 ]);
             }
         }

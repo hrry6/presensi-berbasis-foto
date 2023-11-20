@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tata_usaha', function (Blueprint $table) {
             $table->integer('id_tata_usaha', true);
             $table->integer('id_akun');
-            $table->string('nama_tata_usaha', 60);
-            $table->text('foto_tata_usaha');
+            // $table->string('nama_tata_usaha', 60);
+            // $table->text('foto_tata_usaha');
 
             // Foreign Key
 
