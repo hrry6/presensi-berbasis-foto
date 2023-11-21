@@ -17,9 +17,31 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $totalHadir = DB::select("SELECT CountStatus('Hadir') as totalHadir")[0]->totalHadir;
-        $totalIzin = DB::select("SELECT CountStatus('Izin') as totalIzin")[0]->totalIzin;
-        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
+        $user = Auth::user()->id_akun;
+
+        $totalHadir = DB::table('presensi_siswa')
+            ->select(DB::raw('COUNT(*) as totalHadir'))
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->where('presensi_siswa.status_kehadiran', '=', 'Hadir')
+            ->where('siswa.id_akun', $user)
+            ->value('totalHadir');
+
+        $totalIzin = DB::table('presensi_siswa')
+            ->select(DB::raw('COUNT(*) as totalIzin'))
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->where('presensi_siswa.status_kehadiran', '=', 'Izin')
+            ->where('siswa.id_akun', $user)
+            ->value('totalIzin');
+        
+        $totalAlpha = DB::table('presensi_siswa')
+            ->select(DB::raw('COUNT(*) as totalAlpha'))
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->where('presensi_siswa.status_kehadiran', '=', 'Alpha')
+            ->where('siswa.id_akun', $user)
+            ->value('totalAlpha');
 
         return view('siswa.index', compact('totalHadir', 'totalIzin', 'totalAlpha'));
     }
@@ -29,9 +51,9 @@ class SiswaController extends Controller
         $id_siswa = $siswa->where('id_akun', $request->id)->first()->id_siswa;
         $data = [
             'siswa' => $siswa
-                        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
-                        ->where('id_siswa', $id_siswa)->first(),
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where('id_siswa', $id_siswa)->first(),
             'pengurus' => $pengurus->where('id_siswa', $id_siswa)->first()
         ];
         // dd($data);
