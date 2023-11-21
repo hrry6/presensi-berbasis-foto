@@ -31,7 +31,7 @@ class SiswaSeeder extends Seeder
                     'angkatan' => Arr::random(['1', '2', '3', '4', '5']),
                     'status_siswa' => 'aktif',
                     'status_jabatan' => Arr::random(['sekretaris', 'ketua_kelas', 'wakil_kelas', 'bendahara', 'siswa']),
-                    'foto_siswa' => asset('img/icon_Profile.svg'),
+                    'foto_siswa' => 'siswa.jpg',
                     'pembuat' =>  'Tata Usaha'
                 ]);
             }

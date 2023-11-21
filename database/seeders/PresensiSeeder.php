@@ -27,7 +27,7 @@ class PresensiSeeder extends Seeder
                 DB::table('presensi_siswa')->insert([
                     'id_presensi' => $data,
                     'id_siswa' => $data,
-                    'foto_bukti' => asset('img/presensi.png'),
+                    'foto_bukti' => 'bukti.png',
                     'jam_masuk' =>  $faker->time(),
                     'tanggal' => $faker->date(),
                     'status_kehadiran' => 'hadir',
