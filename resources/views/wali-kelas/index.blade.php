@@ -22,11 +22,11 @@
                 </a>
                 <a href="{{ url('wali-kelas/akun-pengurus-kelas') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Pengurus Kelas</span>
+                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Pengurus Kelas</span>
                 </a>
                 <a href="{{ url('wali-kelas/akun-siswa') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Akun Siswa</span>
+                    <img src="{{ asset('img/icon_Profile.svg') }}" alt=""><span>Siswa</span>
                 </a>
                 <a href="{{ url('wali-kelas/presensi-siswa') }}"
                     class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">

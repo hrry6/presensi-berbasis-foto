@@ -29,9 +29,32 @@ class WaliKelasController extends Controller
             ->where('guru.id_akun', $user)
             ->value('totalSiswa');
 
-        $totalHadir = DB::select("SELECT CountStatus('Hadir') as totalHadir")[0]->totalHadir;
-        $totalIzin = DB::select("SELECT CountStatus('Izin') as totalIzin")[0]->totalIzin;
-        $totalAlpha = DB::select("SELECT CountStatus('Alpha') as totalAlpha")[0]->totalAlpha;
+        $totalHadir = DB::table('presensi_siswa')
+            ->select(DB::raw('COUNT(*) as totalHadir'))
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('guru', 'guru.id_guru', '=', 'kelas.id_wali_kelas')
+            ->where('presensi_siswa.status_kehadiran', '=', 'Hadir')
+            ->where('guru.id_akun', $user)
+            ->value('totalHadir');
+
+        $totalIzin = DB::table('presensi_siswa')
+            ->select(DB::raw('COUNT(*) as totalIzin'))
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('guru', 'guru.id_guru', '=', 'kelas.id_wali_kelas')
+            ->where('presensi_siswa.status_kehadiran', '=', 'Izin')
+            ->where('guru.id_akun', $user)
+            ->value('totalIzin');
+
+        $totalAlpha = DB::table('presensi_siswa')
+            ->select(DB::raw('COUNT(*) as totalAlpha'))
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('guru', 'guru.id_guru', '=', 'kelas.id_wali_kelas')
+            ->where('presensi_siswa.status_kehadiran', '=', 'Alpha')
+            ->where('guru.id_akun', $user)
+            ->value('totalAlpha');
 
         return view('wali-kelas.index', compact('totalSiswa', 'totalHadir', 'totalIzin', 'totalAlpha'));
     }
@@ -41,12 +64,12 @@ class WaliKelasController extends Controller
         $id_guru = $guru->where('id_akun', $request->id)->first()->id_guru;
         $data = [
             "guru" => $guru
-                        ->join('akun', 'guru.id_akun', '=','akun.id_akun')
-                        ->where('id_guru', $id_guru)->first(),
+                ->join('akun', 'guru.id_akun', '=', 'akun.id_akun')
+                ->where('id_guru', $id_guru)->first(),
             'kelas' => $kelas
-                        ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')                
-                        ->where('id_wali_kelas', $id_guru)
-                        ->orderBy('tingkatan')->get()
+                ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+                ->where('id_wali_kelas', $id_guru)
+                ->orderBy('tingkatan')->get()
         ];
         // dd($data);
         return view('wali-kelas.detail-profil', $data);
