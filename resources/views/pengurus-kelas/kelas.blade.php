@@ -19,19 +19,22 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-            <a href="/pengurus-kelas/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4"
-                aria-current="true">
-                <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
-            </a>
-            <a href="/pengurus-kelas/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
-            </a>
-            <a href="/pengurus-kelas/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                <img src="{{ asset('img/icon_Kelas_White.svg') }}" alt=""></i><span>Kelas</span>
-            </a>
-            <a href="/pengurus-kelas/histori" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Histori</span>
-            </a>
+                <a href="/pengurus-kelas/dashboard"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
+                </a>
+                <a href="/pengurus-kelas/presensi"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
+                </a>
+                <a href="/pengurus-kelas/kelas"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
+                    <img src="{{ asset('img/icon_Kelas_White.svg') }}" alt=""></i><span>Kelas</span>
+                </a>
+                <a href="/pengurus-kelas/histori"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Histori</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -61,7 +64,7 @@
                             <th scope="col">No</th>
                             <th scope="col">NIS</th>
                             <th scope="col">Nama Siswa</th>
-                            <th scope="col" colspan="3" class="text-center">Kehadiran</th>
+                            <th scope="col" colspan="4" class="text-center">Kehadiran</th>
                         </tr>
                         <tr class="text-center">
                             <th></th>
@@ -70,6 +73,7 @@
                             <th>Hadir</th>
                             <th>Izin</th>
                             <th>Alpha</th>
+                            <th>Pulang</th>
                         </tr>
                     </thead>
 
@@ -104,6 +108,16 @@
                                         name="status_validasi[{{ $loop->iteration }}][]" value="alpha"
                                         id="checkbox_alpha_{{ $loop->iteration }}"
                                         {{ $i->status_validasi === 'alpha' ? 'checked' : '' }}>
+                                    <input type="hidden" name="id_pengurus[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_pengurus }}">
+                                    <input type="hidden" name="id_presensi[{{ $loop->iteration }}]"
+                                        value="{{ $i->id_presensi }}">
+                                </td>
+                                <td class="text-center">
+                                    <input type="checkbox" class="single-checkbox"
+                                        name="status_validasi[{{ $loop->iteration }}][]" value="pulang"
+                                        id="checkbox_pulang_{{ $loop->iteration }}"
+                                        {{ $i->status_validasi === 'pulang' ? 'checked' : '' }}>
                                     <input type="hidden" name="id_pengurus[{{ $loop->iteration }}]"
                                         value="{{ $i->id_pengurus }}">
                                     <input type="hidden" name="id_presensi[{{ $loop->iteration }}]"
