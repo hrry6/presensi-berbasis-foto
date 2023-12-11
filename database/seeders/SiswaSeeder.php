@@ -17,7 +17,7 @@ class SiswaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
     
-        $datas = [1, 2, 3, 4, 5];
+        $datas = [1, 2, 3, 4, 5, 6];
     
         foreach ($datas as $data) {
             for ($i = 1; $i <= 1; $i++) {

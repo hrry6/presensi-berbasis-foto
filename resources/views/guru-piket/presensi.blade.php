@@ -153,7 +153,7 @@
 
 
         $('#downloadPDF').on('click', function(e) {
-            $("#form").attr('action', '/tata-usaha/presensi-pdf').submit();
+            $("#form").attr('action', '/guru-piket/presensi-pdf').submit();
         })
     </script>
 @endsection

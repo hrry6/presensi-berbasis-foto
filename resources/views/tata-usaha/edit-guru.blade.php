@@ -13,11 +13,16 @@
                         @csrf
                         <div class="form-group">
                             <label for="nama_guru">Nama Guru</label>
-                            <input type="text" class="form-control" name="nama_guru" value="{{ $guru->nama_guru }}">
+                            <input type="text" class="form-control @error('nama_guru') is-invalid @enderror" name="nama_guru" value="{{ $guru->nama_guru }}">
                         </div>
+                        @error('nama_guru') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
                         <div class="form-group">
                             <label>Status</label>
-                            <select name="status" class="form-control">
+                            <select name="status" class="form-control @error('status') is-invalid @enderror">
                                 <option value="" disabled>Pilih Status</option>
                                 <option value="Guru BK" {{ $guruBk === null ? '' : 'selected' }}>Guru BK</option>
                                 <option value="Guru Piket" {{ $guruPiket === null ? '' : 'selected' }}>Guru Piket</option>
@@ -28,11 +33,21 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('status') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username" value="{{ $guru->username }}">
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ $guru->username }}">
                         </div>
+                        @error('username') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="text" class="form-control" name="password">

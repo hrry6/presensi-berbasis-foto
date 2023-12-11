@@ -153,8 +153,8 @@ class GuruPiketController extends Controller
         $id_presensi = $request->input('id_presensi');
 
         $data = $request->validate([
-            'status_kehadiran' => 'sometimes',
-            'keterangan' => 'sometimes',
+            'status_kehadiran' => 'required',
+            'keterangan' => 'required',
             'foto_bukti' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

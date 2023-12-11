@@ -146,7 +146,7 @@
 
 
         $('#downloadPDF').on('click', function(e) {
-            $("#form").attr('action', '/tata-usaha/presensi-pdf').submit();
+            $("#form").attr('action', '/guru-bk/presensi-pdf').submit();
         })
     </script>
 @endsection

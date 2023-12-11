@@ -55,9 +55,12 @@
                 <div class="flex gap-3">
                     <select class="form-select filter" name="filter_tabel" value="">
                         <option value="" {{ old('filter_tabel', request('filter_tabel'))==""?"selected" : "" }}>Pilih Tabel</option>
+                        <option value="jurusan" {{ old('filter_tabel', request('filter_tabel'))=="jurusan"?"selected" : "" }}>Jurusan</option>
+                        <option value="kelas" {{ old('filter_tabel', request('filter_tabel'))=="kelas"?"selected" : "" }}>Kelas</option>
                         <option value="guru" {{ old('filter_tabel', request('filter_tabel'))=="guru"?"selected" : "" }}>Guru</option>
+                        <option value="pengurus_kelas" {{ old('filter_tabel', request('filter_tabel'))=="pengurus_kelas"?"selected" : "" }}>Pengurus Kelas</option>
                         <option value="siswa" {{ old('filter_tabel', request('filter_tabel'))=="siswa"?"selected" : "" }}>Siswa</option>
-                        <option value="pengurus-kelas" {{ old('filter_tabel', request('filter_tabel'))=="pengurus_kelas"?"selected" : "" }}>Pengurus Kelas</option>
+                        <option value="presensi_siswa" {{ old('filter_tabel', request('filter_tabel'))=="presensi_siswa"?"selected" : "" }}>Presensi</option>
                     </select>
                     <select class="form-select filter" name="filter_aktor" value="">
                         <option value="" {{ old('filter_aktor', request('filter_aktor'))==""?"selected" : "" }}>Pilih Aktor</option>

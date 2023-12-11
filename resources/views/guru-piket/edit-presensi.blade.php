@@ -27,16 +27,31 @@
                                 @endforeach
                             </div>
                         </div>
+                        @error('status_kehadiran') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
                         <div class="form-group">
                             <label for="keterangan">Keterangan Lebih Lanjut</label>
-                            <input type="text" class="form-control" name="keterangan"
+                            <input type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan"
                                 value="{{ $presensi->keterangan }}">
                         </div>
+                        @error('keterangan') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
                         <div class="form-group">
                             <label>Upload Bukti Izin/Sakit</label>
                             <input type="file" class="form-control" name="foto_bukti"
                                 value="{{ $presensi->foto_bukti }}" />
                         </div>
+                        @error('foto_bukti') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
                         <div class="form-group">
                             <input type="hidden" name="id_presensi" value="{{ $presensi->id_presensi }}" />
                         </div>

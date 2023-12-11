@@ -26,6 +26,11 @@
                                     XII
                                 </option>
                             </select>
+                            @error('tingkatan') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Jurusan</label>
@@ -37,14 +42,24 @@
                                 </option>
                                 @endforeach
                             </select>
+                            @error('id_jurusan') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="nama_kelas">Nama Kelas</label>
-                            <input type="text" class="form-control" name="nama_kelas" value="{{ $kelas->nama_kelas}}">
+                            <input type="text" class="form-control @error('nama_kelas') is-invalid @enderror" name="nama_kelas" value="{{ $kelas->nama_kelas}}">
                         </div>
+                        @error('nama_kelas') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
                         <div class="form-group">
                             <label>Status</label>
-                            <select name="status_kelas" class="form-control">
+                            <select name="status_kelas" class="form-control @error('status_kelas') is-invalid @enderror">
                                 <option value="" disabled>Pilih Status</option>
                                 <option value="aktif" {{ $kelas->status_kelas == "aktif"?"selected" : ""}}>
                                     Aktif
@@ -53,6 +68,11 @@
                                     Tidak Aktif
                                 </option>
                             </select>
+                            @error('status_kelas') 
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="mt-3">
                             <button id="kembali"

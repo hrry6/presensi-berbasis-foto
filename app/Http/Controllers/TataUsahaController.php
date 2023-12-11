@@ -78,7 +78,7 @@ class TataUsahaController extends Controller
     {
         $id_jurusan = $request->input('id_jurusan');
         $data = $request->validate([
-            'nama_jurusan' => 'sometimes'
+            'nama_jurusan' => 'required'
         ]); 
 
         $user = Auth::user();
@@ -441,12 +441,12 @@ class TataUsahaController extends Controller
     {
         $id_guru = $request->input('id_guru');
         $data = $request->validate([
-            'nama_guru' => 'sometimes',
+            'nama_guru' => 'required',
             'foto_guru' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $data_akun = $request->validate([
-            'username' => 'sometimes',
+            'username' => 'required',
         ]);
 
         if(isset($request->password))
@@ -860,16 +860,16 @@ class TataUsahaController extends Controller
         $id_siswa = $request->input('id_siswa');
 
         $data_akun = $request->validate([
-            'username' => 'sometimes'
+            'username' => 'required'
         ]);
         
         $data_siswa = $request->validate([
-            'nis' => 'sometimes',
-            'nama_siswa' => 'sometimes',
-            'id_kelas' => 'sometimes',
-            'jenis_kelamin' => 'sometimes',
-            'nomer_hp' => 'sometimes',
-            'angkatan' => 'sometimes',
+            'nis' => 'required',
+            'nama_siswa' => 'required',
+            'id_kelas' => 'required',
+            'jenis_kelamin' => 'required',
+            'nomer_hp' => 'required',
+            'angkatan' => 'required',
             'foto_siswa' => 'sometimes', 
         ]);
 

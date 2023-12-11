@@ -16,7 +16,7 @@
                             <input type="number" class="form-control @error('nis') is-invalid @enderror"  value="{{ old('nis')}}" name="nis">
                             @error('nis') 
                                 <div class="invalid-feedback">
-                                    {{$message}}    
+                                    {{$message}} 
                                 </div> 
                             @enderror
                         </div>
@@ -40,10 +40,10 @@
                                 @endforeach
                             </select>
                             @error('id_kelas') 
-                            <div class="invalid-feedback">
-                                {{$message}}    
-                            </div> 
-                        @enderror
+                                <div class="invalid-feedback">
+                                    {{$message}}    
+                                </div> 
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Jenis Kelamin</label>

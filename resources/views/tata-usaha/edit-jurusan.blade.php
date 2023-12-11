@@ -14,8 +14,15 @@
                         <div class="form-group">
                             <label for="nama_jurusan">Jurusan</label>
                             <input type="hidden" name="id_jurusan" value="{{ $data->id_jurusan }}" />
-                            <input type="text" class="form-control" value="{{ $data->nama_jurusan }}" name="nama_jurusan">
-                        </div> <br><br>
+                            <input type="text" class="form-control @error('nama_jurusan') is-invalid @enderror" value="{{ $data->nama_jurusan }}" name="nama_jurusan">
+                        </div>
+                        @error('nama_jurusan') 
+                            <div class="invalid-feedback">
+                                {{$message}}    
+                            </div> 
+                        @enderror
+                        <br>
+                        <br>
                         <button id="kembali"
                             class="btn text-decoration-underline text-light fw-bold rounded-3"
                             style="background-color: #14C345">KEMBALI</button>

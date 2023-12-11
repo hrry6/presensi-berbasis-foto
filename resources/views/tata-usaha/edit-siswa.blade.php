@@ -13,15 +13,15 @@
                         @csrf
                         <div class="form-group">
                             <label for="nis">NIS</label>
-                            <input type="number" class="form-control" name="nis" value="{{ $siswa->nis }}">
+                            <input type="number" class="form-control @error('nis') is-invalid @enderror" name="nis" value="{{ $siswa->nis }}">
                         </div>
                         <div class="form-group">
                             <label for="nama_siswa">Nama Siswa</label>
-                            <input type="text" class="form-control" name="nama_siswa" value="{{ $siswa->nama_siswa }}">
+                            <input type="text" class="form-control @error('nama_siswa') is-invalid @enderror" name="nama_siswa" value="{{ $siswa->nama_siswa }}">
                         </div>
                         <div class="form-group">
                             <label>Kelas</label>
-                            <select name="id_kelas" class="form-control">
+                            <select name="id_kelas" class="form-control @error('id_kelas') is-invalid @enderror">
                                 <option value="" disabled>Pilih Kelas</option>
                                 @foreach ($kelas as $i)
                                     <option value="{{ $i->id_kelas }}"
@@ -48,15 +48,15 @@
                         </div>
                         <div class="form-group">
                             <label for="nomer_hp">Nomer Hp</label>
-                            <input type="number" class="form-control" name="nomer_hp" value="{{ $siswa->nomer_hp }}">
+                            <input type="number" class="form-control @error('nomer_hp') is-invalid @enderror" name="nomer_hp" value="{{ $siswa->nomer_hp }}">
                         </div>
                         <div class="form-group">
                             <label for="angkatan">Angkatan</label>
-                            <input type="number" class="form-control" name="angkatan" value="{{ $siswa->angkatan }}">
+                            <input type="number" class="form-control @error('angkatan') is-invalid @enderror" name="angkatan" value="{{ $siswa->angkatan }}">
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username" value="{{$siswa->username}}">
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{$siswa->username}}">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
