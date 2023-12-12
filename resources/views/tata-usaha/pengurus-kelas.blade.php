@@ -78,7 +78,7 @@
                     @foreach ($kelas as $k)
                         <option value="{{ $k->id_kelas }}"
                             {{ old('filter_kelas', request('filter_kelas')) == "$k->id_kelas" ? 'selected' : '' }}>
-                            {{ $k->tingkatan." ".$k->nama_jurusan." ".$k->nama_kelas }}</option>
+                            {{ $k->tingkatan . ' ' . $k->nama_jurusan . ' ' . $k->nama_kelas }}</option>
                     @endforeach
                 </select>
             </div>
@@ -109,16 +109,24 @@
                         <td>{{ $i->nama_siswa }}</td>
                         <th>{{ $i->jabatan . ' ' . $i->status_jabatan }}</th>
                         <td>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</td>
-                        <td class="d-flex gap-2">
-                            <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}">
-                                <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
-                            </a>
-                            <a href="/tata-usaha/edit-pengurus-kelas/{{ $i->id_pengurus }}">
-                                <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
-                            </a>
-                            <button class="btnHapus" idHapus="{{ $i->id_pengurus }}">
-                                <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
-                            </button>
+                        <td>
+                            <div class="row py-2 px-3">
+                                <div class="col-4" style="padding: 0px 0px 0px 7px">
+                                    <a href="/tata-usaha/detail-pengurus-kelas/{{ $i->id_pengurus }}">
+                                        <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-4" style="padding: 0px 0px 0px 7px">
+                                    <a href="/tata-usaha/edit-pengurus-kelas/{{ $i->id_pengurus }}">
+                                        <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-4" style="padding: 0px 0px 0px 7px">
+                                    <button class="btnHapus" idHapus="{{ $i->id_pengurus }}">
+                                        <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

@@ -8,6 +8,11 @@
             background-color: '#F8F8F8';
         }
 
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            display: none;
+        }
+
         @media (min-width: 991.98px) {
             main {
                 padding-left: 240px;
@@ -47,7 +52,8 @@
             overflow-y: auto;
             /* Scrollable contents if viewport is shorter than content. */
         }
-        .title{
+
+        .title {
             padding: 0 !important;
             margin-top: auto !important;
             margin-bottom: auto !important;
@@ -90,17 +96,19 @@
                     @if (Auth::user()->id_role == '4')
                         <a href="/guru-piket/detail-profil/{{ Auth::user()->id_akun }}">
                             <li class="nav-item dropdown p-10">
-                                <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
-                                height="42" alt="" width="42" loading="lazy" />
+                                <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
                             </li>
                         </a>
                     @elseif(Auth::user()->id_role == '5')
-                    <a href="/guru-bk/detail-profil/{{ Auth::user()->id_akun }}">
-                        <li class="nav-item dropdown p-10">
-                            <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
-                            height="42" alt="" width="42" loading="lazy" />
-                        </li>
-                    </a>
+                        <a href="/guru-bk/detail-profil/{{ Auth::user()->id_akun }}">
+                            <li class="nav-item dropdown p-10">
+                                <img src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
+                            </li>
+                        </a>
                     @endif
                 </ul>
             </div>

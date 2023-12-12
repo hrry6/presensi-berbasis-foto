@@ -73,11 +73,13 @@
                     @foreach ($kelas as $k)
                         <option value="{{ $k->id_kelas }}"
                             {{ old('filter_kelas', request('filter_kelas')) == "$k->id_kelas" ? 'selected' : '' }}>
-                            {{ $k->tingkatan." ".$k->nama_jurusan." ".$k->nama_kelas }}</option>
+                            {{ $k->tingkatan . ' ' . $k->nama_jurusan . ' ' . $k->nama_kelas }}</option>
                     @endforeach
                 </select>
-                <select class="form-select filter {{ old('filter_status', request('filter_status')) == 'aktif' ? 'bg-success text-white' : '' }}
-                {{ old('filter_status', request('filter_status')) == 'tidak_aktif' ? 'bg-danger text-white' : '' }}" name="filter_status" value="">
+                <select
+                    class="form-select filter {{ old('filter_status', request('filter_status')) == 'aktif' ? 'bg-success text-white' : '' }}
+                {{ old('filter_status', request('filter_status')) == 'tidak_aktif' ? 'bg-danger text-white' : '' }}"
+                    name="filter_status" value="">
                     <option value="" {{ old('filter_status', request('filter_status')) == '' ? 'selected' : '' }}>
                         Pilih
                         Status</option>
@@ -118,16 +120,24 @@
                         <td>{{ $i->jenis_kelamin }}</td>
                         <th>{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}</th>
                         <td>{{ $i->status_siswa }}</td>
-                        <td class="d-flex gap-2">
-                            <a href="/tata-usaha/detail-siswa/{{ $i->id_siswa }}">
-                                <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
-                            </a>
-                            <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}">
-                                <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
-                            </a>
-                            <button class="btnHapus" idHapus="{{ $i->id_siswa }}">
-                                <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
-                            </button>
+                        <td>
+                            <div class="row py-2 px-3">
+                                <div class="col-4" style="padding: 0px 0px 0px 7px">
+                                    <a href="/tata-usaha/detail-siswa/{{ $i->id_siswa }}">
+                                        <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-4" style="padding: 0px 0px 0px 7px">
+                                    <a href="/tata-usaha/edit-siswa/{{ $i->id_siswa }}">
+                                        <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-4" style="padding: 0px 0px 0px 7px">
+                                    <button class="btnHapus" idHapus="{{ $i->id_siswa }}">
+                                        <img src="{{ asset('img/icon_Trash.svg') }}" alt="">
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

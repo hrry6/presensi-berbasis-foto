@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SiswaController extends Controller
 {
@@ -60,46 +61,6 @@ class SiswaController extends Controller
         return view('siswa.detail-profil', $data);
     }
 
-    public function showHistori(Request $request)
-    {
-        $bulanList = [
-            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
-            6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober',
-            11 => 'November', 12 => 'Desember',
-        ];
-
-        $mingguList = [1, 2, 3, 4];
-        $selectedMonth = $request->input('bulan', null);
-        $selectedWeek = $request->input('minggu', null);
-
-        $data = PresensiSiswa::selectRaw("*, 
-        CASE
-            WHEN DAY(tanggal) <= 7 THEN 'Minggu ke-1'
-            WHEN DAY(tanggal) <= 14 THEN 'Minggu ke-2'
-            WHEN DAY(tanggal) <= 21 THEN 'Minggu ke-3'
-            ELSE 'Minggu ke-4'
-        END AS minggu")
-            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
-            ->where('siswa.id_akun', Auth::user()->id_akun)
-            ->when($selectedMonth, function ($query, $selectedMonth) {
-                $query->whereMonth('tanggal', $selectedMonth);
-            })
-            ->when($selectedWeek, function ($query, $selectedWeek) {
-                $query->whereRaw("
-                CASE
-                    WHEN DAY(tanggal) > 21 AND ? = 4 THEN 1
-                    WHEN DAY(tanggal) > 14 AND ? = 3 THEN 1
-                    WHEN DAY(tanggal) > 7 AND ? = 2 THEN 1
-                    WHEN DAY(tanggal) <= 7 AND ? = 1 THEN 1
-                    ELSE 0
-                END = 1
-            ", [$selectedWeek, $selectedWeek, $selectedWeek, $selectedWeek]);
-            })
-            ->get();
-
-        return view('siswa.histori', compact('data', 'bulanList', 'mingguList', 'selectedMonth', 'selectedWeek'));
-    }
-
     public function checkSnapshot(Request $request)
     {
         $exists = PresensiSiswa::where('id_siswa', $request->input('id_siswa'))
@@ -146,5 +107,60 @@ class SiswaController extends Controller
         session(['snapshot_taken' => true]);
 
         return back()->with('success', 'Image uploaded successfully');
+    }
+    public function showHistori(Request $request, PresensiSiswa $presensi)
+    {
+        $filter = $this->getFilteredData($request, $presensi);
+
+        $bulanList = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
+            6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober',
+            11 => 'November', 12 => 'Desember',
+        ];
+
+        $mingguList = [1, 2, 3, 4];
+        $selectedMonth = $request->input('bulan', null);
+        $selectedWeek = $request->input('minggu', null);
+
+        return view('siswa.histori', compact('filter', 'bulanList', 'mingguList', 'selectedMonth', 'selectedWeek'));
+    }
+
+    public function exportPresensi(Request $request, PresensiSiswa $presensi)
+    {
+        $filter = $this->getFilteredData($request, $presensi);
+
+        $pdf = PDF::loadView('siswa.presensi-pdf', ['presensi' => $filter]);
+        return $pdf->download('presensi.pdf');
+    }
+
+    private function getFilteredData(Request $request, PresensiSiswa $presensi)
+    {
+        $selectedMonth = $request->input('bulan', null);
+        $selectedWeek = $request->input('minggu', null);
+
+        return $presensi::selectRaw("*, 
+            CASE
+                WHEN DAY(tanggal) <= 7 THEN 'Minggu ke-1'
+                WHEN DAY(tanggal) <= 14 THEN 'Minggu ke-2'
+                WHEN DAY(tanggal) <= 21 THEN 'Minggu ke-3'
+                ELSE 'Minggu ke-4'
+            END AS minggu")
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->where('siswa.id_akun', Auth::user()->id_akun)
+            ->when($selectedMonth, function ($query, $selectedMonth) {
+                $query->whereMonth('tanggal', $selectedMonth);
+            })
+            ->when($selectedWeek, function ($query, $selectedWeek) {
+                $query->whereRaw("
+                    CASE
+                        WHEN DAY(tanggal) > 21 AND ? = 4 THEN 1
+                        WHEN DAY(tanggal) > 14 AND ? = 3 THEN 1
+                        WHEN DAY(tanggal) > 7 AND ? = 2 THEN 1
+                        WHEN DAY(tanggal) <= 7 AND ? = 1 THEN 1
+                        ELSE 0
+                    END = 1
+                ", [$selectedWeek, $selectedWeek, $selectedWeek, $selectedWeek]);
+            })
+            ->get();
     }
 }

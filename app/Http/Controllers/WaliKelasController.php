@@ -292,12 +292,16 @@ class WaliKelasController extends Controller
 
         $data = $request->validate([
             'nis' => 'sometimes',
-            'nama_siswa' => 'sometimes',
+            'nama_siswa' => 'sometimes|string|regex:/^[^\d]+$/',
             'id_kelas' => 'sometimes',
             'jenis_kelamin' => 'sometimes',
             'nomer_hp' => 'sometimes',
             'status_jabatan' => 'sometimes',
-            'foto_siswa' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_siswa' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'nama_siswa.regex' => 'Nama siswa hanya boleh huruf',
+            'foto_siswa.mimes' => 'Foto siswa harus berextensi jpg, jpeg, png',
+            'foto_siswa.uploaded' => 'Foto siswa gagal di upload.',
         ]);
 
         $user = Auth::user();
@@ -361,8 +365,12 @@ class WaliKelasController extends Controller
         $data = $request->validate([
             'id_siswa' => 'required',
             'status_kehadiran' => 'required',
-            'keterangan' => 'sometimes',
-            'foto_bukti' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'keterangan' => 'required',
+            'foto_bukti' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'keterangan.required' => 'Keterangan harus diisi',
+            'foto_siswa.mimes' => 'Foto bukti harus berextensi jpg, jpeg, png',
+            'foto_bukti.uploaded' => 'Foto bukti gagal di upload.',
         ]);
 
         $user = Auth::user();
@@ -438,25 +446,31 @@ class WaliKelasController extends Controller
     private function filterPresensi(Request $request, PresensiSiswa $presensi)
     {
         $user = Auth::user()->id_akun;
-        $filter = $presensi
+        $query = $presensi
             ->join('siswa', 'siswa.id_siswa', '=', 'presensi_siswa.id_siswa')
             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
             ->join('guru', 'guru.id_guru', '=', 'kelas.id_wali_kelas')
-            ->where('guru.id_akun', $user)
-            ->where(function ($query) use ($request) {
-                $query->where('nama_siswa', 'LIKE', "%$request->keyword%")
-                    ->orwhere('tanggal', 'LIKE', "%$request->keyword%")
-                    ->orwhere('status_kehadiran', 'LIKE', "%$request->keyword%")
-                    ->orwhere('nama_kelas', 'LIKE', "%$request->keyword%");
-            });
+            ->where('guru.id_akun', $user);
 
-        if ($request->filter_tanggal != null) {
-            $filter = $filter->where('tanggal', 'LIKE', "%$request->filter_tanggal%");
+        $keywords = $request->keyword;
+        if (!empty($keywords)) {
+            $query->where(function ($subquery) use ($keywords) {
+                $subquery->where('nama_siswa', 'LIKE', "%$keywords%")
+                    ->orWhere('tanggal', 'LIKE', "%$keywords%")
+                    ->orWhere('status_kehadiran', 'LIKE', "%$keywords%")
+                    ->orWhere('nama_kelas', 'LIKE', "%$keywords%");
+            });
         }
-        if ($request->filter_kehadiran != null) {
-            $filter = $filter->where('status_kehadiran', $request->filter_kehadiran);
+
+        if ($request->filter_tanggal) {
+            $query->where('tanggal', 'LIKE', "%$request->filter_tanggal%");
         }
-        return $filter->get();
+
+        if ($request->filter_kehadiran) {
+            $query->where('status_kehadiran', $request->filter_kehadiran);
+        }
+
+        return $query->get();
     }
 
     public function exportPresensi(Request $request, PresensiSiswa $presensi)

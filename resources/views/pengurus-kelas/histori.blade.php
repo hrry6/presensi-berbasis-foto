@@ -15,26 +15,29 @@
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-4">
-            <a href="/pengurus-kelas/dashboard" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4"
-                aria-current="true">
-                <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
-            </a>
-            <a href="/pengurus-kelas/presensi" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
-            </a>
-            <a href="/pengurus-kelas/kelas" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
-                <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""></i><span>Kelas</span>
-            </a>
-            <a href="/pengurus-kelas/histori" class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
-                <img src="{{ asset('img/icon_Location_White.svg') }}" alt=""><span>Histori</span>
-            </a>
+                <a href="/pengurus-kelas/dashboard"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4" aria-current="true">
+                    <img src="{{ asset('img/icon_Home.svg') }}" alt=""><span>Dashboard</span>
+                </a>
+                <a href="/pengurus-kelas/presensi"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Location.svg') }}" alt=""><span>Presensi</span>
+                </a>
+                <a href="/pengurus-kelas/kelas"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4">
+                    <img src="{{ asset('img/icon_Kelas.svg') }}" alt=""></i><span>Kelas</span>
+                </a>
+                <a href="/pengurus-kelas/histori"
+                    class="list-group-item list-group-item-action py-2 ripple flex items-center gap-4 active">
+                    <img src="{{ asset('img/icon_Location_White.svg') }}" alt=""><span>Histori</span>
+                </a>
             </div>
         </div>
     </nav>
 @endsection
 @section('isi')
     <div class="mt-4 ml-4 pt-3 container-md bg-white">
-        <form action="" method="get">
+        <form action="" method="get" id="form">
             <div class="flex gap-3 w-50 mt-3">
                 <select class="form-select" name="bulan" id="bulan" onchange="this.form.submit()">
                     <option value="" {{ $selectedMonth === null ? 'selected' : '' }}>Semua Bulan</option>
@@ -53,6 +56,9 @@
                         </option>
                     @endfor
                 </select>
+
+                <button class="btn btn-success text-nowrap" id="downloadPDF">Download
+                    PDF</button>
             </div>
         </form>
         <table class="table table-bordered DataTable">
@@ -68,7 +74,7 @@
             </thead>
 
             <tbody>
-                @foreach ($data as $i)
+                @foreach ($filter as $i)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $i->nis }}</td>
@@ -81,4 +87,11 @@
             </tbody>
         </table>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        $('#downloadPDF').on('click', function(e) {
+            $("#form").attr('action', '/pengurus-kelas/presensi-pdf').submit();
+        })
+    </script>
 @endsection

@@ -91,13 +91,19 @@
                                 style="max-width: 100px; height: auto;" alt="Bukti" />
                         </td>
                         <td>{{ $p->keterangan }}</td>
-                        <td class="d-flex justify-content-around align-items-center">
-                            <a href="/wali-kelas/detail-presensi-siswa/{{ $p->id_presensi }}" class="mx-2">
-                                <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
-                            </a>
-                            <a href="/wali-kelas/edit-presensi-siswa/{{ $p->id_presensi }}">
-                                <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
-                            </a>
+                        <td>
+                            <div class="row py-2">
+                                <div class="col-6" style="padding: 0px 0px 0px 20px">
+                                    <a href="/wali-kelas/detail-presensi-siswa/{{ $p->id_presensi }}">
+                                        <img src="{{ asset('img/icon_Vector.svg') }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-6" style="padding: 0px 0px 0px 7px">
+                                    <a href="/wali-kelas/edit-presensi-siswa/{{ $p->id_presensi }}">
+                                        <img src="{{ asset('img/icon_Edit.svg') }}" alt="">
+                                    </a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

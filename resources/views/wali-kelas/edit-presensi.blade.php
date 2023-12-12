@@ -28,9 +28,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            @error('keterangan')
+                                <div class="text-danger p-0 m-0">{{ $message }}</div>
+                            @enderror
                             <label for="keterangan">Keterangan Lebih Lanjut</label>
-                            <input type="text" class="form-control" name="keterangan"
-                                value="{{ $presensi->keterangan }}">
+                            <input type="text" class="form-control @error('keterangan') is-invalid @enderror"
+                                name="keterangan" value="{{ $presensi->keterangan }}">
                         </div>
                         <div class="form-group">
                             <label>Upload Bukti Izin/Sakit</label>

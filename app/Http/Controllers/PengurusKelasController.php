@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PengurusKelasController extends Controller
 {
@@ -61,46 +62,6 @@ class PengurusKelasController extends Controller
         return view('pengurus-kelas.detail-profil', $data);
     }
 
-    public function showHistori(Request $request)
-    {
-        $bulanList = [
-            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
-            6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober',
-            11 => 'November', 12 => 'Desember',
-        ];
-
-        $mingguList = [1, 2, 3, 4];
-        $selectedMonth = $request->input('bulan', null);
-        $selectedWeek = $request->input('minggu', null);
-
-        $data = PresensiSiswa::selectRaw("*, 
-        CASE
-            WHEN DAY(tanggal) <= 7 THEN 'Minggu ke-1'
-            WHEN DAY(tanggal) <= 14 THEN 'Minggu ke-2'
-            WHEN DAY(tanggal) <= 21 THEN 'Minggu ke-3'
-            ELSE 'Minggu ke-4'
-        END AS minggu")
-            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
-            ->where('siswa.id_akun', Auth::user()->id_akun)
-            ->when($selectedMonth, function ($query, $selectedMonth) {
-                $query->whereMonth('tanggal', $selectedMonth);
-            })
-            ->when($selectedWeek, function ($query, $selectedWeek) {
-                $query->whereRaw("
-                CASE
-                    WHEN DAY(tanggal) > 21 AND ? = 4 THEN 1
-                    WHEN DAY(tanggal) > 14 AND ? = 3 THEN 1
-                    WHEN DAY(tanggal) > 7 AND ? = 2 THEN 1
-                    WHEN DAY(tanggal) <= 7 AND ? = 1 THEN 1
-                    ELSE 0
-                END = 1
-            ", [$selectedWeek, $selectedWeek, $selectedWeek, $selectedWeek]);
-            })
-            ->get();
-
-        return view('pengurus-kelas.histori', compact('data', 'bulanList', 'mingguList', 'selectedMonth', 'selectedWeek'));
-    }
-
     public function openCam(Siswa $siswa)
     {
         $user = Auth::user()->id_akun;
@@ -122,26 +83,48 @@ class PengurusKelasController extends Controller
 
         $waktuValidasi = $request->input('waktu_validasi');
 
-        if ($waktuValidasi !== "") {
-            $validasiData = $validasi
-                ->join('presensi_siswa', 'validasi.id_presensi', '=', 'presensi_siswa.id_presensi')
-                ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
-                ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
-                ->where('siswa.id_kelas', $siswa->id_kelas)
-                ->where(function ($query) use ($waktuValidasi) {
-                    $query->where('validasi.waktu_validasi', $waktuValidasi)
-                        ->orWhere('validasi.waktu_validasi', 'istirahat_pertama')
-                        ->orWhere('validasi.waktu_validasi', 'istirahat_kedua')
-                        ->orWhere('validasi.waktu_validasi', 'istirahat_ketiga');
-                })
-                ->get();
+        $filter = $this->getKelasData($siswa, $validasi, $waktuValidasi);
 
-            if ($validasiData->isNotEmpty()) {
-                return view('pengurus-kelas.kelas', ['data' => $validasiData]);
-            }
+        if ($filter->isNotEmpty()) {
+            return view('pengurus-kelas.kelas', ['data' => $filter]);
         }
 
         return view('pengurus-kelas.kelas', ['data' => collect([])]);
+    }
+
+    public function exportKelas(Request $request, PresensiSiswa $presensi, Siswa $siswa, Validasi $validasi)
+    {
+        $siswa = $siswa
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
+            ->where('akun.id_akun', Auth::user()->id_akun)
+            ->first();
+
+        $waktuValidasi = $request->input('waktu_validasi');
+
+        $filter = $this->getKelasData($siswa, $validasi, $waktuValidasi);
+
+        // Remove duplicates based on id_presensi
+        $filter = collect($filter)->unique('id_presensi')->values()->all();
+
+        $pdf = PDF::loadView('pengurus-kelas.kelas-pdf', ['kelas' => $filter]);
+        return $pdf->download('kelas.pdf');
+    }
+
+    private function getKelasData($siswa, $validasi, $waktuValidasi)
+    {
+        return $validasi
+            ->join('presensi_siswa', 'validasi.id_presensi', '=', 'presensi_siswa.id_presensi')
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->join('akun', 'siswa.id_akun', '=', 'akun.id_akun')
+            ->where('siswa.id_kelas', $siswa->id_kelas)
+            ->where(function ($query) use ($waktuValidasi) {
+                $query->where('validasi.waktu_validasi', $waktuValidasi)
+                    ->orWhere('validasi.waktu_validasi', 'istirahat_pertama')
+                    ->orWhere('validasi.waktu_validasi', 'istirahat_kedua')
+                    ->orWhere('validasi.waktu_validasi', 'istirahat_ketiga');
+            })
+            ->get();
     }
 
     public function updateValidasi(Request $request)
@@ -195,5 +178,60 @@ class PengurusKelasController extends Controller
         session(['snapshot_taken' => true]);
 
         return back()->with('success', 'Image uploaded successfully');
+    }
+
+    public function showHistori(Request $request, PresensiSiswa $presensi)
+    {
+        $filter = $this->getFilteredData($request, $presensi);
+
+        $bulanList = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei',
+            6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober',
+            11 => 'November', 12 => 'Desember',
+        ];
+
+        $mingguList = [1, 2, 3, 4];
+        $selectedMonth = $request->input('bulan', null);
+        $selectedWeek = $request->input('minggu', null);
+
+        return view('pengurus-kelas.histori', compact('filter', 'bulanList', 'mingguList', 'selectedMonth', 'selectedWeek'));
+    }
+    private function getFilteredData(Request $request, PresensiSiswa $presensi)
+    {
+        $selectedMonth = $request->input('bulan', null);
+        $selectedWeek = $request->input('minggu', null);
+
+        return $presensi::selectRaw("*, 
+            CASE
+                WHEN DAY(tanggal) <= 7 THEN 'Minggu ke-1'
+                WHEN DAY(tanggal) <= 14 THEN 'Minggu ke-2'
+                WHEN DAY(tanggal) <= 21 THEN 'Minggu ke-3'
+                ELSE 'Minggu ke-4'
+            END AS minggu")
+            ->join('siswa', 'presensi_siswa.id_siswa', '=', 'siswa.id_siswa')
+            ->where('siswa.id_akun', Auth::user()->id_akun)
+            ->when($selectedMonth, function ($query, $selectedMonth) {
+                $query->whereMonth('tanggal', $selectedMonth);
+            })
+            ->when($selectedWeek, function ($query, $selectedWeek) {
+                $query->whereRaw("
+                    CASE
+                        WHEN DAY(tanggal) > 21 AND ? = 4 THEN 1
+                        WHEN DAY(tanggal) > 14 AND ? = 3 THEN 1
+                        WHEN DAY(tanggal) > 7 AND ? = 2 THEN 1
+                        WHEN DAY(tanggal) <= 7 AND ? = 1 THEN 1
+                        ELSE 0
+                    END = 1
+                ", [$selectedWeek, $selectedWeek, $selectedWeek, $selectedWeek]);
+            })
+            ->get();
+    }
+
+    public function exportPresensi(Request $request, PresensiSiswa $presensi)
+    {
+        $filter = $this->getFilteredData($request, $presensi);
+
+        $pdf = PDF::loadView('pengurus-kelas.presensi-pdf', ['presensi' => $filter]);
+        return $pdf->download('presensi.pdf');
     }
 }

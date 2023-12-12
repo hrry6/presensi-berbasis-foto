@@ -12,6 +12,11 @@
             background-color: '#F8F8F8';
         }
 
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            display: none;
+        }
+
         @media (min-width: 991.98px) {
             main {
                 padding-left: 240px;
@@ -70,17 +75,18 @@
         .navbar {
             z-index: 100 !important;
         }
-        .title{
+
+        .title {
             color: 292D32;
             font-size: 18px;
         }
 
-        .img-profile
-        {
+        .img-profile {
             width: 42px !important;
             height: 42px !important;
             border-radius: 100px
         }
+
         /* Firefox */
         input[type=number] {
             -moz-appearance: textfield;
@@ -125,41 +131,51 @@
                         <p class="p-0 m-0">LOG OUT</p>
                         <img class="icon" src="{{ asset('img/icon_Logout.svg') }}" alt="">
                     </a>
-                    @if(Auth::user()->id_role == '1')
-                    <a href="/siswa/detail-profil/{{ Auth::user()->id_akun }}">
-                        <li class="nav-item dropdown p-10">
-                            <img class="img-profile" src="{{ url('siswa') . '/' . App\Models\Siswa::where('id_akun', Auth::user()->id_akun)->first()->foto_siswa }}" class="rounded-circle"
-                            height="42" alt="" width="42" loading="lazy" />
-                        </li>
-                    </a>
+                    @if (Auth::user()->id_role == '1')
+                        <a href="/siswa/detail-profil/{{ Auth::user()->id_akun }}">
+                            <li class="nav-item dropdown p-10">
+                                <img class="img-profile"
+                                    src="{{ url('siswa') . '/' . App\Models\Siswa::where('id_akun', Auth::user()->id_akun)->first()->foto_siswa }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
+                            </li>
+                        </a>
                     @elseif(Auth::user()->id_role == '2')
-                    <a href="/wali-kelas/detail-profil/{{ Auth::user()->id_akun }}">
-                        <li class="nav-item dropdown w-full">
-                            <img class="img-profile" src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
-                            height="42" alt="" width="42" loading="lazy" />
-                        </li>
-                    </a>
+                        <a href="/wali-kelas/detail-profil/{{ Auth::user()->id_akun }}">
+                            <li class="nav-item dropdown w-full">
+                                <img class="img-profile"
+                                    src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
+                            </li>
+                        </a>
                     @elseif(Auth::user()->id_role == '3')
-                    <a href="/pengurus-kelas/detail-profil/{{ Auth::user()->id_akun }}">
-                        <li class="nav-item dropdown p-10">
-                            <img class="img-profile" src="{{ url('siswa') . '/' . App\Models\Siswa::where('id_akun', Auth::user()->id_akun)->first()->foto_siswa }}" class="rounded-circle"
-                            height="42" alt="" width="42" loading="lazy" />
-                        </li>
-                    </a>
+                        {{-- <a href="/pengurus-kelas/detail-profil/{{ Auth::user()->id_akun }}">
+                            <li class="nav-item dropdown p-10">
+                                <img class="img-profile"
+                                    src="{{ url('siswa') . '/' . App\Models\Siswa::where('id_akun', Auth::user()->id_akun)->first()->foto_siswa }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
+                            </li>
+                        </a> --}}
                     @elseif(Auth::user()->id_role == '4')
                         <a href="/guru-piket/detail-profil/{{ Auth::user()->id_akun }}">
                             <li class="nav-item dropdown p-10">
-                                <img class="img-profile" src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
-                                height="42" alt="" width="42" loading="lazy" />
+                                <img class="img-profile"
+                                    src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
                             </li>
                         </a>
                     @elseif(Auth::user()->id_role == '5')
-                    <a href="/guru-bk/detail-profil/{{ Auth::user()->id_akun }}">
-                        <li class="nav-item dropdown p-10">
-                            <img class="img-profile" src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}" class="rounded-circle"
-                            height="42" alt="" width="42" loading="lazy" />
-                        </li>
-                    </a>
+                        <a href="/guru-bk/detail-profil/{{ Auth::user()->id_akun }}">
+                            <li class="nav-item dropdown p-10">
+                                <img class="img-profile"
+                                    src="{{ url('guru') . '/' . App\Models\Guru::where('id_akun', Auth::user()->id_akun)->first()->foto_guru }}"
+                                    class="rounded-circle" height="42" alt="" width="42"
+                                    loading="lazy" />
+                            </li>
+                        </a>
                     @endif
                 </ul>
             </div>

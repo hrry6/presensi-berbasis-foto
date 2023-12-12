@@ -55,6 +55,9 @@
                 <div class="ml-auto mt-4 mx-5">
                     <button type="submit" class="bg-primary p-2 text-white rounded-md"
                         style="width: 100px;">Submit</button>
+
+                    <button class="btn btn-success text-nowrap" id="downloadPDF">Download
+                        PDF</button>
                 </div>
             </div>
             <div class="table-container mt-4">
@@ -173,6 +176,12 @@
 
                 $(this).prop('checked', true);
             });
+            $('#downloadPDF').on('click', function(e) {
+                e.preventDefault();
+                $("#validasiForm").attr('action', '/pengurus-kelas/kelas-pdf');
+                $("#validasiForm").submit();
+            })
+
         });
     </script>
 @endsection

@@ -122,6 +122,9 @@ Route::middleware(['auth'])->group(function () {
         // VALIDASI
         Route::get('kelas', [PengurusKelasController::class, 'showKelas']);
         Route::post('update-validasi', [PengurusKelasController::class, 'updateValidasi']);
+
+        Route::get('presensi-pdf', [PengurusKelasController::class, 'exportPresensi']);
+        Route::get('kelas-pdf', [PengurusKelasController::class, 'exportKelas']);
     });
 
     // WALI KELAS
@@ -166,6 +169,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/presensi', [SiswaController::class, 'openCam']);
         Route::post('webcam', [SiswaController::class, 'store'])->name('webcam.capture');
         Route::post('/webcam/check_snapshot', [SiswaController::class, 'checkSnapshot'])->name('webcam.check_snapshot');
+        Route::get('presensi-pdf', [SiswaController::class, 'exportPresensi']);
 
     });
 });

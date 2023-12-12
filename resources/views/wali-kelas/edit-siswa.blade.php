@@ -15,20 +15,25 @@
                             <label for="nis">NIS</label>
                             <input type="number" class="form-control" name="nis" value="{{ $siswa->nis }}">
                         </div>
+
                         <div class="form-group">
+                            @error('nama_siswa')
+                                <div class="text-danger p-0 m-0">{{ $message }}</div>
+                            @enderror
                             <label for="nama_siswa">Nama Siswa</label>
-                            <input type="text" class="form-control" name="nama_siswa" value="{{ $siswa->nama_siswa }}">
+                            <input type="text" class="form-control @error('nama_siswa') is-invalid @enderror"
+                                name="nama_siswa" value="{{ $siswa->nama_siswa }}">
                         </div>
+
                         <div class="form-group">
                             <label>Kelas</label>
-                            <select name="id_kelas" class="form-control">
-                                @foreach ($kelas as $i)
-                                    <option value="{{ $i->id_kelas }}"
-                                        {{ $siswa->id_kelas === $i->id_kelas ? 'selected' : '' }}>
-                                        {{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            @foreach ($kelas as $i)
+                                @if ($siswa->id_kelas === $i->id_kelas)
+                                    <input type="text" class="form-control"
+                                        value="{{ $i->tingkatan . ' ' . $i->nama_jurusan . ' ' . $i->nama_kelas }}"
+                                        readonly>
+                                @endif
+                            @endforeach
                         </div>
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
@@ -61,8 +66,12 @@
                             <input type="number" class="form-control" name="nomer_hp" value="{{ $siswa->nomer_hp }}">
                         </div>
                         <div class="form-group">
+                            @error('foto_siswa')
+                                <div class="text-danger p-0 m-0">{{ $message }}</div>
+                            @enderror
                             <label>Foto Profil Siswa</label>
-                            <input type="file" class="form-control" name="foto_siswa" />
+                            <input type="file" class="form-control @error('foto_siswa') is-invalid @enderror"
+                                name="foto_siswa" />
                         </div>
                         <div class="form-group">
                             <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}" />
